@@ -1,0 +1,111 @@
+About Linux Libraries. Static and Shared 
+--------------------------------------------
+
+|Static-lib|
+-------------------------------------------
+*Create*
+  ar options achive-name object-file....
+  e.g ar my.a mod1.o mod2.o mod3.o
+Use ar tool you can create, modify, list static lib.
+ 
+*Using-static-lib*
+ juse like obj-file
+ e.g. ld -o file obj1.o my.a
+
+*Overview*
+ 1.Use static-lib every exec file includes copies of all of the
+   object files
+ 2.If static-lib changed you must recompilet exec files
+
+|Shared-lib|
+------------------------------------------
+*Advantages*
+1. Juse one lib's instance in virtual memroy. Every exec files that use same
+   shared-libs use same one lib
+2. Program size is smaller.
+3. If the Shared-libs changed no need to recompilted the exec files.
+
+*Principal-costs*
+1. Shared-libs are more complex than static-libs.
+2. Shared-libs must be compiled to use *position-independent* (-fPIC) code. 
+   which has a performance overhead on most architectures Because it 
+   requires the use of an extra register.
+3. Run-time take a litte more tiem to load, relocation, reference to each
+   symbol.
+
+*Create-Shared-lib*
+e.g gcc -c |-fPIC| -Wall mod1.c mod2.c mod3.c  <compiled>
+    gcc -o |-Shared| -o libmyss.so mod1.o mod2.o mod3.o <link>
+
+  Unlike static libraies is not possible to add or remove individual object
+  from a previouly built shared library.
+
+|-fPIC|: Generan *position-independent* code.
+   On Linux/X86-32, It is possibel to create shared-lib without the -fPIC
+   option.
+
+*_GLOBAL_OFFSET_TABLE_* if share-file has _GLOBAL_OFFSET_TABLE_ symbol it
+	 it compilet with -fPIC eather is not.
+	 e.g nm myss.so | grep _GLOBAL_OFFSET_TABLE_
+*TEXTREL* indicat shared-lib whose text segment contains a reference 
+        that requires run-time relocation.
+        readelf -d libmyss.so | grep TEXTREL
+
+*Show-require.-hared-libs*
+   Use *ldd* tool.
+
+*Using-Shared-lib*
+ juse like obj-file
+ e.g. ld -o file libmyss.so obj.o
+
+1. find share-lib in run-time
+*Default-ld-path* /etc/ld.so.conf is containes default search paht
+*LD_LIBRARY_PATH* set LD_LIBRARY_PATH is add other search path
+  then the ld-linux.so.2 searches for LD_LIBRARY_PATH list before looking 
+  in the standard library.(ldd also can't find is not set)
+|/lib/ld-linux.so.2| Dynamic liker is itself is a shared-lib, which is
+                   employed by every ELF executable that use shared-lib.
+                   It find and link other shared-libs.
+		    <see> ld.so man-page
+Other way: set new path you specifiy in /etc/ld.so.d/ 
+           and rebuild /etc/ld.so.cache use *ldconfig* -X
+  -v list search path and all of shared-libs
+
+*The-Shared-Lib-Soname*
+*soname* is a kind of alias of real-shared-lib name. 
+       The purpose of the soname is to provide a level of indirection.
+       don't kear about the read-shared-lib name(different version)
+       The soname name is embedded in exec file instead of the read name.
+  e.g. gcc -g -c -fPIC -Wall mod1.c mod2.c mod3.c
+       gcc -g -shared -Wl,-soname,libxx.so -o libmyss.1.so mod1.o mod2.o
+  mod3.o <link>
+       ln -s libmyss.1.so libxx.so <make-a-link>
+
+*DT_SONAME* soname name
+*Show-Soname*
+  readelf -d libss.so | grep SONAME
+
+*/proc/PID/maps* Show program currently using shread-libs
+   
+*Versins-and-Naming-Conventions*
+read-name:lib*name.so.major-id.minor-id*
+          different major-id versin is incompatiable. has different soname 
+soname: lib*name.major-id*
+linker-name: lname.so
+
+                  
+EE can't use*-fomit-frame-pointer* in debug mode
+  When use *-g* comilpiling option a progarm(lib) 
+  should not be sepcified the -fomit-frame-pointer option.
+  Because this makes debugging impossible.
+
+Qus.
+-------------------------------------------------------
+
+
+
+DOC
+-------------------------------
+Linux interface 41,42 Chapters
+
+vim:ft=help softtabstop=2
