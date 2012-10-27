@@ -16,13 +16,26 @@ test:
 ## compilet no soname shared-lib Note complite with read lib
 nosoname:
 	gcc -Wall -fPIC -shared -o ${LIB_REAL_NAME} ${LIB_SRC}
-	gcc -Wall main main.c ${LIB_REAL_NAME} 
+	gcc -Wall main.c ${LIB_REAL_NAME} 
 
 ## compilet with soname shared-lib
 soname:
 	gcc -Wall -fPIC -shared -Wl,-soname,${LIB_SONAME} -o ${LIB_REAL_NAME} ${LIB_SRC}
 # link real-name but symbol is soname
 	gcc -Wall main.c ${LIB_REAL_NAME} 
+
+## compilet with specifiy search path, this not need set search path
+withpath:
+	gcc -Wall -fPIC -shared -Wl,-soname,${LIB_SONAME} -o ${LIB_REAL_NAME} ${LIB_SRC}
+	gcc -Wall -Wl,-rpath,/home/god/codes/linux/shared-lib main.c ${LIB_REAL_NAME}
+
+
+## compilet with $ORIGIN, set to search exec relecot path
+## The $ORIGIN will speant a.out path
+origin:
+	gcc -Wall -fPIC -shared -Wl,-soname,${LIB_SONAME} -o ${LIB_REAL_NAME} ${LIB_SRC}
+	gcc -Wall -Wl,-rpath,'$$ORIGIN' main.c ${LIB_REAL_NAME}
+
 
 # create soname symbol-ln that ld.so will find it
 # create linker name. ln to the last version of soname-lib or real-lib.

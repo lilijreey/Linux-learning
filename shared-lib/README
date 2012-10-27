@@ -59,17 +59,30 @@ e.g gcc -c |-fPIC| -Wall mod1.c mod2.c mod3.c  <compiled>
  e.g. ld -o file libmyss.so obj.o
 
 1. find share-lib in run-time
-*Default-ld-path* /etc/ld.so.conf is containes default search paht
+*Default-ld-path* /lib /use/lib and /etc/ld.so.conf is containes default search paht
 *LD_LIBRARY_PATH* set LD_LIBRARY_PATH is add other search path
   then the ld-linux.so.2 searches for LD_LIBRARY_PATH list before looking 
   in the standard library.(ldd also can't find is not set)
-|/lib/ld-linux.so.2| Dynamic liker is itself is a shared-lib, which is
-                   employed by every ELF executable that use shared-lib.
-                   It find and link other shared-libs.
-		    <see> ld.so man-page
 Other way: set new path you specifiy in /etc/ld.so.d/ 
            and rebuild /etc/ld.so.cache use *ldconfig* -X
-  -v list search path and all of shared-libs
+Compilting-with-search-path:
+	gcc -Wall -Wl,-rpath,/home/path main.c lib.so
+       the RPATH section will in exec file
+      use objdump -p a.out can see RPATH section
+
+*LD_RUN_PATH* is also can replate the -rpath command <see> |LD_RPATH.readme|
+*LD_RPATH*
+*$ORIGIN* provite a reslote path the depented the exec file
+        dirctory. e.g 
+	gcc -Wall -Wl,-rpath,`$ORIGIN/lib' main.c ...
+        the ld will find so in exec file/lib dircrory. 
+        this provied the user don't install or set ld search path.
+
+
+|/lib/ld.s|          Dynamic linker for a.out file
+|/lib/ld-linux.so.2| Dynamic liker for ELF file is itself is a shared-lib, which                     is employed by every ELF executable that use shared-lib.
+                   It find and link other shared-libs.
+		    <see> ld.so man-page
 
 *The-Shared-Lib-Soname*
 *soname* is a kind of alias of real-shared-lib name. 
@@ -94,13 +107,55 @@ soname: lib*name.major-id*
 linker-name: lname.so
 
                   
+*Install-shared-lib*
+  1.create ln 
+  2.update /etc/ld.so.cache use ldconfig
+
 EE can't use*-fomit-frame-pointer* in debug mode
   When use *-g* comilpiling option a progarm(lib) 
   should not be sepcified the -fomit-frame-pointer option.
   Because this makes debugging impossible.
 
+*Run-Time-Symbol-Rosolution*
+???
+
+
+*Dynamically-Loaded-Libraries*
+------------------------------------------------------------
+  When an executable starts, the dynamic linker 
+  loads all of the shared libraries. Sometimes, however,
+  it can be useful to load libraries at a later time. 
+  This provided by dl*  API
+
+*dlopen()*
+  open a shared-lib in run-time, return the lib-handle
+
+*dlclose()*
+  closes a library previously opened by dlopen()
+
+*dlsym()*
+  searches a library for a symbol 
+
+*dlerror()*
+  return a error-string
+
+*Use-dl-funcs*
+ use the API must built with *-ldl* lib
+
+
+
+
+
+
 Qus.
 -------------------------------------------------------
+1.LD_RPATH LD_RUN_PATH  different
+2.use shared-lib link-time do what, and run-time do what?
+3.use dl* and complie shared-lib different
+  dynmic-linker is ld.so and static-linker is ld.
+4.when two programs use a shared-lib if the shared-lib troush
+  what is happen?
+5./proc/PID/maps is show either current using shread-lib and ldd so.
 
 
 
@@ -108,4 +163,4 @@ DOC
 -------------------------------
 Linux interface 41,42 Chapters
 
-vim:ft=help softtabstop=2
+vim:ft=help softtabstop=2 shiftwidth=2
