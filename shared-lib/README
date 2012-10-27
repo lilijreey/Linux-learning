@@ -144,7 +144,17 @@ EE can't use*-fomit-frame-pointer* in debug mode
 
 
 
+*Controlling-symbol-visibility*
+  use __attribute__((visibility("xxx)")) control
+  this attribute will see in realelf -s in Vis
+  hitten hitten symbol that not want visit by outside common use share-lib
+  inter-symbol.
+  hidden attribute makes the symbol available across all source code
+  files that compose the shared library, 
+  but prevents it from being visible outside the library.
 
+*Linker-Version-Script*
+  //TODO
 
 
 Qus.
