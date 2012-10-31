@@ -1,0 +1,52 @@
+
+*structs*
+-------------------------
+*epoll_event* 每一个成员的类型
+   struct epoll_event {
+       uint32_t     events;	 /* Epoll events */
+       *epoll_data_t* data;	 /* User data variable */
+   };
+*epoll_data_t* 一个联合类型
+   typedef union epoll_data {
+       void	   *ptr;
+       int	    fd;
+       uint32_t     u32;
+       uint64_t     u64;
+   } epoll_data_t;
+
+*create-epoll*
+ 得到一个epoll的fd (instance). 
+ |epoll_create|(int size //这个参数已经不用了)
+ |epoll_create1|(int flag see man)
+
+*epoll-limit* /proc/sys/fs/epoll/max_user_watches
+  Because each file descriptor registered in an epoll interest list requires a small
+  amount of *nonswappable* kernel memory, the kernel provides an interface that
+  defines a limit on the total number of file descriptors that each user can register in
+  all epoll interest lists. The value of this limit can be viewed and modified via
+  max_user_watches, a Linux-specific file in the /proc/sys/fs/epoll directory. The default
+  value of this limit is calculated based on available system memory 
+
+*events*
+---------------------
+*ET* 边沿触发 (需要使用EPOLLET 设置)
+*LT* 水平触发 (默认的)
+
+*epoll-op* 操作epoll都使用 |epoll_ctl| 函数， 不同的op参数代表不同的操作
+------------------
+  *add-fd*
+  	*fd type* epoll_ctl 不支持一般文件和目录文件fd，???
+        我使用一个文本文件的fd 都OK 没有报错??? 为啥？？？
+        每一个evnets都是对应与一个fd的，所以不同fd可以设置不同的边沿触发和水平触发
+  *delete-fd*
+  *modify-fd*
+
+*poll-readed-fd*
+-------------------------------
+  得到指定events Readly的fd。 
+ |epoll_wait|(epollfd, 返回直的数组，数组的元素个数，超时时间)
+ 返回有几个readly的fd 
+  返回的fd的空间需要调用这创建，传递给|epoll_wait|
+  返回的每个epoll_event 中 events 是触发readly的event，data和epoll_ctl是的一样
+
+vim:ft=help
