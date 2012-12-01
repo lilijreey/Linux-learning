@@ -48,6 +48,10 @@ port： 0, 内核指定
 目的IP 和 到达接口
 如何一个主机有多个IP地址。情况是什么?
 
+得到connect后内核分配的地址
+getsockname  //通常client调用，得到自己的
+getpeerkname //通常server调用，得到client的
+
 |listen|
 做两件事
 1.把socket从主动接口，设置为别动接口. socket默认返回一个主动接口(调用connect)
@@ -59,5 +63,7 @@ port： 0, 内核指定
 
 |accept|
 Qus. 返回的socket的源地址和目的地址于listen的有何不同
+
+
 
 vim: ft=help
