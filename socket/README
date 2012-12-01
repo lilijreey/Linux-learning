@@ -1,0 +1,63 @@
+TCP 连接关闭情况
+
+1.正常关闭 A: close. 给B发送 FIN包
+  B: 调用read 返回0. 表示A：已经关闭（不能在发送数据了)但是还可以接受数据
+  Qus. 如果B不掉用 read可以知道A：发送的FIN吗？
+
+2.程序崩溃。 A：Qus. 会发出FIN吗？
+    B： 调用read的返回是什么？会指定A已经崩溃了吗?
+
+3. A突然断电，网线断掉：
+    A：write 会报错吗？
+    B： read 是声明情况
+
+
+Socket API
+|connect| 调用发起3次握手，知道连接建立或者失败才返回
+收到第二分解 peer SYN(ACK)包. 返回
+如果connect 失败则socket 不可再用。必须关闭. TCP
+
+返回失败的几种情况:
+1. 对方没有开机: 对方太忙，
+  始终没有收到对方的ACK，则返回ETIMEDOUT
+
+2. Peer 对应服务没有启动。 连接端口没有监听进程
+  Peer 回复 RST connect 返回 ECONNREFUSED
+
+3. 路由不可达
+
+|bind| 绑定socket到一个协议地址
+
+如果不帮定。那么在connect 或 listen 时，内核就要为socket
+选择一个临时*port* *IP* 对于client bind无所谓。但是对用
+server 通常都需要一个固定的port
+
+IPaddrs: 进程绑定的ip地址必须是进程所在主机的一个接口
+绑定IP后, 进程所有发送的包的源地址IP就是绑定的IP.
+进程只能接受目的地址是绑定IP的包
+
+如果TCP server不绑定IP，则Server的IP会是 client SYN包的目的IP
+
+IP: 统配地址 ipv4 INADDR_ANY, 内核指定, 何时指定？
+             ipv6 in6addr_any. 
+通配符不同的原因:
+    INADDR_ANY 通常是0.可以使用一个数字表示
+    ipV6 地址是个结构，不能使用0来表示
+port： 0, 内核指定
+
+目的IP 和 到达接口
+如何一个主机有多个IP地址。情况是什么?
+
+|listen|
+做两件事
+1.把socket从主动接口，设置为别动接口. socket默认返回一个主动接口(调用connect)
+  指示内核因该接受指向此接口的连接请求.
+  TCP 状态从 CLOSED 到 LISTEN
+2.设置请求队列大小
+ Qus. 当前的最大值为多少
+
+
+|accept|
+Qus. 返回的socket的源地址和目的地址于listen的有何不同
+
+vim: ft=help
