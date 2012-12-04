@@ -163,6 +163,9 @@ SA-RESTART 如果一个syscall是因为signal中断则signal处理完后重启sy
     per-signal set. 对I/O syscall wait*, 
     对于poll,ppoll select pselect, epoll_wait epoll_await, sleep 
     等函数没用。这些函数永远不会自动重启
+    more see signal(7)
+
+
 SA-INFO 使用actinfo
 SA-ONSTACK 使用专门的stack处理handle
 SA-NODEFER 不屏蔽正在处理的signal
