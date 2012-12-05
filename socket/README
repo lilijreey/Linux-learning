@@ -4,12 +4,20 @@ TCP 连接关闭情况
   B: 调用read 返回0. 表示A：已经关闭（不能在发送数据了)但是还可以接受数据
   Qus. 如果B不掉用 read可以知道A：发送的FIN吗？
 
-2.程序崩溃。 A：Qus. 会发出FIN吗？
-    B： 调用read的返回是什么？会指定A已经崩溃了吗?
+2.程序崩溃。
+另一端不会立即知道，除非调用write，或使用心跳SO_KEEPALIVE
+    A：Qus. 会发出FIN吗？, 不会
+    B： 调用read的返回是什么？会指定A已经崩溃了吗? 不会阻塞，或timeout
+    C:  调用write回阻塞直到timeout或ICMP返回不可达
+   
 
 3. A突然断电，网线断掉：
-    A：write 会报错吗？
-    B： read 是声明情况
+  和2的情况相同
+
+4.崩溃并重启
+  另一端是否知道？ 如果在崩溃时不主动发送消息，则不知道server是否已经崩溃
+ A:调用read时server以重启: 阻塞，或timeout
+ B:调用write时server以重启: 会收到RST分节,到时write 返回 ECONNRESET 错误
 
 
 Socket API
@@ -42,10 +50,7 @@ IP: 统配地址 ipv4 INADDR_ANY, 内核指定, 何时指定？
              ipv6 in6addr_any. 
 通配符不同的原因:
     INADDR_ANY 通常是0.可以使用一个数字表示
-    ipV6 地址是个结构，不能使用0来表示
-port： 0, 内核指定
-
-目的IP 和 到达接口
+    ipV6 地址是个结构，不能使用0来表示 port： 0, 内核指定 目的IP 和 到达接口
 如何一个主机有多个IP地址。情况是什么?
 
 得到connect后内核分配的地址
@@ -65,5 +70,29 @@ getpeerkname //通常server调用，得到client的
 Qus. 返回的socket的源地址和目的地址于listen的有何不同
 
 
+EPIPE:
+写一个已经收到FIN包的接口是ok的。
+但是写一个已经收到RST的接口就引发SIGPIPE
+
+|setsockopt| more see *tcp(7)*
+几种常见的选项
+1. SO_KEEPALIVE 
+  保活心跳
+
+2. SO_RCVBUF, SO_SNDBUF
+  接收发送缓存大小，tcp窗口的小
+  必须在connect bind前调用
+
+3. SO_RCVTIMEO SO_SNDTIMEO
+  接收发送超时设置
+
+4. SO_REUSEADDR
+   SO_REUSEPORT
+  允许重用地址， 在time_wait 状态下的地址是否可以重用
+   一般用于重启后马上要重新绑定到原来地址的
+
+5. TCP_NODELAY
+   禁止Nagle算法
+   不会把小包拼接成大包后在发送，会使得小包用户的体验增强
 
 vim: ft=help
