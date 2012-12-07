@@ -20,7 +20,7 @@ TCP 连接关闭情况
  B:调用write时server以重启: 会收到RST分节,到时write 返回 ECONNRESET 错误
 
 
-Socket API
+Socket API 注意是不是可重入的
 |connect| 调用发起3次握手，知道连接建立或者失败才返回
 收到第二分解 peer SYN(ACK)包. 返回
 如果connect 失败则socket 不可再用。必须关闭. TCP
@@ -78,6 +78,7 @@ EPIPE:
 ip<->name
 |gethostbyname|
 |gethostbyaddr|
+不可重入
 
 使用这些函数主机要联网
 使用2_r version
@@ -88,6 +89,13 @@ ip<->name
 
 |gethostname|
 return same as hostname(1)
+不可重入
+
+|getaddrinfo|
+比gethostbyname 更高级的函数
+屏蔽了相关协议，
+|freeaddrinfo|
+不可重入
 
 port<->service-name
 |getservbyname|
