@@ -1,0 +1,143 @@
+TCP 连接关闭情况
+
+1.正常关闭 A: close. 给B发送 FIN包
+  B: 调用read 返回0. 表示A：已经关闭（不能在发送数据了)但是还可以接受数据
+  Qus. 如果B不掉用 read可以知道A：发送的FIN吗？
+
+2.程序崩溃。
+另一端不会立即知道，除非调用write，或使用心跳SO_KEEPALIVE
+    A：Qus. 会发出FIN吗？, 不会
+    B： 调用read的返回是什么？会指定A已经崩溃了吗? 不会阻塞，或timeout
+    C:  调用write回阻塞直到timeout或ICMP返回不可达
+   
+
+3. A突然断电，网线断掉：
+  和2的情况相同
+
+4.崩溃并重启
+  另一端是否知道？ 如果在崩溃时不主动发送消息，则不知道server是否已经崩溃
+ A:调用read时server以重启: 阻塞，或timeout
+ B:调用write时server以重启: 会收到RST分节,到时write 返回 ECONNRESET 错误
+
+
+Socket API 注意是不是可重入的
+|connect| 调用发起3次握手，知道连接建立或者失败才返回
+收到第二分解 peer SYN(ACK)包. 返回
+如果connect 失败则socket 不可再用。必须关闭. TCP
+因为connect failed 后 socket的状态为定义
+
+返回失败的几种情况:
+1. 对方没有开机: 对方太忙，
+  始终没有收到对方的ACK，则返回ETIMEDOUT
+
+2. Peer 对应服务没有启动。 连接端口没有监听进程
+  Peer 回复 RST connect 返回 ECONNREFUSED
+
+3. 路由不可达
+
+|bind| 绑定socket到一个协议地址
+
+如果不帮定。那么在connect 或 listen 时，内核就要为socket
+选择一个临时*port* *IP* 对于client bind无所谓。但是对用
+server 通常都需要一个固定的port
+
+IPaddrs: 进程绑定的ip地址必须是进程所在主机的一个接口
+绑定IP后, 进程所有发送的包的源地址IP就是绑定的IP.
+进程只能接受目的地址是绑定IP的包
+
+如果TCP server不绑定IP，则Server的IP会是 client SYN包的目的IP
+
+IP: 统配地址 ipv4 INADDR_ANY, 内核指定, 何时指定？
+             ipv6 in6addr_any. 
+通配符不同的原因:
+    INADDR_ANY 通常是0.可以使用一个数字表示
+    ipV6 地址是个结构，不能使用0来表示 port： 0, 内核指定 目的IP 和 到达接口
+如何一个主机有多个IP地址。情况是什么?
+
+得到connect后内核分配的地址
+getsockname  //通常client调用，得到自己的
+getpeerkname //通常server调用，得到client的
+
+|listen|
+做两件事
+1.把socket从主动接口，设置为别动接口. socket默认返回一个主动接口(调用connect)
+  指示内核因该接受指向此接口的连接请求.
+  TCP 状态从 CLOSED 到 LISTEN
+2.设置请求队列大小
+ Qus. 当前的最大值为多少
+
+
+|accept|
+Qus. 返回的socket的源地址和目的地址于listen的有何不同
+
+
+EPIPE:
+写一个已经收到FIN包的接口是ok的。
+但是写一个已经收到RST的接口就引发SIGPIPE
+
+ip<->name
+|gethostbyname|
+|gethostbyaddr|
+不可重入
+
+使用这些函数主机要联网
+使用2_r version
+
+通过 /etc/resolv.conf 文件来查询
+如果查询不到，则通过UDP相服务器查询
+不通过DNS，也可在 /etc/hosts(静态主机文件)中查找
+
+|gethostname|
+return same as hostname(1)
+不可重入
+
+|getaddrinfo|
+比gethostbyname 更高级的函数
+屏蔽了相关协议，
+|freeaddrinfo|
+不可重入
+
+port<->service-name
+|getservbyname|
+|gettservbport|
+通过 /etc/service 文件查询
+
+
+|getprotobynumber|
+
+|setsockopt| more see *tcp(7)*
+几种常见的选项
+1. SO_KEEPALIVE 
+  保活心跳
+
+2. SO_RCVBUF, SO_SNDBUF
+  接收发送缓存大小，tcp窗口的小
+  必须在connect bind前调用
+  linux  SO_RCVBUF=87380, SO_SNDBUF=16384
+
+3. SO_RCVTIMEO SO_SNDTIMEO
+  接收发送超时设置. default is 0
+
+4. SO_REUSEADDR SO_REUSEPORT
+   bind 之前设置
+  允许重用地址， 在time_wait 状态下的地址是否可以重用
+   一般用于重启后马上要重新绑定到原来地址的
+  try?
+
+5. TCP_NODELAY
+   禁止Nagle算法
+   不会把小包拼接成大包后在发送，会使得小包用户的体验增强
+
+6. TCP_DEFER_ACCEPT
+   当连接请求由数据到达是在返回。 用于拒绝接收只建立连接不发送数据的请求。
+   
+7. SO_LINGER
+   改变 close 的默认动作，通常close立即返回。如果close时还有没有发出的msg
+   系统将试着把这些msg发出
+   传递参数 linger { int l_onoff /*0 is off*/
+                     int l_linger 
+                    }
+  l_onoff = 0 等于没有设置,close 默认动作
+  l_onoff != 0 ??? linux 
+
+vim: ft=help

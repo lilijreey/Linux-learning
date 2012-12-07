@@ -49,7 +49,8 @@ int main()
     struct epoll_event evlist[EPOLL_LIST_SIZE] ;
     int size=0;
     for (;;) {
-        // epoll_wait size 1 is ok
+        //通常值等待1个
+        //epoll_wait(epoll_fd, evlist, 1, -1));
         EV_TEST(-1, size, epoll_wait(epoll_fd, evlist, EPOLL_LIST_SIZE, -1));
         printf("size:%d\n", size);
         // handld every readly fd

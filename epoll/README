@@ -1,4 +1,5 @@
 
+
 *structs*
 -------------------------
 *epoll_event* 每一个成员的类型
@@ -26,6 +27,11 @@
   all epoll interest lists. The value of this limit can be viewed and modified via
   max_user_watches, a Linux-specific file in the /proc/sys/fs/epoll directory. The default
   value of this limit is calculated based on available system memory 
+
+epoll_wait
+在内核准备好数据后返回。 Fin包也是普通数据, read return 0
+RST ?
+
 
 *events*
 ---------------------
