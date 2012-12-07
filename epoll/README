@@ -32,6 +32,17 @@
 *ET* 边沿触发 (需要使用EPOLLET 设置)
 *LT* 水平触发 (默认的)
 
+EPOLLIN
+EPOLLPRI
+EPOLLRDHUP
+EPOLLOUT
+EPOLLET
+EPOLLONESHOT
+
+EPOLLERR :这两个events epoll_wait 总是会监听，不需要在epoll_ctl 中设置
+EPOLLHUP
+
+
 *epoll-op* 操作epoll都使用 |epoll_ctl| 函数， 不同的op参数代表不同的操作
 ------------------
   *add-fd*
@@ -39,9 +50,15 @@
         我使用一个文本文件的fd 都OK 没有报错??? 为啥？？？
         每一个evnets都是对应与一个fd的，所以不同fd可以设置不同的边沿触发和水平触发
   *delete-fd*
+    传入须要删除的fd
+    	E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_DEL, e.data.fd, NULL/* ignore the arg */));
+       
   *modify-fd*
+    传入须要删除的fd,和新的epoll_event
+	    e.events |= EPOLLET;
+	    E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_MOD, e.data.fd, &e));
 
-*poll-readed-fd*
+*poll-readly-fd*
 -------------------------------
   得到指定events Readly的fd。 
  |epoll_wait|(epollfd, 返回直的数组，数组的元素个数，超时时间)
@@ -49,4 +66,7 @@
   返回的fd的空间需要调用这创建，传递给|epoll_wait|
   返回的每个epoll_event 中 events 是触发readly的event，data和epoll_ctl是的一样
 
+*copy-epoll-fd*
+-------------------------------
+使用dup来复制epoll的fd，不会导致kernel复制event-list，kernl会为epoll生成一个inode
 vim:ft=help

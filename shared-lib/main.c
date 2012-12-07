@@ -16,6 +16,5 @@ int main()
 {
     s1();
     s2();
-    s3();
     return 0;
 }

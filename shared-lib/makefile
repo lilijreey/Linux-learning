@@ -36,6 +36,10 @@ origin:
 	gcc -Wall -fPIC -shared -Wl,-soname,${LIB_SONAME} -o ${LIB_REAL_NAME} ${LIB_SRC}
 	gcc -Wall -Wl,-rpath,'$$ORIGIN' main.c ${LIB_REAL_NAME}
 
+## use version-script control visibility
+version:
+	gcc -Wall -fPIC -shared -Wl,-soname,${LIB_SONAME},--version-script,export.map -o ${LIB_REAL_NAME} ${LIB_SRC}
+	gcc -Wall -Wl,-rpath,/home/god/codes/linux/shared-lib main.c ${LIB_REAL_NAME}
 
 # create soname symbol-ln that ld.so will find it
 # create linker name. ln to the last version of soname-lib or real-lib.

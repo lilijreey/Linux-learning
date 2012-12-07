@@ -18,5 +18,4 @@
 
 void s1() ;
 void s2() ;
-void s3() ;
 

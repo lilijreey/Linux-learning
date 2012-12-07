@@ -12,7 +12,9 @@
  */
 
 #include <stdio.h>
+void s3() ;
 void s2() {
     printf("s2.c s2 function\n");
+    s3() ;
 }
 
