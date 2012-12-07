@@ -24,6 +24,7 @@ Socket API
 |connect| 调用发起3次握手，知道连接建立或者失败才返回
 收到第二分解 peer SYN(ACK)包. 返回
 如果connect 失败则socket 不可再用。必须关闭. TCP
+因为connect failed 后 socket的状态为定义
 
 返回失败的几种情况:
 1. 对方没有开机: 对方太忙，
@@ -74,6 +75,28 @@ EPIPE:
 写一个已经收到FIN包的接口是ok的。
 但是写一个已经收到RST的接口就引发SIGPIPE
 
+ip<->name
+|gethostbyname|
+|gethostbyaddr|
+
+使用这些函数主机要联网
+使用2_r version
+
+通过 /etc/resolv.conf 文件来查询
+如果查询不到，则通过UDP相服务器查询
+不通过DNS，也可在 /etc/hosts(静态主机文件)中查找
+
+|gethostname|
+return same as hostname(1)
+
+port<->service-name
+|getservbyname|
+|gettservbport|
+通过 /etc/service 文件查询
+
+
+|getprotobynumber|
+
 |setsockopt| more see *tcp(7)*
 几种常见的选项
 1. SO_KEEPALIVE 
@@ -82,17 +105,31 @@ EPIPE:
 2. SO_RCVBUF, SO_SNDBUF
   接收发送缓存大小，tcp窗口的小
   必须在connect bind前调用
+  linux  SO_RCVBUF=87380, SO_SNDBUF=16384
 
 3. SO_RCVTIMEO SO_SNDTIMEO
-  接收发送超时设置
+  接收发送超时设置. default is 0
 
-4. SO_REUSEADDR
-   SO_REUSEPORT
+4. SO_REUSEADDR SO_REUSEPORT
+   bind 之前设置
   允许重用地址， 在time_wait 状态下的地址是否可以重用
    一般用于重启后马上要重新绑定到原来地址的
+  try?
 
 5. TCP_NODELAY
    禁止Nagle算法
    不会把小包拼接成大包后在发送，会使得小包用户的体验增强
+
+6. TCP_DEFER_ACCEPT
+   当连接请求由数据到达是在返回。 用于拒绝接收只建立连接不发送数据的请求。
+   
+7. SO_LINGER
+   改变 close 的默认动作，通常close立即返回。如果close时还有没有发出的msg
+   系统将试着把这些msg发出
+   传递参数 linger { int l_onoff /*0 is off*/
+                     int l_linger 
+                    }
+  l_onoff = 0 等于没有设置,close 默认动作
+  l_onoff != 0 ??? linux 
 
 vim: ft=help
