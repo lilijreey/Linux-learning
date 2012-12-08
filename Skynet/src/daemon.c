@@ -164,12 +164,12 @@ int daemon_start(int argc, char** argv)
 	sa.sa_flags = SA_RESTART|SA_SIGINFO;
 	sa.sa_sigaction = sigchld_handler;
 	sigaction(SIGCHLD, &sa, NULL);
-/*	sigaction(SIGSEGV, &sa, NULL);
+	sigaction(SIGSEGV, &sa, NULL);
 	sigaction(SIGBUS, &sa, NULL);
 	sigaction(SIGILL, &sa, NULL);
 	sigaction(SIGABRT, &sa, NULL);
 	sigaction(SIGFPE, &sa, NULL);
-*/	
+	
 	sigemptyset(&sset);
 	sigaddset(&sset, SIGSEGV);
 	sigaddset(&sset, SIGBUS);

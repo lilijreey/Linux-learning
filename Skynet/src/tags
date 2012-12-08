@@ -6,8 +6,8 @@
 !_TAG_PROGRAM_VERSION	5.9~svn20110310	//
 ADD_EVENT	time/timer.h	/^	ADD_EVENT = timer_add_new_timer,$/;"	e	enum:timer_add_mode
 ADD_EVENT_REPLACE_UNCONDITIONALLY	time/timer.h	/^	ADD_EVENT_REPLACE_UNCONDITIONALLY = timer_replace_timer$/;"	e	enum:timer_add_mode
-ADD_TIMER_EVENT	time/timer.h	181;"	d
-ADD_TIMER_EVENT_EX	time/timer.h	197;"	d
+ADD_TIMER_EVENT	time/timer.h	179;"	d
+ADD_TIMER_EVENT_EX	time/timer.h	195;"	d
 ALERT_LOG	log.h	168;"	d
 ALERT_LOG	log.h	173;"	d
 AsyncServInterface	dll.h	/^typedef struct AsyncServInterface {$/;"	s
@@ -17,28 +17,19 @@ AsyncServInterface::get_pkg_len	dll.h	/^	int		(*get_pkg_len)(int fd, const void*
 AsyncServInterface::handle	dll.h	/^	void*   handle; \/\/ Hold the handle returned by dlopen$/;"	m	struct:AsyncServInterface	access:public
 AsyncServInterface::init_service	dll.h	/^	int 	(*init_service)(int isparent);$/;"	m	struct:AsyncServInterface	access:public
 AsyncServInterface::on_client_conn_closed	dll.h	/^	void	(*on_client_conn_closed)(int fd);$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::on_client_conn_opened	dll.h	/^	void 	(*on_client_conn_opened)(fdsession_t *);$/;"	m	struct:AsyncServInterface	access:public
 AsyncServInterface::on_fd_closed	dll.h	/^	void	(*on_fd_closed)(int fd);$/;"	m	struct:AsyncServInterface	access:public
-AsyncServInterface::proc_events	dll.h	/^	void	(*proc_events)();$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::proc_events	dll.h	/^	void	(*proc_events)(uint32_t);$/;"	m	struct:AsyncServInterface	access:public
 AsyncServInterface::proc_mcast_pkg	dll.h	/^	void	(*proc_mcast_pkg)(const void* data, int len);$/;"	m	struct:AsyncServInterface	access:public
-AsyncServInterface::proc_pkg_from_client	dll.h	/^	int		(*proc_pkg_from_client)(void* pkg, int pkglen, fdsession_t* fdsess);$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::proc_pkg_from_client	dll.h	/^	void	(*proc_pkg_from_client)(void* pkg, int pkglen, fdsession_t* fdsess);$/;"	m	struct:AsyncServInterface	access:public
 AsyncServInterface::proc_pkg_from_serv	dll.h	/^	void	(*proc_pkg_from_serv)(int fd, void* pkg, int pkglen);$/;"	m	struct:AsyncServInterface	access:public
 AsyncServInterface::proc_udp_pkg	dll.h	/^	int		(*proc_udp_pkg)(int fd, const void* avail_data, int avail_len );$/;"	m	struct:AsyncServInterface	access:public
 AsyncServInterface::reload_global_data	dll.h	/^	int		(*reload_global_data)();$/;"	m	struct:AsyncServInterface	access:public
 BINDCONF_INC	bindconf.h	2;"	d
-BINS	Makefile	/^BINS	=Skynet $/;"	m
-BINS	Makefile	/^BINS	=Skynet2 $/;"	m
 BOOT_FAIL	log.c	290;"	d	file:
 BOOT_LOG	log.h	332;"	d
 BOOT_LOG2	log.h	343;"	d
 BOOT_OK	log.c	289;"	d	file:
-CC	Makefile	/^CC	= gcc$/;"	m
-CC	conf_parser/Makefile	/^CC	= gcc$/;"	m
-CC	inet/Makefile	/^CC	= gcc$/;"	m
-CC	time/Makefile	/^CC	= gcc$/;"	m
-CFLAGS	Makefile	/^CFLAGS	= -Wall $(INCL) -MMD $(DEBUG) -D_REENTRANT -D_GNU_SOURCE $(OPT) $/;"	m
-CFLAGS	conf_parser/Makefile	/^CFLAGS	= -Wall $(INCL) -MMD $(DEBUG) $(OPT) -fPIC$/;"	m
-CFLAGS	inet/Makefile	/^CFLAGS	= -Wall $(INCL) -MMD $(DEBUG) $(OPT) -fPIC$/;"	m
-CFLAGS	time/Makefile	/^CFLAGS	= -Wall $(INCL) -MMD $(DEBUG) $(OPT) -fPIC$/;"	m
 CLOSE_BLOCK	shmq.h	/^	CLOSE_BLOCK	\/\/ parent informs child that a connection had been closed$/;"	e	enum:__anon9
 CN_NEED_CLOSE	net.h	20;"	d
 CN_NEED_POLLIN	net.h	21;"	d
@@ -47,10 +38,6 @@ CRIT_LOG	log.h	190;"	d
 CRIT_LOG	log.h	195;"	d
 DAEMON_INC	daemon.h	2;"	d
 DATA_BLOCK	shmq.h	/^	DATA_BLOCK = 0,$/;"	e	enum:__anon9
-DEBUG	Makefile	/^DEBUG	= -g -DDEBUG$/;"	m
-DEBUG	conf_parser/Makefile	/^DEBUG	= -O2 -DDEBUG$/;"	m
-DEBUG	inet/Makefile	/^DEBUG	= -g -DDEBUG$/;"	m
-DEBUG	time/Makefile	/^DEBUG	= -g -DDEBUG$/;"	m
 DEBUG_LOG	log.h	296;"	d
 DEBUG_LOG	log.h	301;"	d
 DEBUG_RETURN	log.h	398;"	d
@@ -69,8 +56,8 @@ FIN_BLOCK	shmq.h	/^	FIN_BLOCK,	\/\/ child informs parent to close a connection$/
 INFO_LOG	log.h	275;"	d
 INFO_LOG	log.h	280;"	d
 INIKEY_HASHBITS	conf_parser/config.c	16;"	d	file:
-INIT_LIST_HEAD	kernel_ds/list.h	41;"	d
-IPADDR_CAT_H_	inet/ipaddr_cat.h	15;"	d
+INIT_LIST_HEAD	kernel_ds/list.h	39;"	d
+IPADDR_CAT_H_	inet/ipaddr_cat.h	11;"	d
 KALERT_LOG	log.h	170;"	d
 KALERT_LOG	log.h	174;"	d
 KCRIT_LOG	log.h	192;"	d
@@ -90,10 +77,11 @@ KTRACE_LOG	log.h	324;"	d
 KWARN_LOG	log.h	235;"	d
 KWARN_LOG	log.h	239;"	d
 LIBant_ARCH_I386_ATOMIC_	kernel_ds/atomic.h	13;"	d
-LIBant_CONFIG_H_	conf_parser/config.h	20;"	d
-LIBant_TIME_H_	time/time.h	15;"	d
-LIST_HEAD	kernel_ds/list.h	34;"	d
-LIST_HEAD_INIT	kernel_ds/list.h	32;"	d
+LIBant_CONFIG_H_	conf_parser/config.h	18;"	d
+LIBant_RANDOM_HPP_	random/random.h	13;"	d
+LIBant_TIME_H_	time/time.h	13;"	d
+LIST_HEAD	kernel_ds/list.h	32;"	d
+LIST_HEAD_INIT	kernel_ds/list.h	30;"	d
 LOCK	kernel_ds/atomic.h	15;"	d
 LOCKED_MASK	shmq.h	13;"	d
 LOG_H_	log.h	12;"	d
@@ -101,33 +89,24 @@ MAX_LOG_CNT	log.c	29;"	d	file:
 NOTI_LOG	log.h	254;"	d
 NOTI_LOG	log.h	259;"	d
 OPEN_BLOCK	shmq.h	/^	OPEN_BLOCK,$/;"	e	enum:__anon9
-OPT	Makefile	/^OPT	= -funroll-loops -D__USE_STRING_INLINES -fhosted$/;"	m
-OPT	conf_parser/Makefile	/^OPT	= -funroll-loops -D__USE_STRING_INLINES -fhosted$/;"	m
-OPT	inet/Makefile	/^OPT	= -funroll-loops -D__USE_STRING_INLINES -fhosted$/;"	m
-OPT	time/Makefile	/^OPT	= -funroll-loops -D__USE_STRING_INLINES -fhosted$/;"	m
 PAD_BLOCK	shmq.h	/^	PAD_BLOCK,$/;"	e	enum:__anon9
-PKGS	Makefile	/^PKGS = glib-2.0 libxml-2.0$/;"	m
-REMOVE_MICRO_TIMER	time/timer.h	298;"	d
-REMOVE_TIMER	time/timer.h	246;"	d
-REMOVE_TIMERS	time/timer.h	307;"	d
+REMOVE_MICRO_TIMER	time/timer.h	296;"	d
+REMOVE_TIMER	time/timer.h	244;"	d
+REMOVE_TIMERS	time/timer.h	305;"	d
 SCREEN_COLS	log.c	288;"	d	file:
 SHIFT_FD_LOCK	log.c	66;"	d	file:
 SHIFT_FD_UNLOCK	log.c	70;"	d	file:
 SHM_BLOCK_LEN_MAX	shmq.h	15;"	d
 SIMPLY	log.h	129;"	d
 SIMPLY	log.h	132;"	d
-SKYNET_SERVER_DLL_H_	dll.h	15;"	d
-SKYNET_SERVER_MCAST_H_	mcast.h	15;"	d
+SKYNET_SERVER_DLL_H_	dll.h	12;"	d
+SKYNET_SERVER_MCAST_H_	mcast.h	13;"	d
 SKYNET_SERVER_NET_H_	net.h	2;"	d
-SKYNET_SERVER_NET_INTERFACE_H_	net_if.h	15;"	d
+SKYNET_SERVER_NET_INTERFACE_H_	net_if.h	12;"	d
 SKYNET_SERVER_SERVICE_H_	service.h	2;"	d
 SKYNET_SERVER_UTIL_H_	util.h	2;"	d
 SKYNET_SERVER__SHMQ_H_	shmq.h	2;"	d
 SLEEP_MASK	shmq.h	14;"	d
-SRCS	Makefile	/^SRCS 	= main.c dll.c daemon.c util.c shmq.c net.c net_if.c service.c bindconf.c mcast.c$/;"	m
-SRCS	conf_parser/Makefile	/^SRCS 	= config.c$/;"	m
-SRCS	inet/Makefile	/^SRCS 	= tcp.c mcast.c$/;"	m
-SRCS	time/Makefile	/^SRCS 	= time.c$/;"	m
 TCP_H_	inet/tcp.h	12;"	d
 TIMER_VEC_SIZE	time/timer.c	5;"	d	file:
 TRACE_LOG	log.h	318;"	d
@@ -139,11 +118,11 @@ WARN_RETURN_VOID	log.h	387;"	d
 __anon10::counter	kernel_ds/atomic.h	/^  volatile int counter;$/;"	m	struct:__anon10	access:public
 __anon8::bc_elem	service.h	/^	bind_config_elem_t*	bc_elem;$/;"	m	struct:__anon8	access:public
 __anon8::idle_timeout	service.h	/^	int					idle_timeout;$/;"	m	struct:__anon8	access:public
-__builtin_prefetch	kernel_ds/list.h	18;"	d
+__builtin_prefetch	kernel_ds/list.h	16;"	d
 __list_add	kernel_ds/list.h	/^__list_add (struct list_head *new_entry,$/;"	f	signature:(struct list_head *new_entry, struct list_head *prev, struct list_head *next)
 __list_del	kernel_ds/list.h	/^__list_del (struct list_head *prev, struct list_head *next)$/;"	f	signature:(struct list_head *prev, struct list_head *next)
-__list_for_each	kernel_ds/list.h	226;"	d
-__list_for_each_prev	kernel_ds/list.h	238;"	d
+__list_for_each	kernel_ds/list.h	224;"	d
+__list_for_each_prev	kernel_ds/list.h	236;"	d
 __list_splice	kernel_ds/list.h	/^__list_splice (struct list_head *list, struct list_head *head)$/;"	f	signature:(struct list_head *list, struct list_head *head)
 add_event	time/timer.c	/^add_event(list_head_t* head, timer_cb_func_t function, void* owner, void* data, time_t expire, timer_add_mode_t flag)$/;"	f	signature:(list_head_t* head, timer_cb_func_t function, void* owner, void* data, time_t expire, timer_add_mode_t flag)
 add_event	time/timer.h	/^add_event(list_head_t* head, timer_cb_func_t func, void* owner, void* data, time_t expire, timer_add_mode_t flag);$/;"	p	signature:(list_head_t* head, timer_cb_func_t func, void* owner, void* data, time_t expire, timer_add_mode_t flag)
@@ -185,9 +164,8 @@ addr_pred	mcast.c	/^static gboolean addr_pred(gpointer key, gpointer value, gpoi
 addr_tbl	mcast.c	/^	GHashTable*	addr_tbl;$/;"	m	struct:addr_cache	file:	access:public
 align_queue_head	shmq.c	/^align_queue_head (struct shm_queue *q, const struct shm_block *mb)$/;"	f	file:	signature:(struct shm_queue *q, const struct shm_block *mb)
 align_queue_tail	shmq.c	/^align_queue_tail (struct shm_queue *q)$/;"	f	file:	signature:(struct shm_queue *q)
-ant_H_LIST_H_	kernel_ds/list.h	16;"	d
-ant_MCAST_H_	inet/mcast.h	15;"	d
-ant_TIMER_H_	time/timer.h	15;"	d
+ant_H_LIST_H_	kernel_ds/list.h	14;"	d
+ant_TIMER_H_	time/timer.h	13;"	d
 ant_list_add	kernel_ds/list.h	/^ant_list_add (struct list_head *new_entry, struct list_head *head)$/;"	f	signature:(struct list_head *new_entry, struct list_head *head)
 arg_end	daemon.c	/^static char*	arg_end;$/;"	v	file:
 arg_start	daemon.c	/^static char*	arg_start;$/;"	v	file:
@@ -346,8 +324,6 @@ etin_head	net.h	/^	list_head_t	etin_head;$/;"	m	struct:epinfo	access:public
 evs	net.h	/^	struct epoll_event*	evs;$/;"	m	struct:epinfo	typeref:struct:epinfo::epoll_event	access:public
 expire	time/timer.c	/^	int     expire;$/;"	m	struct:tvec_root_s	file:	access:public
 expire	time/timer.h	/^	time_t				expire;$/;"	m	struct:timer_struct	access:public
-family_to_level	inet/mcast.c	/^static inline int family_to_level(int family)$/;"	f	file:	signature:(int family)
-family_to_level	inet/mcast.c	/^static inline int family_to_level(int family);$/;"	p	file:	signature:(int family)
 fd	service.h	/^	int			fd;$/;"	m	struct:fdsession	access:public
 fd	shmq.h	/^	uint32_t	fd;$/;"	m	struct:shm_block	access:public
 fd_array_session	service.h	/^typedef struct fd_array_session {$/;"	s
@@ -499,13 +475,13 @@ list_add_tail	kernel_ds/list.h	/^list_add_tail (struct list_head *new_entry, str
 list_del	kernel_ds/list.h	/^list_del (struct list_head *entry)$/;"	f	signature:(struct list_head *entry)
 list_del_init	kernel_ds/list.h	/^list_del_init (struct list_head *entry)$/;"	f	signature:(struct list_head *entry)
 list_empty	kernel_ds/list.h	/^list_empty (struct list_head *head)$/;"	f	signature:(struct list_head *head)
-list_entry	kernel_ds/list.h	208;"	d
-list_for_each	kernel_ds/list.h	217;"	d
-list_for_each	kernel_ds/list.h	220;"	d
-list_for_each_entry	kernel_ds/list.h	259;"	d
-list_for_each_entry	kernel_ds/list.h	264;"	d
-list_for_each_prev	kernel_ds/list.h	233;"	d
-list_for_each_safe	kernel_ds/list.h	248;"	d
+list_entry	kernel_ds/list.h	206;"	d
+list_for_each	kernel_ds/list.h	215;"	d
+list_for_each	kernel_ds/list.h	218;"	d
+list_for_each_entry	kernel_ds/list.h	257;"	d
+list_for_each_entry	kernel_ds/list.h	262;"	d
+list_for_each_prev	kernel_ds/list.h	231;"	d
+list_for_each_safe	kernel_ds/list.h	246;"	d
 list_head	kernel_ds/list.h	/^struct list_head$/;"	s
 list_head::next	kernel_ds/list.h	/^  struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::list_head	access:public
 list_head::prev	kernel_ds/list.h	/^  struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::	access:public
@@ -514,8 +490,8 @@ list_move	kernel_ds/list.h	/^list_move (struct list_head *list, struct list_head
 list_move_tail	kernel_ds/list.h	/^list_move_tail (struct list_head *list, struct list_head *head)$/;"	f	signature:(struct list_head *list, struct list_head *head)
 list_splice	kernel_ds/list.h	/^list_splice (struct list_head *list, struct list_head *head)$/;"	f	signature:(struct list_head *list, struct list_head *head)
 list_splice_init	kernel_ds/list.h	/^list_splice_init (struct list_head *list, struct list_head *head)$/;"	f	signature:(struct list_head *list, struct list_head *head)
-load_bind_file	bindconf.c	/^int load_bind_file(const char* file_name)$/;"	f	signature:(const char* file_name)
-load_bind_file	bindconf.h	/^int load_bind_file(const char* file_name);$/;"	p	signature:(const char* file_name)
+load_bind_file	bindconf.c	/^int load_bind_file(uint32_t id, uint16_t port)$/;"	f	signature:(uint32_t id, uint16_t port)
+load_bind_file	bindconf.h	/^int load_bind_file(uint32_t id, uint16_t port);$/;"	p	signature:(uint32_t id, uint16_t port)
 log_buf_sz	log.c	/^	log_buf_sz	= 8192$/;"	e	enum:__anon3	file:
 log_color	log.c	/^static const char* log_color[] = {$/;"	v	file:
 log_dest	log.h	/^typedef enum log_dest {$/;"	g
@@ -555,23 +531,7 @@ max_log_files	log.c	/^static int max_log_files;$/;"	v	file:
 max_timer_type	time/timer.c	/^	max_timer_type	= 10000$/;"	e	enum:__anon11	file:
 maxfd	net.h	/^	int			maxfd;$/;"	m	struct:epinfo	access:public
 mcast_addr	mcast.c	/^static struct sockaddr_in mcast_addr;$/;"	v	typeref:struct:sockaddr_in	file:
-mcast_block_source	inet/mcast.c	/^int mcast_block_source(int sockfd, const struct sockaddr* src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen)$/;"	f	signature:(int sockfd, const struct sockaddr* src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen)
-mcast_block_source	inet/mcast.h	/^int mcast_block_source(int sockfd, const struct sockaddr* src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen);$/;"	p	signature:(int sockfd, const struct sockaddr* src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen)
 mcast_fd	mcast.c	/^static int mcast_fd = -1;$/;"	v	file:
-mcast_get_if	inet/mcast.c	/^int mcast_get_if(int sockfd, int family)$/;"	f	signature:(int sockfd, int family)
-mcast_get_if	inet/mcast.h	/^int mcast_get_if(int sockfd, int family);$/;"	p	signature:(int sockfd, int family)
-mcast_get_loop	inet/mcast.c	/^int mcast_get_loop(int sockfd, int family)$/;"	f	signature:(int sockfd, int family)
-mcast_get_loop	inet/mcast.h	/^int mcast_get_loop(int sockfd, int family);$/;"	p	signature:(int sockfd, int family)
-mcast_get_ttl	inet/mcast.c	/^int mcast_get_ttl(int sockfd, int family)$/;"	f	signature:(int sockfd, int family)
-mcast_get_ttl	inet/mcast.h	/^int mcast_get_ttl(int sockfd, int family);$/;"	p	signature:(int sockfd, int family)
-mcast_join	inet/mcast.c	/^int mcast_join(int sockfd, const struct sockaddr* grp, socklen_t grplen, const char* ifname)$/;"	f	signature:(int sockfd, const struct sockaddr* grp, socklen_t grplen, const char* ifname)
-mcast_join	inet/mcast.h	/^int mcast_join(int sockfd, const struct sockaddr* grp, socklen_t grplen, const char* ifname);$/;"	p	signature:(int sockfd, const struct sockaddr* grp, socklen_t grplen, const char* ifname)
-mcast_join_source_group	inet/mcast.c	/^int mcast_join_source_group(int sockfd, const struct sockaddr* src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen, const char* ifname)$/;"	f	signature:(int sockfd, const struct sockaddr* src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen, const char* ifname)
-mcast_join_source_group	inet/mcast.h	/^int mcast_join_source_group(int sockfd, const struct sockaddr* src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen, const char* ifname);$/;"	p	signature:(int sockfd, const struct sockaddr* src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen, const char* ifname)
-mcast_leave	inet/mcast.c	/^int mcast_leave(int sockfd, const struct sockaddr* grp, socklen_t grplen, const char* ifname)$/;"	f	signature:(int sockfd, const struct sockaddr* grp, socklen_t grplen, const char* ifname)
-mcast_leave	inet/mcast.h	/^int mcast_leave(int sockfd, const struct sockaddr* grp, socklen_t grplen, const char* ifname);$/;"	p	signature:(int sockfd, const struct sockaddr* grp, socklen_t grplen, const char* ifname)
-mcast_leave_source_group	inet/mcast.c	/^int mcast_leave_source_group(int sockfd, const struct sockaddr *src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen)$/;"	f	signature:(int sockfd, const struct sockaddr *src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen)
-mcast_leave_source_group	inet/mcast.h	/^int mcast_leave_source_group(int sockfd, const struct sockaddr *src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen);$/;"	p	signature:(int sockfd, const struct sockaddr *src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen)
 mcast_notify_addr	mcast.h	/^	mcast_notify_addr   = 0,$/;"	e	enum:__anon6
 mcast_pkg_header	mcast.c	/^struct mcast_pkg_header {$/;"	s	file:
 mcast_pkg_header::body	mcast.c	/^	char		body[];$/;"	m	struct:mcast_pkg_header	file:	access:public
@@ -580,14 +540,6 @@ mcast_pkg_header::proto_type	mcast.c	/^	uint16_t	proto_type; \/\/ mcast_notify_a
 mcast_pkg_header_t	mcast.c	/^typedef struct mcast_pkg_header mcast_pkg_header_t;$/;"	t	typeref:struct:mcast_pkg_header	file:
 mcast_pkg_size	net.c	/^	mcast_pkg_size	= 8192,$/;"	e	enum:__anon12	file:
 mcast_reload_text	mcast.h	/^	mcast_reload_text	= 1$/;"	e	enum:__anon6
-mcast_set_if	inet/mcast.c	/^int mcast_set_if(int sockfd, int family, const char* ifname)$/;"	f	signature:(int sockfd, int family, const char* ifname)
-mcast_set_if	inet/mcast.h	/^int mcast_set_if(int sockfd, int family, const char* ifname);$/;"	p	signature:(int sockfd, int family, const char* ifname)
-mcast_set_loop	inet/mcast.c	/^int mcast_set_loop(int sockfd, int family, int onoff)$/;"	f	signature:(int sockfd, int family, int onoff)
-mcast_set_loop	inet/mcast.h	/^int mcast_set_loop(int sockfd, int family, int onoff);$/;"	p	signature:(int sockfd, int family, int onoff)
-mcast_set_ttl	inet/mcast.c	/^int mcast_set_ttl(int sockfd, int family, int ttl)$/;"	f	signature:(int sockfd, int family, int ttl)
-mcast_set_ttl	inet/mcast.h	/^int mcast_set_ttl(int sockfd, int family, int ttl);$/;"	p	signature:(int sockfd, int family, int ttl)
-mcast_unblock_source	inet/mcast.c	/^int mcast_unblock_source(int sockfd, const struct sockaddr* src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen)$/;"	f	signature:(int sockfd, const struct sockaddr* src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen)
-mcast_unblock_source	inet/mcast.h	/^int mcast_unblock_source(int sockfd, const struct sockaddr* src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen);$/;"	p	signature:(int sockfd, const struct sockaddr* src, socklen_t srclen, const struct sockaddr* grp, socklen_t grplen)
 micro_timer	time/timer.c	/^static struct list_head    micro_timer;$/;"	v	typeref:struct:list_head	file:
 micro_timer_struct	time/timer.h	/^typedef struct micro_timer_struct {$/;"	s
 micro_timer_struct::data	time/timer.h	/^	void*				data;$/;"	m	struct:micro_timer_struct	access:public
@@ -626,6 +578,7 @@ next_del_addrs_tm	mcast.c	/^time_t next_del_addrs_tm = 0x7FFFFFFF;$/;"	v
 next_syn_addr_tm	mcast.c	/^time_t next_syn_addr_tm  = 0x7FFFFFFF;$/;"	v
 now	time/timer.c	/^struct timeval  now;$/;"	v	typeref:struct:timeval
 on_client_conn_closed	dll.h	/^	void	(*on_client_conn_closed)(int fd);$/;"	m	struct:AsyncServInterface	access:public
+on_client_conn_opened	dll.h	/^	void 	(*on_client_conn_opened)(fdsession_t *);$/;"	m	struct:AsyncServInterface	access:public
 on_fd_closed	dll.h	/^	void	(*on_fd_closed)(int fd);$/;"	m	struct:AsyncServInterface	access:public
 online_id	bindconf.h	/^	uint32_t	online_id;$/;"	m	struct:bind_config_elem	access:public
 online_name	bindconf.h	/^	char		online_name[16];$/;"	m	struct:bind_config_elem	access:public
@@ -645,15 +598,16 @@ port	mcast.h	/^	unsigned short	port;$/;"	m	struct:addr_node	access:public
 port	net_if.h	/^	in_addr_t	port;$/;"	m	struct:ip_port	access:public
 prev	kernel_ds/list.h	/^  struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::	access:public
 proc_addr_mcast_pkg	mcast.c	/^void proc_addr_mcast_pkg(const mcast_pkg_header_t* hdr, int len)$/;"	f	signature:(const mcast_pkg_header_t* hdr, int len)
-proc_events	dll.h	/^	void	(*proc_events)();$/;"	m	struct:AsyncServInterface	access:public
+proc_events	dll.h	/^	void	(*proc_events)(uint32_t);$/;"	m	struct:AsyncServInterface	access:public
 proc_mcast_pkg	dll.h	/^	void	(*proc_mcast_pkg)(const void* data, int len);$/;"	m	struct:AsyncServInterface	access:public
-proc_pkg_from_client	dll.h	/^	int		(*proc_pkg_from_client)(void* pkg, int pkglen, fdsession_t* fdsess);$/;"	m	struct:AsyncServInterface	access:public
+proc_pkg_from_client	dll.h	/^	void	(*proc_pkg_from_client)(void* pkg, int pkglen, fdsession_t* fdsess);$/;"	m	struct:AsyncServInterface	access:public
 proc_pkg_from_serv	dll.h	/^	void	(*proc_pkg_from_serv)(int fd, void* pkg, int pkglen);$/;"	m	struct:AsyncServInterface	access:public
 proc_reload_plugin	mcast.c	/^void proc_reload_plugin(reload_text_pkg_t* pkg, int len)$/;"	f	signature:(reload_text_pkg_t* pkg, int len)
 proc_udp_pkg	dll.h	/^	int		(*proc_udp_pkg)(int fd, const void* avail_data, int avail_len );$/;"	m	struct:AsyncServInterface	access:public
 prog_name	main.c	/^char* prog_name;$/;"	v
 proto_type	mcast.c	/^	uint16_t	proto_type; \/\/ mcast_notify_addr, mcast_reload_text$/;"	m	struct:mcast_pkg_header	file:	access:public
 r5hash	kernel_ds/hash_algo.h	/^static inline uint32_t r5hash(const char* p)$/;"	f	signature:(const char* p)
+ranged_random	random/random.h	/^static inline int ranged_random(int min, int max)$/;"	f	signature:(int min, int max)
 rcvprotlen	net.h	/^	uint32_t	rcvprotlen;$/;"	m	struct:conn_buf	access:public
 recvlen	net.h	/^	uint32_t	recvlen;$/;"	m	struct:conn_buf	access:public
 recvptr	net.h	/^	uint8_t*	recvptr;$/;"	m	struct:conn_buf	access:public

@@ -4,8 +4,7 @@ in /usr/include/bit/signum.h
 信号是异步事件，只能告诉内核，在此信号出现是的动作，而不能简单的检测一个变量， 来判断是否出现一个信号。
 
 ##信号操作
-+   接受信号
-+   无视信号
++   接受信号 +   无视信号
 +   屏蔽信号
 
 ###信号处理的3种方式：
@@ -131,10 +130,11 @@ if (cnt == -1)
 
 #### structs
 +   sigaction `{
-	      1. void	(*sa_handler)(int); // signal handler SIG_DFL,SIG_IGN.
-	      2. void	(*sa_sigaction)(int, siginfo_t *, void *);
+	       void	(*sa_handler)(int); // signal handler SIG_DFL,SIG_IGN.
+	      void	(*sa_sigaction)(int, siginfo_t *, void *);
 	       sigset_t   sa_mask; //block mask
-           //标记 使用1作为信号handler还是2 SA_SIGINFO 使用2
+           //标记 默认使用sa_handler作为信号handler
+           // 设置为 SA_SIGINFO 使用 sa_sigaction 
 	       int	  sa_flags; 
 	       void	(*sa_restorer)(void); // 过时了的
         }
@@ -157,6 +157,7 @@ if (cnt == -1)
 正在被处理的signal默认在sa-mash 中.阻塞当前处理的signal。 
 不阻塞 设定为SA—NODEFER
 +   sa-flags 控制信号的处理行为
++   一个sigaction 可为多个signal 设置handler
 
 ### sa-flags
 SA-RESTART 如果一个syscall是因为signal中断则signal处理完后重启syscall
