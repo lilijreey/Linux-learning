@@ -38,10 +38,12 @@ int main()
     int ofd = open("./epoll.c", O_RDONLY);
     if (ofd == -1) err_exit("open error");
     // EE set epoll
-    // add new fd
-    struct epoll_event e = {EPOLLIN | EPOLLET, (epoll_data_t)ofd};
-
+    // add new fd EPOLLET 边沿触发
+    struct epoll_event e = {EPOLLIN | EPOLLERR, (epoll_data_t)ofd};
     E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_ADD, e.data.fd, &e));
+    //E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_DEL, e.data.fd, NULL/* ignore the arg */));
+    e.events |= EPOLLET;
+    E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_MOD, e.data.fd, &e));
 
     // EE get read fd
     struct epoll_event evlist[EPOLL_LIST_SIZE] ;

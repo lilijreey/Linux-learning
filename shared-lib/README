@@ -67,6 +67,7 @@ Other way: set new path you specifiy in /etc/ld.so.d/
            and rebuild /etc/ld.so.cache use *ldconfig* -X
 Compilting-with-search-path:
 	gcc -Wall -Wl,-rpath,/home/path main.c lib.so
+        gcc -Wl 选项直接把后面的参数传递给链接程序
        the RPATH section will in exec file
       use objdump -p a.out can see RPATH section
 
@@ -124,17 +125,47 @@ EE can't use*-fomit-frame-pointer* in debug mode
 ------------------------------------------------------------
   When an executable starts, the dynamic linker 
   loads all of the shared libraries. Sometimes, however,
-  it can be useful to load libraries at a later time. 
+  it can be useful to load libraries at call dlopen time 
   This provided by dl*  API
 
 *dlopen()*
   open a shared-lib in run-time, return the lib-handle
+  每次打开相同的lib都会增加一个引用数字， 使用dlclose
+  会减少引用（和打开文件一样) 
+  lib路径可以是absolute or relative
+  flags:
+   RTLD_LAZY, 在调用未定义的符合时在解决
+   dlopen可以理解返回，但是会有潜在的错误发现不了
+  
+   RTLD_NOW,在dlopen 时就解决所有的未定义符号
+   可以立即发现一些没有解决的符合定义和错误.但是dlopen比较慢
 
+   其他flags 
+   RTLD_GLOBAL 使得lib中解析的符号在其他的lib中可见
+   RTLD_LOCAL  使得lib中解析的符号在其他的lib中不可见
+   *LD_BIND_NOW* 环境变量可以覆盖 dlopen是的flags。
+   只要LD_BIND_NOW 是任意非空直在dlopen 时就会结局所有的未定义符号
+   使用elfread -r lib 察看重定位信息
+
+
+EE 符号查找
+目标文件有两个属性会影响到符号查找：
+1. 符号搜索作用域
+2. 符号自身的可见性
 *dlclose()*
   closes a library previously opened by dlopen()
+  只用引用为0时才回真正关闭 unload lib
 
 *dlsym()*
   searches a library for a symbol 
+*dlvsym()*
+  searches a library for a symbol provite version lib
+ 使用dlsym 后要检查是否有错误
+ .e.g.
+ h =dlsym(ins, "fun");
+ char *error = dlerror();
+ if (error != NULL) 
+  printf("error:%s", error");
 
 *dlerror()*
   return a error-string
@@ -153,8 +184,27 @@ EE can't use*-fomit-frame-pointer* in debug mode
   files that compose the shared library, 
   but prevents it from being visible outside the library.
 
-*Linker-Version-Script*
-  //TODO
+*Linker-Version-Scripts*
+  控制lib中符号的可见性,和符号版本
+  使用链接配置文件编译lib 
+      gcc -Wl,--version-script,file.map -o lib.so
+  控制符号可见性(导出符号)
+  假设lib中只有f1,f2是接口函数需要导出，其他的符合都是内部使用
+  不应导出。 对应的version-script 文件可以这样写e.g.
+  // 下面的global he local 设置对应readelf -s 后每个符号的Bind 熟悉
+  VER_1 { #版本号
+    global:
+     f1;
+     f2;
+    local:
+      *; ## 支持通配符
+   };
+   //使用versin-script 文件编译so后，global指定的符号的Bind熟悉为GLOBAL
+   //其他的为LOCAL
+   //static 对象的Bind属性总是LOCAL。 versin-script 也改变不了 
+   //C全局对象默认为global 属性
+
+
 
 
 Qus.
