@@ -1,0 +1,840 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+ADD_EVENT	src/time/timer.h	/^	ADD_EVENT = timer_add_new_timer,$/;"	e	enum:timer_add_mode
+ADD_EVENT_REPLACE_UNCONDITIONALLY	src/time/timer.h	/^	ADD_EVENT_REPLACE_UNCONDITIONALLY = timer_replace_timer$/;"	e	enum:timer_add_mode
+ADD_TIMER_EVENT	src/time/timer.h	179;"	d
+ADD_TIMER_EVENT_EX	src/time/timer.h	195;"	d
+ALERT_LOG	src/log.h	168;"	d
+ALERT_LOG	src/log.h	173;"	d
+AR	build/Makefile	/^  AR = ar$/;"	m
+AsyncServInterface	src/dll.h	/^typedef struct AsyncServInterface {$/;"	s
+AsyncServInterface::data_handle	src/dll.h	/^	void*   data_handle; \/\/ Hold the handle returned by dlopen$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::fini_service	src/dll.h	/^	int 	(*fini_service)(int isparent);$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::get_pkg_len	src/dll.h	/^	int		(*get_pkg_len)(int fd, const void* avail_data, int avail_len, int isparent);$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::handle	src/dll.h	/^	void*   handle; \/\/ Hold the handle returned by dlopen$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::init_service	src/dll.h	/^	int 	(*init_service)(int isparent);$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::on_client_conn_closed	src/dll.h	/^	void	(*on_client_conn_closed)(int fd);$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::on_client_conn_opened	src/dll.h	/^	void 	(*on_client_conn_opened)(fdsession_t *);$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::on_fd_closed	src/dll.h	/^	void	(*on_fd_closed)(int fd);$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::proc_events	src/dll.h	/^	void	(*proc_events)(uint32_t);$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::proc_mcast_pkg	src/dll.h	/^	void	(*proc_mcast_pkg)(const void* data, int len);$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::proc_pkg_from_client	src/dll.h	/^	void	(*proc_pkg_from_client)(void* pkg, int pkglen, fdsession_t* fdsess);$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::proc_pkg_from_serv	src/dll.h	/^	void	(*proc_pkg_from_serv)(int fd, void* pkg, int pkglen);$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::proc_udp_pkg	src/dll.h	/^	int		(*proc_udp_pkg)(int fd, const void* avail_data, int avail_len );$/;"	m	struct:AsyncServInterface	access:public
+AsyncServInterface::reload_global_data	src/dll.h	/^	int		(*reload_global_data)();$/;"	m	struct:AsyncServInterface	access:public
+BINDCONF_INC	src/bindconf.h	2;"	d
+BOOT_FAIL	src/log.c	290;"	d	file:
+BOOT_LOG	src/log.h	332;"	d
+BOOT_LOG2	src/log.h	343;"	d
+BOOT_OK	src/log.c	289;"	d	file:
+CC	build/Makefile	/^  CC = gcc$/;"	m
+CC	sample/Makefile	/^CC = gcc$/;"	m
+CFLAGS	sample/Makefile	/^CFLAGS  = -Wall -pipe -DDEBUG -g -D_GNU_SOURCE -shared -fPIC -D_REENTRANT$/;"	m
+CLOSE_BLOCK	src/shmq.h	/^	CLOSE_BLOCK	\/\/ parent informs child that a connection had been closed$/;"	e	enum:__anon9
+CN_NEED_CLOSE	src/net.h	20;"	d
+CN_NEED_POLLIN	src/net.h	21;"	d
+CN_NOTIFY_CLOSE	src/net.h	22;"	d
+CRIT_LOG	src/log.h	190;"	d
+CRIT_LOG	src/log.h	195;"	d
+CXX	build/Makefile	/^  CXX = g++$/;"	m
+DAEMON_INC	src/daemon.h	2;"	d
+DATA_BLOCK	src/shmq.h	/^	DATA_BLOCK = 0,$/;"	e	enum:__anon9
+DEBUG_LOG	src/log.h	296;"	d
+DEBUG_LOG	src/log.h	301;"	d
+DEBUG_RETURN	src/log.h	398;"	d
+DEBUG_RETURN_VOID	src/log.h	409;"	d
+DETAIL	src/log.h	121;"	d
+DETAIL	src/log.h	124;"	d
+DLFUNC	src/dll.c	16;"	d	file:
+DLFUNC_NO_ERROR	src/dll.c	10;"	d	file:
+EMERG_LOG	src/log.h	147;"	d
+EMERG_LOG	src/log.h	152;"	d
+ERROR_LOG	src/log.h	211;"	d
+ERROR_LOG	src/log.h	216;"	d
+ERROR_RETURN	src/log.h	354;"	d
+ERROR_RETURN_VOID	src/log.h	365;"	d
+FIN_BLOCK	src/shmq.h	/^	FIN_BLOCK,	\/\/ child informs parent to close a connection$/;"	e	enum:__anon9
+INCLUDE	sample/Makefile	/^INCLUDE =   -I\/usr\/include\/glib-2.0 -I\/usr\/lib\/glib-2.0\/include\/ $/;"	m
+INFO_LOG	src/log.h	275;"	d
+INFO_LOG	src/log.h	280;"	d
+INIKEY_HASHBITS	src/conf_parser/config.c	16;"	d	file:
+INIT_LIST_HEAD	src/kernel_ds/list.h	39;"	d
+IPADDR_CAT_H_	src/inet/ipaddr_cat.h	11;"	d
+KALERT_LOG	src/log.h	170;"	d
+KALERT_LOG	src/log.h	174;"	d
+KCRIT_LOG	src/log.h	192;"	d
+KCRIT_LOG	src/log.h	196;"	d
+KDEBUG_LOG	src/log.h	298;"	d
+KDEBUG_LOG	src/log.h	302;"	d
+KEMERG_LOG	src/log.h	149;"	d
+KEMERG_LOG	src/log.h	153;"	d
+KERROR_LOG	src/log.h	213;"	d
+KERROR_LOG	src/log.h	217;"	d
+KINFO_LOG	src/log.h	277;"	d
+KINFO_LOG	src/log.h	281;"	d
+KNOTI_LOG	src/log.h	256;"	d
+KNOTI_LOG	src/log.h	260;"	d
+KTRACE_LOG	src/log.h	320;"	d
+KTRACE_LOG	src/log.h	324;"	d
+KWARN_LOG	src/log.h	235;"	d
+KWARN_LOG	src/log.h	239;"	d
+LIB	sample/Makefile	/^LIB 	= -ldl -lrt $/;"	m
+LIBant_ARCH_I386_ATOMIC_	src/kernel_ds/atomic.h	13;"	d
+LIBant_CONFIG_H_	src/conf_parser/config.h	18;"	d
+LIBant_RANDOM_HPP_	src/random/random.h	13;"	d
+LIBant_TIME_H_	src/time/time.h	13;"	d
+LINKCMD	build/Makefile	/^  LINKCMD    = $(CC) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)$/;"	m
+LIST_HEAD	src/kernel_ds/list.h	32;"	d
+LIST_HEAD_INIT	src/kernel_ds/list.h	30;"	d
+LOCK	src/kernel_ds/atomic.h	15;"	d
+LOCKED_MASK	src/shmq.h	13;"	d
+LOG_H_	src/log.h	12;"	d
+MAX_LOG_CNT	src/log.c	29;"	d	file:
+NOTI_LOG	src/log.h	254;"	d
+NOTI_LOG	src/log.h	259;"	d
+OBJDIR	build/Makefile	/^  OBJDIR     = obj\/Debug$/;"	m
+OBJDIR	build/Makefile	/^  OBJDIR     = obj\/Release$/;"	m
+OBJECTS	build/Makefile	/^OBJECTS := \\$/;"	m
+OO	sample/Makefile	/^OO	= test.o$/;"	m
+OPEN_BLOCK	src/shmq.h	/^	OPEN_BLOCK,$/;"	e	enum:__anon9
+PAD_BLOCK	src/shmq.h	/^	PAD_BLOCK,$/;"	e	enum:__anon9
+POSTBUILDCMDS	build/Makefile	/^  define POSTBUILDCMDS$/;"	m
+PREBUILDCMDS	build/Makefile	/^  define PREBUILDCMDS$/;"	m
+PRELINKCMDS	build/Makefile	/^  define PRELINKCMDS$/;"	m
+PROJECTS	Makefile	/^PROJECTS := SkynetPro$/;"	m
+REMOVE_MICRO_TIMER	src/time/timer.h	296;"	d
+REMOVE_TIMER	src/time/timer.h	244;"	d
+REMOVE_TIMERS	src/time/timer.h	305;"	d
+RESOURCES	build/Makefile	/^RESOURCES := \\$/;"	m
+SCREEN_COLS	src/log.c	288;"	d	file:
+SHELLTYPE	build/Makefile	/^  SHELLTYPE := posix$/;"	m
+SHELLTYPE	build/Makefile	/^SHELLTYPE := msdos$/;"	m
+SHIFT_FD_LOCK	src/log.c	66;"	d	file:
+SHIFT_FD_UNLOCK	src/log.c	70;"	d	file:
+SHM_BLOCK_LEN_MAX	src/shmq.h	15;"	d
+SILENT	build/Makefile	/^  SILENT = @$/;"	m
+SIMPLY	src/log.h	129;"	d
+SIMPLY	src/log.h	132;"	d
+SKYNET_SERVER_DLL_H_	src/dll.h	12;"	d
+SKYNET_SERVER_MCAST_H_	src/mcast.h	13;"	d
+SKYNET_SERVER_NET_H_	src/net.h	2;"	d
+SKYNET_SERVER_NET_INTERFACE_H_	src/net_if.h	12;"	d
+SKYNET_SERVER_SERVICE_H_	src/service.h	2;"	d
+SKYNET_SERVER_UTIL_H_	src/util.h	2;"	d
+SKYNET_SERVER__SHMQ_H_	src/shmq.h	2;"	d
+SLEEP_MASK	src/shmq.h	14;"	d
+TARGET	build/Makefile	/^  TARGET     = $(TARGETDIR)\/SkynetPro$/;"	m
+TARGETDIR	build/Makefile	/^  TARGETDIR  = ..\/bin\/debug$/;"	m
+TARGETDIR	build/Makefile	/^  TARGETDIR  = ..\/bin\/release$/;"	m
+TARGETS	sample/Makefile	/^TARGETS = test.so$/;"	m
+TCP_H_	src/inet/tcp.h	12;"	d
+TIMER_VEC_SIZE	src/time/timer.c	5;"	d	file:
+TRACE_LOG	src/log.h	318;"	d
+TRACE_LOG	src/log.h	323;"	d
+TmrTest	sample/test.c	/^typedef struct TmrTest {$/;"	s	file:
+TmrTest::timer_list	sample/test.c	/^	list_head_t timer_list;$/;"	m	struct:TmrTest	file:	access:public
+WARN_LOG	src/log.h	233;"	d
+WARN_LOG	src/log.h	238;"	d
+WARN_RETURN	src/log.h	376;"	d
+WARN_RETURN_VOID	src/log.h	387;"	d
+_SERVICE_H_	sample/test.h	2;"	d
+__anon10::counter	src/kernel_ds/atomic.h	/^  volatile int counter;$/;"	m	struct:__anon10	access:public
+__anon8::bc_elem	src/service.h	/^	bind_config_elem_t*	bc_elem;$/;"	m	struct:__anon8	access:public
+__anon8::idle_timeout	src/service.h	/^	int					idle_timeout;$/;"	m	struct:__anon8	access:public
+__builtin_prefetch	src/kernel_ds/list.h	16;"	d
+__list_add	src/kernel_ds/list.h	/^__list_add (struct list_head *new_entry,$/;"	f	signature:(struct list_head *new_entry, struct list_head *prev, struct list_head *next)
+__list_del	src/kernel_ds/list.h	/^__list_del (struct list_head *prev, struct list_head *next)$/;"	f	signature:(struct list_head *prev, struct list_head *next)
+__list_for_each	src/kernel_ds/list.h	224;"	d
+__list_for_each_prev	src/kernel_ds/list.h	236;"	d
+__list_splice	src/kernel_ds/list.h	/^__list_splice (struct list_head *list, struct list_head *head)$/;"	f	signature:(struct list_head *list, struct list_head *head)
+add_event	src/time/timer.c	/^add_event(list_head_t* head, timer_cb_func_t function, void* owner, void* data, time_t expire, timer_add_mode_t flag)$/;"	f	signature:(list_head_t* head, timer_cb_func_t function, void* owner, void* data, time_t expire, timer_add_mode_t flag)
+add_event	src/time/timer.h	/^add_event(list_head_t* head, timer_cb_func_t func, void* owner, void* data, time_t expire, timer_add_mode_t flag);$/;"	p	signature:(list_head_t* head, timer_cb_func_t func, void* owner, void* data, time_t expire, timer_add_mode_t flag)
+add_event_ex	src/time/timer.c	/^add_event_ex(list_head_t* head, int fidx, void* owner, void* data, time_t expire, timer_add_mode_t flag)$/;"	f	signature:(list_head_t* head, int fidx, void* owner, void* data, time_t expire, timer_add_mode_t flag)
+add_event_ex	src/time/timer.h	/^add_event_ex(list_head_t* head, int fidx, void* owner, void* data, time_t expire, timer_add_mode_t flag);$/;"	p	signature:(list_head_t* head, int fidx, void* owner, void* data, time_t expire, timer_add_mode_t flag)
+add_events	src/net.c	/^static inline int add_events (int epfd, int fd, uint32_t flag)$/;"	f	file:	signature:(int epfd, int fd, uint32_t flag)
+add_fdsess	src/service.c	/^add_fdsess(fdsession_t* fdsess)$/;"	f	file:	signature:(fdsession_t* fdsess)
+add_micro_event	src/time/timer.c	/^add_micro_event(timer_cb_func_t func, const struct timeval* tv, void* owner, void* data)$/;"	f	signature:(timer_cb_func_t func, const struct timeval* tv, void* owner, void* data)
+add_micro_event	src/time/timer.h	/^add_micro_event(timer_cb_func_t func, const struct timeval* tv, void* owner, void* data);$/;"	p	signature:(timer_cb_func_t func, const struct timeval* tv, void* owner, void* data)
+add_micro_event_ex	src/time/timer.c	/^add_micro_event_ex(int fidx, const struct timeval* tv, void* owner, void* data)$/;"	f	signature:(int fidx, const struct timeval* tv, void* owner, void* data)
+add_micro_event_ex	src/time/timer.h	/^add_micro_event_ex(int fidx, const struct timeval* tv, void* owner, void* data);$/;"	p	signature:(int fidx, const struct timeval* tv, void* owner, void* data)
+add_timer	src/time/timer.c	/^add_timer(timer_struct_t *t)$/;"	f	file:	signature:(timer_struct_t *t)
+add_timer	src/time/timer.c	/^static inline void add_timer(timer_struct_t* t);$/;"	p	file:	signature:(timer_struct_t* t)
+add_to_close_queue	src/net.c	/^inline void add_to_close_queue(int fd)$/;"	f	signature:(int fd)
+add_to_etin_queue	src/net.c	/^inline void add_to_etin_queue (int fd)$/;"	f	signature:(int fd)
+addr	src/shmq.h	/^	shm_head_t* addr;$/;"	m	struct:shm_queue	access:public
+addr_buf	src/mcast.c	/^static char addr_buf[sizeof(mcast_pkg_header_t) + sizeof(addr_mcast_pkg_t)];$/;"	v	file:
+addr_cache	src/mcast.c	/^struct addr_cache {$/;"	s	file:
+addr_cache::addr_tbl	src/mcast.c	/^	GHashTable*	addr_tbl;$/;"	m	struct:addr_cache	file:	access:public
+addr_cache::svr_name	src/mcast.c	/^	char		svr_name[16];$/;"	m	struct:addr_cache	file:	access:public
+addr_cache_t	src/mcast.c	/^typedef struct addr_cache addr_cache_t;$/;"	t	typeref:struct:addr_cache	file:
+addr_mcast_1st_pkg	src/mcast.h	/^	addr_mcast_1st_pkg	= 1,$/;"	e	enum:__anon7
+addr_mcast_addr	src/mcast.c	/^static struct sockaddr_in addr_mcast_addr;$/;"	v	typeref:struct:sockaddr_in	file:
+addr_mcast_fd	src/mcast.c	/^static int addr_mcast_fd = -1;$/;"	v	file:
+addr_mcast_pkg	src/mcast.c	/^struct addr_mcast_pkg {$/;"	s	file:
+addr_mcast_pkg::ip	src/mcast.c	/^	char		ip[16];$/;"	m	struct:addr_mcast_pkg	file:	access:public
+addr_mcast_pkg::name	src/mcast.c	/^	char		name[16];$/;"	m	struct:addr_mcast_pkg	file:	access:public
+addr_mcast_pkg::port	src/mcast.c	/^	uint16_t	port;$/;"	m	struct:addr_mcast_pkg	file:	access:public
+addr_mcast_pkg::svr_id	src/mcast.c	/^	uint32_t	svr_id;$/;"	m	struct:addr_mcast_pkg	file:	access:public
+addr_mcast_pkg_t	src/mcast.c	/^typedef struct addr_mcast_pkg addr_mcast_pkg_t;$/;"	t	typeref:struct:addr_mcast_pkg	file:
+addr_mcast_syn_pkg	src/mcast.h	/^	addr_mcast_syn_pkg	= 2$/;"	e	enum:__anon7
+addr_node	src/mcast.h	/^struct addr_node {$/;"	s
+addr_node::ip	src/mcast.h	/^	char			ip[16];$/;"	m	struct:addr_node	access:public
+addr_node::last_syn_tm	src/mcast.h	/^	time_t			last_syn_tm;$/;"	m	struct:addr_node	access:public
+addr_node::port	src/mcast.h	/^	unsigned short	port;$/;"	m	struct:addr_node	access:public
+addr_node::svr_id	src/mcast.h	/^	uint32_t		svr_id;$/;"	m	struct:addr_node	access:public
+addr_node_t	src/mcast.h	/^typedef struct addr_node addr_node_t;$/;"	t	typeref:struct:addr_node
+addr_pred	src/mcast.c	/^static gboolean addr_pred(gpointer key, gpointer value, gpointer user_data)$/;"	f	file:	signature:(gpointer key, gpointer value, gpointer user_data)
+addr_tbl	src/mcast.c	/^	GHashTable*	addr_tbl;$/;"	m	struct:addr_cache	file:	access:public
+align_queue_head	src/shmq.c	/^align_queue_head (struct shm_queue *q, const struct shm_block *mb)$/;"	f	file:	signature:(struct shm_queue *q, const struct shm_block *mb)
+align_queue_tail	src/shmq.c	/^align_queue_tail (struct shm_queue *q)$/;"	f	file:	signature:(struct shm_queue *q)
+ant_H_LIST_H_	src/kernel_ds/list.h	14;"	d
+ant_TIMER_H_	src/time/timer.h	13;"	d
+ant_list_add	src/kernel_ds/list.h	/^ant_list_add (struct list_head *new_entry, struct list_head *head)$/;"	f	signature:(struct list_head *new_entry, struct list_head *head)
+arg_end	src/daemon.c	/^static char*	arg_end;$/;"	v	file:
+arg_start	src/daemon.c	/^static char*	arg_start;$/;"	v	file:
+async_serv_if_t	src/dll.h	/^} async_serv_if_t;$/;"	t	typeref:struct:AsyncServInterface
+asyncserv_proc_mcast_pkg	src/mcast.c	/^void asyncserv_proc_mcast_pkg(void* data, int len)$/;"	f	signature:(void* data, int len)
+asyncserv_proc_mcast_pkg	src/mcast.h	/^void asyncserv_proc_mcast_pkg(void* data, int len);$/;"	p	signature:(void* data, int len)
+atomic_add	src/kernel_ds/atomic.h	/^atomic_add (int i, atomic_t * v)$/;"	f	signature:(int i, atomic_t * v)
+atomic_add_negative	src/kernel_ds/atomic.h	/^atomic_add_negative (int i, atomic_t * v)$/;"	f	signature:(int i, atomic_t * v)
+atomic_add_return	src/kernel_ds/atomic.h	/^atomic_add_return (int i, atomic_t * v)$/;"	f	signature:(int i, atomic_t * v)
+atomic_clear_mask	src/kernel_ds/atomic.h	206;"	d
+atomic_dec	src/kernel_ds/atomic.h	/^atomic_dec (atomic_t * v)$/;"	f	signature:(atomic_t * v)
+atomic_dec_and_test	src/kernel_ds/atomic.h	/^atomic_dec_and_test (atomic_t * v)$/;"	f	signature:(atomic_t * v)
+atomic_dec_return	src/kernel_ds/atomic.h	203;"	d
+atomic_inc	src/kernel_ds/atomic.h	/^atomic_inc (atomic_t * v)$/;"	f	signature:(atomic_t * v)
+atomic_inc_and_test	src/kernel_ds/atomic.h	/^atomic_inc_and_test (atomic_t * v)$/;"	f	signature:(atomic_t * v)
+atomic_inc_return	src/kernel_ds/atomic.h	198;"	d
+atomic_read	src/kernel_ds/atomic.h	31;"	d
+atomic_set	src/kernel_ds/atomic.h	38;"	d
+atomic_set_mask	src/kernel_ds/atomic.h	210;"	d
+atomic_sub	src/kernel_ds/atomic.h	/^atomic_sub (int i, atomic_t * v)$/;"	f	signature:(int i, atomic_t * v)
+atomic_sub_and_test	src/kernel_ds/atomic.h	/^atomic_sub_and_test (int i, atomic_t * v)$/;"	f	signature:(int i, atomic_t * v)
+atomic_sub_return	src/kernel_ds/atomic.h	/^atomic_sub_return (int i, atomic_t * v)$/;"	f	signature:(int i, atomic_t * v)
+atomic_t	src/kernel_ds/atomic.h	/^} atomic_t;$/;"	t	typeref:struct:__anon10
+backgd_mode	src/daemon.c	/^static int		backgd_mode = 0;$/;"	v	file:
+base_filename	src/log.c	/^	char	base_filename[64];$/;"	m	struct:fds_t	file:	access:public
+base_filename_len	src/log.c	/^	int		base_filename_len;$/;"	m	struct:fds_t	file:	access:public
+bc_elem	src/net.h	/^	struct bind_config_elem*	bc_elem;$/;"	m	struct:fdinfo	typeref:struct:fdinfo::bind_config_elem	access:public
+bc_elem	src/service.h	/^	bind_config_elem_t*	bc_elem;$/;"	m	struct:__anon8	access:public
+bind_conf_max_field_num	src/bindconf.c	/^	bind_conf_max_field_num	= 4$/;"	e	enum:__anon4	file:
+bind_config	src/bindconf.h	/^typedef struct bind_config {$/;"	s
+bind_config::bind_num	src/bindconf.h	/^	int					bind_num;$/;"	m	struct:bind_config	access:public
+bind_config::configs	src/bindconf.h	/^	bind_config_elem_t	configs[max_listen_fds];$/;"	m	struct:bind_config	access:public
+bind_config_elem	src/bindconf.h	/^typedef struct bind_config_elem {$/;"	s
+bind_config_elem::bind_ip	src/bindconf.h	/^	char		bind_ip[16];$/;"	m	struct:bind_config_elem	access:public
+bind_config_elem::bind_port	src/bindconf.h	/^	in_port_t	bind_port;$/;"	m	struct:bind_config_elem	access:public
+bind_config_elem::online_id	src/bindconf.h	/^	uint32_t	online_id;$/;"	m	struct:bind_config_elem	access:public
+bind_config_elem::online_name	src/bindconf.h	/^	char		online_name[16];$/;"	m	struct:bind_config_elem	access:public
+bind_config_elem::recvq	src/bindconf.h	/^	shm_queue_t	recvq;$/;"	m	struct:bind_config_elem	access:public
+bind_config_elem::restart_cnt	src/bindconf.h	/^	uint8_t		restart_cnt;$/;"	m	struct:bind_config_elem	access:public
+bind_config_elem::sendq	src/bindconf.h	/^	shm_queue_t	sendq;$/;"	m	struct:bind_config_elem	access:public
+bind_config_elem_t	src/bindconf.h	/^} bind_config_elem_t;$/;"	t	typeref:struct:bind_config_elem
+bind_config_t	src/bindconf.h	/^} bind_config_t;$/;"	t	typeref:struct:bind_config
+bind_ip	src/bindconf.h	/^	char		bind_ip[16];$/;"	m	struct:bind_config_elem	access:public
+bind_num	src/bindconf.h	/^	int					bind_num;$/;"	m	struct:bind_config	access:public
+bind_port	src/bindconf.h	/^	in_port_t	bind_port;$/;"	m	struct:bind_config_elem	access:public
+bind_udp_socket	src/net.c	/^int bind_udp_socket( const char* ipaddr, in_port_t port )$/;"	f	signature:( const char* ipaddr, in_port_t port )
+bind_udp_socket	src/net.h	/^int bind_udp_socket( const char* ipaddr, in_port_t port );$/;"	p	signature:( const char* ipaddr, in_port_t port )
+bindconf	src/bindconf.c	/^bind_config_t bindconf;$/;"	v
+blk_cnt	src/shmq.h	/^	atomic_t blk_cnt;$/;"	m	struct:shm_head	access:public
+body	src/mcast.c	/^	char		body[];$/;"	m	struct:mcast_pkg_header	file:	access:public
+boot_log	src/log.c	/^void boot_log(int ok, int dummy, const char *fmt, ...)$/;"	f	signature:(int ok, int dummy, const char *fmt, ...)
+boot_log	src/log.h	/^void boot_log(int ok, int dummy, const char* fmt, ...);$/;"	p	signature:(int ok, int dummy, const char* fmt, ...)
+cb	src/net.h	/^	conn_buf_t	cb;$/;"	m	struct:fdinfo	access:public
+close_client_conn	src/net_if.c	/^void close_client_conn(int fd)$/;"	f	signature:(int fd)
+close_client_conn	src/net_if.h	/^void close_client_conn(int fd);$/;"	p	signature:(int fd)
+close_head	src/net.h	/^	list_head_t	close_head;$/;"	m	struct:epinfo	access:public
+close_shmq_pipe	src/shmq.c	/^void close_shmq_pipe(bind_config_t* bc, int idx, int is_child)$/;"	f	signature:(bind_config_t* bc, int idx, int is_child)
+close_shmq_pipe	src/shmq.h	/^extern void close_shmq_pipe(struct bind_config* bc, int idx, int is_child);$/;"	p	signature:(struct bind_config* bc, int idx, int is_child)
+cn	src/service.h	/^	GHashTable*	cn;$/;"	m	struct:fd_array_session	access:public
+color_end	src/log.c	/^static const char* color_end = "\\e[m";$/;"	v	file:
+config	Makefile	/^  config=debug$/;"	m
+config	build/Makefile	/^  config=debug$/;"	m
+config_cache	src/service.c	/^config_cache_t		config_cache;$/;"	v
+config_cache_t	src/service.h	/^} config_cache_t;$/;"	t	typeref:struct:__anon8
+config_exit	src/conf_parser/config.c	/^void config_exit()$/;"	f
+config_exit	src/conf_parser/config.h	/^void  config_exit();$/;"	p	signature:()
+config_get_intval	src/conf_parser/config.c	/^int config_get_intval(const char* key, int def)$/;"	f	signature:(const char* key, int def)
+config_get_intval	src/conf_parser/config.h	/^int   config_get_intval(const char* key, int def);$/;"	p	signature:(const char* key, int def)
+config_get_strval	src/conf_parser/config.c	/^char* config_get_strval(const char* key)$/;"	f	signature:(const char* key)
+config_get_strval	src/conf_parser/config.h	/^char* config_get_strval(const char* key);$/;"	p	signature:(const char* key)
+config_init	src/conf_parser/config.c	/^int config_init(const char* file_name)$/;"	f	signature:(const char* file_name)
+config_init	src/conf_parser/config.h	/^int   config_init(const char* file_name);$/;"	p	signature:(const char* file_name)
+config_key_hash	src/conf_parser/config.c	/^config_key_hash(const char* key) $/;"	f	file:	signature:(const char* key)
+config_max_log_files	src/log.c	/^static int config_max_log_files;\/\/保存原有的max_log_files $/;"	v	file:
+config_pair	src/conf_parser/config.c	/^typedef struct config_pair {$/;"	s	file:
+config_pair::key	src/conf_parser/config.c	/^	char  key[];$/;"	m	struct:config_pair	file:	access:public
+config_pair::list	src/conf_parser/config.c	/^	struct list_head list;$/;"	m	struct:config_pair	typeref:struct:config_pair::list_head	file:	access:public
+config_pair::val	src/conf_parser/config.c	/^	char* val;$/;"	m	struct:config_pair	file:	access:public
+config_pair_t	src/conf_parser/config.c	/^} config_pair_t;$/;"	t	typeref:struct:config_pair	file:
+config_put_value	src/conf_parser/config.c	/^static int config_put_value(const char* key, const char* val) $/;"	f	file:	signature:(const char* key, const char* val)
+configs	src/bindconf.h	/^	bind_config_elem_t	configs[max_listen_fds];$/;"	m	struct:bind_config	access:public
+conn_buf	src/net.h	/^typedef struct conn_buf {$/;"	s
+conn_buf::rcvprotlen	src/net.h	/^	uint32_t	rcvprotlen;$/;"	m	struct:conn_buf	access:public
+conn_buf::recvlen	src/net.h	/^	uint32_t	recvlen;$/;"	m	struct:conn_buf	access:public
+conn_buf::recvptr	src/net.h	/^	uint8_t*	recvptr;$/;"	m	struct:conn_buf	access:public
+conn_buf::sendlen	src/net.h	/^	uint32_t	sendlen;$/;"	m	struct:conn_buf	access:public
+conn_buf::sendptr	src/net.h	/^	uint8_t*	sendptr;$/;"	m	struct:conn_buf	access:public
+conn_buf::sndbufsz	src/net.h	/^	uint32_t	sndbufsz;$/;"	m	struct:conn_buf	access:public
+conn_buf_t	src/net.h	/^} conn_buf_t;$/;"	t	typeref:struct:conn_buf
+connect_to_service	src/net_if.c	/^int connect_to_service(const char* service_name, uint32_t svr_id, int bufsz, int timeout)$/;"	f	signature:(const char* service_name, uint32_t svr_id, int bufsz, int timeout)
+connect_to_service	src/net_if.h	/^int connect_to_service(const char* service_name, uint32_t svr_id, int bufsz, int timeout);$/;"	p	signature:(const char* service_name, uint32_t svr_id, int bufsz, int timeout)
+connect_to_svr	sample/client.c	/^int connect_to_svr(const char* ipaddr, uint16_t port)$/;"	f	signature:(const char* ipaddr, uint16_t port)
+connect_to_svr	src/net_if.c	/^int connect_to_svr(const char* ipaddr, in_addr_t port, int bufsz, int timeout)$/;"	f	signature:(const char* ipaddr, in_addr_t port, int bufsz, int timeout)
+connect_to_svr	src/net_if.h	/^int connect_to_svr(const char* ipaddr, in_addr_t port, int bufsz, int timeout);$/;"	p	signature:(const char* ipaddr, in_addr_t port, int bufsz, int timeout)
+count	src/net.h	/^	int			count;$/;"	m	struct:epinfo	access:public
+count	src/service.h	/^	int			count;$/;"	m	struct:fd_array_session	access:public
+counter	src/kernel_ds/atomic.h	/^  volatile int counter;$/;"	m	struct:__anon10	access:public
+create_addr_mcast_socket	src/mcast.c	/^int create_addr_mcast_socket()$/;"	f
+create_addr_mcast_socket	src/mcast.h	/^int  create_addr_mcast_socket();$/;"	p	signature:()
+create_mcast_socket	src/mcast.c	/^int create_mcast_socket()$/;"	f
+create_mcast_socket	src/mcast.h	/^int create_mcast_socket();$/;"	p	signature:()
+create_udp_socket	src/net_if.c	/^int create_udp_socket(struct sockaddr_in* addr, const char* ip, in_port_t port)$/;"	f	signature:(struct sockaddr_in* addr, const char* ip, in_port_t port)
+create_udp_socket	src/net_if.h	/^int create_udp_socket(struct sockaddr_in* addr, const char* ip, in_port_t port);$/;"	p	signature:(struct sockaddr_in* addr, const char* ip, in_port_t port)
+cur_day_seq_count	src/log.c	/^	int  	cur_day_seq_count;\/\/当天轮转文件的个数$/;"	m	struct:fds_t	file:	access:public
+current_dir	src/main.c	/^char* current_dir;$/;"	v
+daemon_set_title	src/daemon.c	/^void daemon_set_title(const char* fmt, ...)$/;"	f	signature:(const char* fmt, ...)
+daemon_set_title	src/daemon.h	/^void daemon_set_title(const char* fmt, ...);$/;"	p	signature:(const char* fmt, ...)
+daemon_start	src/daemon.c	/^int daemon_start(int argc, char** argv)$/;"	f	signature:(int argc, char** argv)
+daemon_start	src/daemon.h	/^int  daemon_start(int argc, char** argv);$/;"	p	signature:(int argc, char** argv)
+daemon_stop	src/daemon.c	/^void daemon_stop(void) $/;"	f	signature:(void)
+daemon_stop	src/daemon.h	/^void daemon_stop(void);$/;"	p	signature:(void)
+data	src/shmq.h	/^	uint8_t		data[];$/;"	m	struct:shm_block	access:public
+data	src/time/timer.h	/^	void*				data;$/;"	m	struct:micro_timer_struct	access:public
+data	src/time/timer.h	/^	void*				data;$/;"	m	struct:timer_struct	access:public
+data_handle	src/dll.h	/^	void*   data_handle; \/\/ Hold the handle returned by dlopen$/;"	m	struct:AsyncServInterface	access:public
+day	src/log.c	/^	int		day;$/;"	m	struct:fds_t	file:	access:public
+def_page_size	src/net.h	/^	def_page_size = 8192$/;"	e	enum:__anon1
+del_an_expired_addr	src/mcast.c	/^static gboolean del_an_expired_addr(gpointer key, gpointer value, gpointer user_data)$/;"	f	file:	signature:(gpointer key, gpointer value, gpointer user_data)
+del_expired_addrs	src/mcast.c	/^void del_expired_addrs()$/;"	f
+del_expired_addrs	src/mcast.h	/^void del_expired_addrs();$/;"	p	signature:()
+del_from_close_queue	src/net.c	/^inline void del_from_close_queue (int fd)$/;"	f	signature:(int fd)
+del_from_etin_queue	src/net.c	/^inline void del_from_etin_queue (int fd)$/;"	f	signature:(int fd)
+destroy_timer	src/time/timer.c	/^void destroy_timer()$/;"	f
+destroy_timer	src/time/timer.h	/^void destroy_timer();$/;"	p	signature:()
+dll	src/dll.c	/^async_serv_if_t dll;$/;"	v
+do_add_conn	src/net.c	/^int do_add_conn(int fd, uint8_t type, struct sockaddr_in *peer, bind_config_elem_t* bc_elem)$/;"	f	signature:(int fd, uint8_t type, struct sockaddr_in *peer, bind_config_elem_t* bc_elem)
+do_add_conn	src/net.h	/^int  do_add_conn(int fd, uint8_t type, struct sockaddr_in *peer, struct bind_config_elem* bc_elem);$/;"	p	signature:(int fd, uint8_t type, struct sockaddr_in *peer, struct bind_config_elem* bc_elem)
+do_del_conn	src/net.c	/^void do_del_conn(int fd, int is_conn)$/;"	f	signature:(int fd, int is_conn)
+do_del_conn	src/net.h	/^void do_del_conn(int fd, int is_conn);$/;"	p	signature:(int fd, int is_conn)
+do_del_expired_addrs	src/mcast.c	/^static void do_del_expired_addrs(gpointer key, gpointer value, gpointer user_data)$/;"	f	file:	signature:(gpointer key, gpointer value, gpointer user_data)
+do_destroy_shmq	src/shmq.c	/^void do_destroy_shmq(bind_config_elem_t* bc_elem)$/;"	f	signature:(bind_config_elem_t* bc_elem)
+do_destroy_shmq	src/shmq.h	/^void  do_destroy_shmq(struct bind_config_elem* bc_elem);$/;"	p	signature:(struct bind_config_elem* bc_elem)
+do_open_conn	src/net.c	/^static int do_open_conn(int fd, int isconn)$/;"	f	file:	signature:(int fd, int isconn)
+do_open_conn	src/net.c	/^static int do_open_conn(int fd, int isconn);$/;"	p	file:	signature:(int fd, int isconn)
+do_read_conn	src/net.c	/^static int do_read_conn(int fd, int max)$/;"	f	file:	signature:(int fd, int max)
+do_remove_timer	src/time/timer.h	/^do_remove_timer(timer_struct_t* t, int freed)$/;"	f	signature:(timer_struct_t* t, int freed)
+do_shmq_create	src/shmq.c	/^do_shmq_create (struct shm_queue *q)$/;"	f	file:	signature:(struct shm_queue *q)
+do_write_conn	src/net.c	/^int do_write_conn(int fd)$/;"	f	signature:(int fd)
+do_write_conn	src/net.h	/^int  do_write_conn(int fd);$/;"	p	signature:(int fd)
+dup_argv	src/daemon.c	/^dup_argv(int argc, char** argv)$/;"	f	file:	signature:(int argc, char** argv)
+enable_multi_thread	src/log.c	/^void enable_multi_thread()$/;"	f
+enable_multi_thread	src/log.h	/^void enable_multi_thread();$/;"	p	signature:()
+entry	src/time/timer.h	/^	struct list_head	entry;$/;"	m	struct:micro_timer_struct	typeref:struct:micro_timer_struct::list_head	access:public
+entry	src/time/timer.h	/^	struct list_head	entry;$/;"	m	struct:timer_struct	typeref:struct:timer_struct::list_head	access:public
+env_start	src/daemon.c	/^static char*	env_start;$/;"	v	file:
+epfd	src/net.h	/^	int			epfd;$/;"	m	struct:epinfo	access:public
+epi	src/net.c	/^struct epinfo epi;$/;"	v	typeref:struct:epinfo
+epi2shm	src/shmq.h	/^epi2shm(int fd, struct shm_block *mb) $/;"	f	signature:(int fd, struct shm_block *mb)
+epinfo	src/net.h	/^struct epinfo {$/;"	s
+epinfo::close_head	src/net.h	/^	list_head_t	close_head;$/;"	m	struct:epinfo	access:public
+epinfo::count	src/net.h	/^	int			count;$/;"	m	struct:epinfo	access:public
+epinfo::epfd	src/net.h	/^	int			epfd;$/;"	m	struct:epinfo	access:public
+epinfo::etin_head	src/net.h	/^	list_head_t	etin_head;$/;"	m	struct:epinfo	access:public
+epinfo::evs	src/net.h	/^	struct epoll_event*	evs;$/;"	m	struct:epinfo	typeref:struct:epinfo::epoll_event	access:public
+epinfo::fds	src/net.h	/^	fdinfo_t*	fds;$/;"	m	struct:epinfo	access:public
+epinfo::fdsize	src/net.h	/^	int			fdsize;$/;"	m	struct:epinfo	access:public
+epinfo::maxfd	src/net.h	/^	int			maxfd;$/;"	m	struct:epinfo	access:public
+etin_head	src/net.h	/^	list_head_t	etin_head;$/;"	m	struct:epinfo	access:public
+evs	src/net.h	/^	struct epoll_event*	evs;$/;"	m	struct:epinfo	typeref:struct:epinfo::epoll_event	access:public
+expire	src/time/timer.c	/^	int     expire;$/;"	m	struct:tvec_root_s	file:	access:public
+expire	src/time/timer.h	/^	time_t				expire;$/;"	m	struct:timer_struct	access:public
+fd	src/service.h	/^	int			fd;$/;"	m	struct:fdsession	access:public
+fd	src/shmq.h	/^	uint32_t	fd;$/;"	m	struct:shm_block	access:public
+fd_array_session	src/service.h	/^typedef struct fd_array_session {$/;"	s
+fd_array_session::cn	src/service.h	/^	GHashTable*	cn;$/;"	m	struct:fd_array_session	access:public
+fd_array_session::count	src/service.h	/^	int			count;$/;"	m	struct:fd_array_session	access:public
+fd_array_session_t	src/service.h	/^} fd_array_session_t;$/;"	t	typeref:struct:fd_array_session
+fd_type_addr_mcast	src/net.h	/^	fd_type_addr_mcast,$/;"	e	enum:__anon2
+fd_type_listen	src/net.h	/^	fd_type_listen,$/;"	e	enum:__anon2
+fd_type_mcast	src/net.h	/^	fd_type_mcast,$/;"	e	enum:__anon2
+fd_type_pipe	src/net.h	/^	fd_type_pipe,$/;"	e	enum:__anon2
+fd_type_remote	src/net.h	/^	fd_type_remote,$/;"	e	enum:__anon2
+fd_type_udp	src/net.h	/^	fd_type_udp$/;"	e	enum:__anon2
+fd_type_unused	src/net.h	/^	fd_type_unused = 0,$/;"	e	enum:__anon2
+fdinfo	src/net.h	/^typedef struct fdinfo {$/;"	s
+fdinfo::bc_elem	src/net.h	/^	struct bind_config_elem*	bc_elem;$/;"	m	struct:fdinfo	typeref:struct:fdinfo::bind_config_elem	access:public
+fdinfo::cb	src/net.h	/^	conn_buf_t	cb;$/;"	m	struct:fdinfo	access:public
+fdinfo::flag	src/net.h	/^	uint8_t		flag;$/;"	m	struct:fdinfo	access:public
+fdinfo::id	src/net.h	/^	uint32_t	id;$/;"	m	struct:fdinfo	access:public
+fdinfo::list	src/net.h	/^	list_head_t	list;$/;"	m	struct:fdinfo	access:public
+fdinfo::sk	src/net.h	/^	skinfo_t	sk;$/;"	m	struct:fdinfo	access:public
+fdinfo::sockfd	src/net.h	/^	int			sockfd;$/;"	m	struct:fdinfo	access:public
+fdinfo::type	src/net.h	/^	uint8_t		type;$/;"	m	struct:fdinfo	access:public
+fdinfo_t	src/net.h	/^} fdinfo_t;$/;"	t	typeref:struct:fdinfo
+fds	src/net.h	/^	fdinfo_t*	fds;$/;"	m	struct:epinfo	access:public
+fds	src/service.c	/^fd_array_session_t	fds;$/;"	v
+fds_info	src/log.c	/^} fds_info[log_lvl_max];$/;"	v	typeref:struct:fds_t	file:
+fds_t	src/log.c	/^static struct fds_t {$/;"	s	file:
+fds_t::base_filename	src/log.c	/^	char	base_filename[64];$/;"	m	struct:fds_t	file:	access:public
+fds_t::base_filename_len	src/log.c	/^	int		base_filename_len;$/;"	m	struct:fds_t	file:	access:public
+fds_t::cur_day_seq_count	src/log.c	/^	int  	cur_day_seq_count;\/\/当天轮转文件的个数$/;"	m	struct:fds_t	file:	access:public
+fds_t::day	src/log.c	/^	int		day;$/;"	m	struct:fds_t	file:	access:public
+fds_t::opfd	src/log.c	/^	int		opfd;$/;"	m	struct:fds_t	file:	access:public
+fds_t::seq	src/log.c	/^	int		seq;$/;"	m	struct:fds_t	file:	access:public
+fdsession	src/service.h	/^typedef struct fdsession {$/;"	s
+fdsession::fd	src/service.h	/^	int			fd;$/;"	m	struct:fdsession	access:public
+fdsession::id	src/service.h	/^	uint32_t	id;$/;"	m	struct:fdsession	access:public
+fdsession::remote_ip	src/service.h	/^	uint32_t	remote_ip;$/;"	m	struct:fdsession	access:public
+fdsession::remote_port	src/service.h	/^	uint16_t	remote_port;$/;"	m	struct:fdsession	access:public
+fdsession_t	src/service.h	/^} fdsession_t;$/;"	t	typeref:struct:fdsession
+fdsize	src/net.h	/^	int			fdsize;$/;"	m	struct:epinfo	access:public
+find_event	src/time/timer.c	/^find_event(list_head_t* head, timer_cb_func_t func);$/;"	p	file:	signature:(list_head_t* head, timer_cb_func_t func)
+find_event	src/time/timer.c	/^find_event(list_head_t* head, timer_cb_func_t function)$/;"	f	file:	signature:(list_head_t* head, timer_cb_func_t function)
+find_event_with_expire	src/time/timer.c	/^find_event_with_expire(list_head_t* head, timer_cb_func_t function, time_t expire)$/;"	f	file:	signature:(list_head_t* head, timer_cb_func_t function, time_t expire)
+find_event_with_expire	src/time/timer.c	/^find_event_with_expire(list_head_t* head, timer_cb_func_t function, time_t expire);$/;"	p	file:	signature:(list_head_t* head, timer_cb_func_t function, time_t expire)
+find_min_idx	src/time/timer.c	/^find_min_idx(time_t diff, int max_idx)$/;"	f	file:	signature:(time_t diff, int max_idx)
+find_min_idx	src/time/timer.c	/^static inline int  find_min_idx(time_t diff, int max_idx);$/;"	p	file:	signature:(time_t diff, int max_idx)
+fini_service	sample/test.c	/^int fini_service(int isparent)$/;"	f	signature:(int isparent)
+fini_service	sample/test.h	/^int  fini_service();$/;"	p	signature:()
+fini_service	src/dll.h	/^	int 	(*fini_service)(int isparent);$/;"	m	struct:AsyncServInterface	access:public
+flag	src/net.h	/^	uint8_t		flag;$/;"	m	struct:fdinfo	access:public
+free_addr_cache	src/mcast.c	/^static void free_addr_cache(void* addr_cache)$/;"	f	file:	signature:(void* addr_cache)
+free_addr_node	src/mcast.c	/^static void free_addr_node(void* addr_node)$/;"	f	file:	signature:(void* addr_node)
+free_argv	src/daemon.h	/^free_argv(void)$/;"	f	signature:(void)
+free_cb	src/net.c	/^inline void free_cb(struct conn_buf *p)$/;"	f	signature:(struct conn_buf *p)
+free_fdsess	src/service.c	/^free_fdsess(void* fdsess)$/;"	f	file:	signature:(void* fdsess)
+func_indx	src/time/timer.h	/^	int					func_indx;$/;"	m	struct:micro_timer_struct	access:public
+func_indx	src/time/timer.h	/^	int					func_indx;$/;"	m	struct:timer_struct	access:public
+function	src/time/timer.h	/^	timer_cb_func_t		function;$/;"	m	struct:micro_timer_struct	access:public
+function	src/time/timer.h	/^	timer_cb_func_t		function;$/;"	m	struct:timer_struct	access:public
+g_ip_port	src/net_if.c	/^static ip_port_t g_ip_port;$/;"	v	file:
+g_ip_resolved	src/net_if.c	/^static int g_ip_resolved;$/;"	v	file:
+g_listen_port	src/net.c	/^int g_listen_port;$/;"	v
+g_log_dest	src/log.c	/^static log_dest_t g_log_dest = log_dest_terminal; \/\/ write log to terminal by default$/;"	v	file:
+g_logtime_interval	src/log.c	/^static int  g_logtime_interval; \/\/ 每个日志文件记录日志的总时间（秒）$/;"	v	file:
+g_multi_thread	src/log.c	/^static int g_multi_thread;$/;"	v	file:
+g_shift_fd_mutex	src/log.c	/^static pthread_mutex_t g_shift_fd_mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v	file:
+get_bind_conf	src/bindconf.h	/^get_bind_conf()$/;"	f	signature:()
+get_bind_conf_idx	src/bindconf.h	/^get_bind_conf_idx(const bind_config_elem_t* bc_elem)$/;"	f	signature:(const bind_config_elem_t* bc_elem)
+get_cli_ip	src/dll.h	/^get_cli_ip(const fdsession_t* fdsess)$/;"	f	signature:(const fdsession_t* fdsess)
+get_cli_ip2	src/dll.h	/^get_cli_ip2(int fd)$/;"	f	signature:(int fd)
+get_cli_port	src/dll.h	/^get_cli_port(const fdsession_t* fdsess)$/;"	f	signature:(const fdsession_t* fdsess)
+get_fdsess	src/service.h	/^get_fdsess(int fd)$/;"	f	signature:(int fd)
+get_last_connecting_service	src/net_if.c	/^const ip_port_t* get_last_connecting_service()$/;"	f
+get_last_connecting_service	src/net_if.h	/^const ip_port_t* get_last_connecting_service();$/;"	p	signature:()
+get_log_seq_nonrecycle	src/log.c	/^get_log_seq_nonrecycle(int lvl)$/;"	f	file:	signature:(int lvl)
+get_log_seq_recycle	src/log.c	/^get_log_seq_recycle(int lvl)$/;"	f	file:	signature:(int lvl)
+get_log_time	src/log.c	/^inline int get_log_time()$/;"	f
+get_logfile_seqno	src/log.c	/^get_logfile_seqno(const char* filename, int loglvl)$/;"	f	file:	signature:(const char* filename, int loglvl)
+get_now_tm	src/time/timer.h	/^get_now_tm()$/;"	f	signature:()
+get_now_tv	src/time/timer.h	/^get_now_tv()$/;"	f	signature:()
+get_pkg_len	sample/test.c	/^int	get_pkg_len(int fd, const void* pkg, int pkglen, int isparent)$/;"	f	signature:(int fd, const void* pkg, int pkglen, int isparent)
+get_pkg_len	sample/test.h	/^int	 get_pkg_len(int fd, const void* pkg, int pkglen, int isparent);$/;"	p	signature:(int fd, const void* pkg, int pkglen, int isparent)
+get_pkg_len	src/dll.h	/^	int		(*get_pkg_len)(int fd, const void* avail_data, int avail_len, int isparent);$/;"	m	struct:AsyncServInterface	access:public
+get_remote_ip	src/net_if.h	/^uint32_t get_remote_ip(int fd)$/;"	f	signature:(int fd)
+get_server_id	src/dll.h	/^static inline uint32_t get_server_id()$/;"	f	signature:()
+get_server_ip	src/dll.h	/^static inline const char* get_server_ip()$/;"	f	signature:()
+get_server_name	src/dll.h	/^static inline const char* get_server_name()$/;"	f	signature:()
+get_server_port	src/dll.h	/^static inline in_port_t get_server_port()$/;"	f	signature:()
+get_service_ipport	src/mcast.c	/^addr_node_t* get_service_ipport(const char* service, unsigned int svr_id)$/;"	f	signature:(const char* service, unsigned int svr_id)
+get_service_ipport	src/mcast.h	/^addr_node_t* get_service_ipport(const char* service, unsigned int svr_id);$/;"	p	signature:(const char* service, unsigned int svr_id)
+handle	src/dll.h	/^	void*   handle; \/\/ Hold the handle returned by dlopen$/;"	m	struct:AsyncServInterface	access:public
+handle_close	src/service.c	/^int handle_close(int fd)$/;"	f	signature:(int fd)
+handle_close	src/service.h	/^int  handle_close(int fd);$/;"	p	signature:(int fd)
+handle_fini	src/service.c	/^handle_fini()$/;"	f	file:
+handle_init	src/service.c	/^handle_init(bind_config_elem_t* bc_elem)$/;"	f	file:	signature:(bind_config_elem_t* bc_elem)
+handle_open	src/service.c	/^handle_open(const shm_block_t* mb)$/;"	f	file:	signature:(const shm_block_t* mb)
+handle_process	src/service.c	/^handle_process(uint8_t* recvbuf, int rcvlen, int fd)$/;"	f	file:	signature:(uint8_t* recvbuf, int rcvlen, int fd)
+handle_recv_queue	src/service.c	/^void handle_recv_queue()$/;"	f
+handle_recv_queue	src/service.h	/^void handle_recv_queue();$/;"	p	signature:()
+handle_send_queue	src/net.c	/^handle_send_queue()$/;"	f	file:
+handle_timer	src/time/timer.h	/^handle_timer()$/;"	f	signature:()
+has_init	src/conf_parser/config.c	/^static int has_init;$/;"	v	file:
+has_init	src/log.c	/^static int has_init;$/;"	v	file:
+head	src/shmq.h	/^	volatile int head;$/;"	m	struct:shm_head	access:public
+head	src/time/timer.c	/^	struct list_head head;$/;"	m	struct:tvec_root_s	typeref:struct:tvec_root_s::list_head	file:	access:public
+head_mb	src/shmq.c	/^head_mb (const struct shm_queue *q)$/;"	f	signature:(const struct shm_queue *q)
+id	src/net.h	/^	uint32_t	id;$/;"	m	struct:fdinfo	access:public
+id	src/service.h	/^	uint32_t	id;$/;"	m	struct:fdsession	access:public
+id	src/shmq.h	/^	uint32_t	id;$/;"	m	struct:shm_block	access:public
+idle_timeout	src/service.h	/^	int					idle_timeout;$/;"	m	struct:__anon8	access:public
+ini_key_head	src/conf_parser/config.c	/^static list_head_t ini_key_head[1 << INIKEY_HASHBITS];$/;"	v	file:
+init_service	sample/test.c	/^int init_service(int isparent)$/;"	f	signature:(int isparent)
+init_service	sample/test.h	/^int  init_service();$/;"	p	signature:()
+init_service	src/dll.h	/^	int 	(*init_service)(int isparent);$/;"	m	struct:AsyncServInterface	access:public
+ip	src/mcast.c	/^	char		ip[16];$/;"	m	struct:addr_mcast_pkg	file:	access:public
+ip	src/mcast.h	/^	char			ip[16];$/;"	m	struct:addr_node	access:public
+ip	src/net_if.h	/^	char		ip[16];$/;"	m	struct:ip_port	access:public
+ip_port	src/net_if.h	/^typedef struct ip_port {$/;"	s
+ip_port::ip	src/net_if.h	/^	char		ip[16];$/;"	m	struct:ip_port	access:public
+ip_port::port	src/net_if.h	/^	in_addr_t	port;$/;"	m	struct:ip_port	access:public
+ip_port_t	src/net_if.h	/^} ip_port_t;$/;"	t	typeref:struct:ip_port
+is_benchmark_ip	src/inet/ipaddr_cat.h	/^static inline int is_benchmark_ip(const char* ip)$/;"	f	signature:(const char* ip)
+is_benchmark_ip2	src/inet/ipaddr_cat.h	/^static inline int is_benchmark_ip2(in_addr_t ip)$/;"	f	signature:(in_addr_t ip)
+is_doc_ip	src/inet/ipaddr_cat.h	/^static inline int is_doc_ip(const char* ip)$/;"	f	signature:(const char* ip)
+is_doc_ip2	src/inet/ipaddr_cat.h	/^static inline int is_doc_ip2(in_addr_t ip)$/;"	f	signature:(in_addr_t ip)
+is_loopback_ip	src/inet/ipaddr_cat.h	/^static inline int is_loopback_ip(const char* ip)$/;"	f	signature:(const char* ip)
+is_loopback_ip2	src/inet/ipaddr_cat.h	/^static inline int is_loopback_ip2(in_addr_t ip)$/;"	f	signature:(in_addr_t ip)
+is_multicast_ip	src/inet/ipaddr_cat.h	/^static inline int is_multicast_ip(const char* ip)$/;"	f	signature:(const char* ip)
+is_multicast_ip2	src/inet/ipaddr_cat.h	/^static inline int is_multicast_ip2(in_addr_t ip)$/;"	f	signature:(in_addr_t ip)
+is_parent	src/service.c	/^int					is_parent = 1;$/;"	v
+is_private_ip	src/inet/ipaddr_cat.h	/^static inline int is_private_ip(const char* ip)$/;"	f	signature:(const char* ip)
+is_private_ip2	src/inet/ipaddr_cat.h	/^static inline int is_private_ip2(in_addr_t ip)$/;"	f	signature:(in_addr_t ip)
+is_relay_ip	src/inet/ipaddr_cat.h	/^static inline int is_relay_ip(const char* ip)$/;"	f	signature:(const char* ip)
+is_relay_ip2	src/inet/ipaddr_cat.h	/^static inline int is_relay_ip2(in_addr_t ip)$/;"	f	signature:(in_addr_t ip)
+is_reserved_ip	src/inet/ipaddr_cat.h	/^static inline int is_reserved_ip(const char* ip)$/;"	f	signature:(const char* ip)
+is_reserved_ip2	src/inet/ipaddr_cat.h	/^static inline int is_reserved_ip2(in_addr_t ip)$/;"	f	signature:(in_addr_t ip)
+is_zero_ip	src/inet/ipaddr_cat.h	/^static inline int is_zero_ip(const char* ip)$/;"	f	signature:(const char* ip)
+is_zero_ip2	src/inet/ipaddr_cat.h	/^static inline int is_zero_ip2(in_addr_t ip)$/;"	f	signature:(in_addr_t ip)
+is_zeroconf_ip	src/inet/ipaddr_cat.h	/^static inline int is_zeroconf_ip(const char* ip)$/;"	f	signature:(const char* ip)
+is_zeroconf_ip2	src/inet/ipaddr_cat.h	/^static inline int is_zeroconf_ip2(in_addr_t ip)$/;"	f	signature:(in_addr_t ip)
+iterate_close_queue	src/net.c	/^inline void iterate_close_queue()$/;"	f
+iterate_etin_queue	src/net.c	/^inline void iterate_etin_queue(int max_len, int is_conn)$/;"	f	signature:(int max_len, int is_conn)
+key	src/conf_parser/config.c	/^	char  key[];$/;"	m	struct:config_pair	file:	access:public
+last_syn_tm	src/mcast.h	/^	time_t			last_syn_tm;$/;"	m	struct:addr_node	access:public
+last_tm	src/net.h	/^	uint32_t	last_tm;$/;"	m	struct:skinfo	access:public
+length	src/shmq.h	/^	u_int length;$/;"	m	struct:shm_queue	access:public
+length	src/shmq.h	/^	uint16_t	length;	\/\/ length of the whole shmblock, including data$/;"	m	struct:shm_block	access:public
+likely	src/log.c	20;"	d	file:
+likely	src/log.c	22;"	d	file:
+likely	src/util.h	11;"	d
+likely	src/util.h	9;"	d
+list	src/conf_parser/config.c	/^	struct list_head list;$/;"	m	struct:config_pair	typeref:struct:config_pair::list_head	file:	access:public
+list	src/net.h	/^	list_head_t	list;$/;"	m	struct:fdinfo	access:public
+list_add_tail	src/kernel_ds/list.h	/^list_add_tail (struct list_head *new_entry, struct list_head *head)$/;"	f	signature:(struct list_head *new_entry, struct list_head *head)
+list_del	src/kernel_ds/list.h	/^list_del (struct list_head *entry)$/;"	f	signature:(struct list_head *entry)
+list_del_init	src/kernel_ds/list.h	/^list_del_init (struct list_head *entry)$/;"	f	signature:(struct list_head *entry)
+list_empty	src/kernel_ds/list.h	/^list_empty (struct list_head *head)$/;"	f	signature:(struct list_head *head)
+list_entry	src/kernel_ds/list.h	206;"	d
+list_for_each	src/kernel_ds/list.h	215;"	d
+list_for_each	src/kernel_ds/list.h	218;"	d
+list_for_each_entry	src/kernel_ds/list.h	257;"	d
+list_for_each_entry	src/kernel_ds/list.h	262;"	d
+list_for_each_prev	src/kernel_ds/list.h	231;"	d
+list_for_each_safe	src/kernel_ds/list.h	246;"	d
+list_head	src/kernel_ds/list.h	/^struct list_head$/;"	s
+list_head::next	src/kernel_ds/list.h	/^  struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::list_head	access:public
+list_head::prev	src/kernel_ds/list.h	/^  struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::	access:public
+list_head_t	src/kernel_ds/list.h	/^typedef struct list_head list_head_t;$/;"	t	typeref:struct:list_head
+list_move	src/kernel_ds/list.h	/^list_move (struct list_head *list, struct list_head *head)$/;"	f	signature:(struct list_head *list, struct list_head *head)
+list_move_tail	src/kernel_ds/list.h	/^list_move_tail (struct list_head *list, struct list_head *head)$/;"	f	signature:(struct list_head *list, struct list_head *head)
+list_splice	src/kernel_ds/list.h	/^list_splice (struct list_head *list, struct list_head *head)$/;"	f	signature:(struct list_head *list, struct list_head *head)
+list_splice_init	src/kernel_ds/list.h	/^list_splice_init (struct list_head *list, struct list_head *head)$/;"	f	signature:(struct list_head *list, struct list_head *head)
+load_bind_file	src/bindconf.c	/^int load_bind_file(uint32_t id, uint16_t port)$/;"	f	signature:(uint32_t id, uint16_t port)
+load_bind_file	src/bindconf.h	/^int load_bind_file(uint32_t id, uint16_t port);$/;"	p	signature:(uint32_t id, uint16_t port)
+log_buf_sz	src/log.c	/^	log_buf_sz	= 8192$/;"	e	enum:__anon3	file:
+log_color	src/log.c	/^static const char* log_color[] = {$/;"	v	file:
+log_dest	src/log.h	/^typedef enum log_dest {$/;"	g
+log_dest_both	src/log.h	/^	log_dest_both		= 3$/;"	e	enum:log_dest
+log_dest_file	src/log.h	/^	log_dest_file		= 2,$/;"	e	enum:log_dest
+log_dest_t	src/log.h	/^} log_dest_t;$/;"	t	typeref:enum:log_dest
+log_dest_terminal	src/log.h	/^	log_dest_terminal	= 1,$/;"	e	enum:log_dest
+log_dir	src/log.c	/^static char log_dir[256];$/;"	v	file:
+log_file_name	src/log.c	/^log_file_name(int lvl, int seq, char* file_name, const struct tm* tm)$/;"	f	file:	signature:(int lvl, int seq, char* file_name, const struct tm* tm)
+log_file_path	src/log.c	/^log_file_path(int lvl, int seq, char* file_name, const struct tm* tm)$/;"	f	file:	signature:(int lvl, int seq, char* file_name, const struct tm* tm)
+log_init	src/log.c	/^int log_init(const char* dir, log_lvl_t lvl, uint32_t size, int maxfiles, const char* pre_name)$/;"	f	signature:(const char* dir, log_lvl_t lvl, uint32_t size, int maxfiles, const char* pre_name)
+log_init	src/log.h	/^int  log_init(const char* dir, log_lvl_t lvl, uint32_t size, int maxfiles, const char* pre_name);$/;"	p	signature:(const char* dir, log_lvl_t lvl, uint32_t size, int maxfiles, const char* pre_name)
+log_init_ex	src/util.c	/^int log_init_ex(const char* dir, log_lvl_t lvl, uint32_t size, int maxfiles, const char* pre_name, uint32_t logtime)$/;"	f	signature:(const char* dir, log_lvl_t lvl, uint32_t size, int maxfiles, const char* pre_name, uint32_t logtime)
+log_init_ex	src/util.h	/^int log_init_ex(const char* dir, log_lvl_t lvl, uint32_t size, int maxfiles, const char* pre_name, uint32_t logtime);$/;"	p	signature:(const char* dir, log_lvl_t lvl, uint32_t size, int maxfiles, const char* pre_name, uint32_t logtime)
+log_init_t	src/log.c	/^int log_init_t(const char* dir, log_lvl_t lvl, const char* pre_name, int logtime)$/;"	f	signature:(const char* dir, log_lvl_t lvl, const char* pre_name, int logtime)
+log_init_t	src/log.h	/^int log_init_t(const char* dir, log_lvl_t lvl, const char* pre_name, int logtime);$/;"	p	signature:(const char* dir, log_lvl_t lvl, const char* pre_name, int logtime)
+log_level	src/log.c	/^static log_lvl_t  log_level	 = log_lvl_debug;	  \/\/ default log level$/;"	v	file:
+log_lvl	src/log.h	/^typedef enum log_lvl {$/;"	g
+log_lvl_alert	src/log.h	/^	log_lvl_alert,$/;"	e	enum:log_lvl
+log_lvl_crit	src/log.h	/^	log_lvl_crit,$/;"	e	enum:log_lvl
+log_lvl_debug	src/log.h	/^	log_lvl_debug,$/;"	e	enum:log_lvl
+log_lvl_emerg	src/log.h	/^	log_lvl_emerg,$/;"	e	enum:log_lvl
+log_lvl_error	src/log.h	/^	log_lvl_error,$/;"	e	enum:log_lvl
+log_lvl_info	src/log.h	/^	log_lvl_info,$/;"	e	enum:log_lvl
+log_lvl_max	src/log.h	/^	log_lvl_max$/;"	e	enum:log_lvl
+log_lvl_notice	src/log.h	/^	log_lvl_notice,$/;"	e	enum:log_lvl
+log_lvl_t	src/log.h	/^} log_lvl_t;$/;"	t	typeref:enum:log_lvl
+log_lvl_trace	src/log.h	/^	log_lvl_trace,$/;"	e	enum:log_lvl
+log_lvl_warning	src/log.h	/^	log_lvl_warning,$/;"	e	enum:log_lvl
+log_pre	src/log.c	/^static char log_pre[32];$/;"	v	file:
+log_size	src/log.c	/^static uint32_t log_size;$/;"	v	file:
+lognames	src/log.c	/^static const char* lognames[] = { "emerg", "alert", "crit", "error",$/;"	v	file:
+main	sample/client.c	/^int main(int argc, char **argv)$/;"	f	signature:(int argc, char **argv)
+main	src/main.c	/^int main(int argc, char* argv[])$/;"	f	signature:(int argc, char* argv[])
+max_fd_num	src/daemon.c	/^int max_fd_num;$/;"	v
+max_listen_fds	src/bindconf.h	/^	max_listen_fds	= 60$/;"	e	enum:__anon5
+max_log_files	src/log.c	/^static int max_log_files;$/;"	v	file:
+max_timer_type	src/time/timer.c	/^	max_timer_type	= 10000$/;"	e	enum:__anon11	file:
+maxfd	src/net.h	/^	int			maxfd;$/;"	m	struct:epinfo	access:public
+mcast_addr	src/mcast.c	/^static struct sockaddr_in mcast_addr;$/;"	v	typeref:struct:sockaddr_in	file:
+mcast_fd	src/mcast.c	/^static int mcast_fd = -1;$/;"	v	file:
+mcast_notify_addr	src/mcast.h	/^	mcast_notify_addr   = 0,$/;"	e	enum:__anon6
+mcast_pkg_header	src/mcast.c	/^struct mcast_pkg_header {$/;"	s	file:
+mcast_pkg_header::body	src/mcast.c	/^	char		body[];$/;"	m	struct:mcast_pkg_header	file:	access:public
+mcast_pkg_header::pkg_type	src/mcast.c	/^	uint16_t	pkg_type;   \/\/ for mcast_notify_addr: 1st, syn$/;"	m	struct:mcast_pkg_header	file:	access:public
+mcast_pkg_header::proto_type	src/mcast.c	/^	uint16_t	proto_type; \/\/ mcast_notify_addr, mcast_reload_text$/;"	m	struct:mcast_pkg_header	file:	access:public
+mcast_pkg_header_t	src/mcast.c	/^typedef struct mcast_pkg_header mcast_pkg_header_t;$/;"	t	typeref:struct:mcast_pkg_header	file:
+mcast_pkg_size	src/net.c	/^	mcast_pkg_size	= 8192,$/;"	e	enum:__anon12	file:
+mcast_reload_text	src/mcast.h	/^	mcast_reload_text	= 1$/;"	e	enum:__anon6
+micro_timer	src/time/timer.c	/^static struct list_head    micro_timer;$/;"	v	typeref:struct:list_head	file:
+micro_timer_struct	src/time/timer.h	/^typedef struct micro_timer_struct {$/;"	s
+micro_timer_struct::data	src/time/timer.h	/^	void*				data;$/;"	m	struct:micro_timer_struct	access:public
+micro_timer_struct::entry	src/time/timer.h	/^	struct list_head	entry;$/;"	m	struct:micro_timer_struct	typeref:struct:micro_timer_struct::list_head	access:public
+micro_timer_struct::func_indx	src/time/timer.h	/^	int					func_indx;$/;"	m	struct:micro_timer_struct	access:public
+micro_timer_struct::function	src/time/timer.h	/^	timer_cb_func_t		function;$/;"	m	struct:micro_timer_struct	access:public
+micro_timer_struct::owner	src/time/timer.h	/^	void*				owner;$/;"	m	struct:micro_timer_struct	access:public
+micro_timer_struct::tv	src/time/timer.h	/^	struct timeval		tv;$/;"	m	struct:micro_timer_struct	typeref:struct:micro_timer_struct::timeval	access:public
+micro_timer_struct_t	src/time/timer.h	/^} micro_timer_struct_t ;$/;"	t	typeref:struct:micro_timer_struct
+min_expiring_time	src/time/timer.c	/^	time_t  min_expiring_time;$/;"	m	struct:tvec_root_s	file:	access:public
+mk_integral_tm_day	src/time/time.c	/^time_t mk_integral_tm_day(struct tm tm_cur, int mday, int month)$/;"	f	signature:(struct tm tm_cur, int mday, int month)
+mk_integral_tm_day	src/time/time.h	/^time_t mk_integral_tm_day(struct tm tm_cur, int mday, int month);$/;"	p	signature:(struct tm tm_cur, int mday, int month)
+mk_integral_tm_hr	src/time/time.h	/^mk_integral_tm_hr(struct tm tm_cur)$/;"	f	signature:(struct tm tm_cur)
+mmap_config_file	src/conf_parser/config.c	/^int mmap_config_file(const char* file_name, char** buf)$/;"	f	signature:(const char* file_name, char** buf)
+mmap_config_file	src/conf_parser/config.h	/^int   mmap_config_file(const char* file_name, char** buf);$/;"	p	signature:(const char* file_name, char** buf)
+mod_events	src/net.c	/^int mod_events(int epfd, int fd, uint32_t flag)$/;"	f	signature:(int epfd, int fd, uint32_t flag)
+mod_events	src/net.h	/^int  mod_events(int epfd, int fd, uint32_t flag);$/;"	p	signature:(int epfd, int fd, uint32_t flag)
+mod_expire_time	src/time/timer.c	/^void mod_expire_time(timer_struct_t* t, time_t expiretime)$/;"	f	signature:(timer_struct_t* t, time_t expiretime)
+mod_expire_time	src/time/timer.h	/^void mod_expire_time(timer_struct_t* tmr, time_t exptm);$/;"	p	signature:(timer_struct_t* tmr, time_t exptm)
+name	src/mcast.c	/^	char		name[16];$/;"	m	struct:addr_mcast_pkg	file:	access:public
+net_exit	src/net.c	/^void net_exit ()$/;"	f
+net_exit	src/net.h	/^void net_exit();$/;"	p	signature:()
+net_init	src/net.c	/^int net_init(int size, int maxevents)$/;"	f	signature:(int size, int maxevents)
+net_init	src/net.h	/^int  net_init(int size, int maxevents);$/;"	p	signature:(int size, int maxevents)
+net_loop	src/net.c	/^int net_loop(int timeout, int max_len, int is_conn)$/;"	f	signature:(int timeout, int max_len, int is_conn)
+net_loop	src/net.h	/^int  net_loop(int timeout, int max_len, int is_conn);$/;"	p	signature:(int timeout, int max_len, int is_conn)
+net_recv	src/net.c	/^static int net_recv(int fd, int max, int is_conn)$/;"	f	file:	signature:(int fd, int max, int is_conn)
+net_recv	src/net.c	/^static int net_recv(int fd, int max, int is_conn);$/;"	p	file:	signature:(int fd, int max, int is_conn)
+net_send	src/net_if.c	/^int net_send(int fd, const void* data, uint32_t len)$/;"	f	signature:(int fd, const void* data, uint32_t len)
+net_send	src/net_if.h	/^int net_send(int fd, const void* data, uint32_t len);$/;"	p	signature:(int fd, const void* data, uint32_t len)
+net_start	src/net.c	/^int net_start(const char* listen_ip, in_port_t listen_port, bind_config_elem_t* bc_elem)$/;"	f	signature:(const char* listen_ip, in_port_t listen_port, bind_config_elem_t* bc_elem)
+net_start	src/net.h	/^int  net_start(const char *listen_ip, uint16_t listen_port, struct bind_config_elem* bc_elem);$/;"	p	signature:(const char *listen_ip, uint16_t listen_port, struct bind_config_elem* bc_elem)
+new_so_name	src/mcast.c	/^	char		new_so_name[32];$/;"	m	struct:reload_text_pkg	file:	access:public
+next	src/kernel_ds/list.h	/^  struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::list_head	access:public
+next_del_addrs_tm	src/mcast.c	/^time_t next_del_addrs_tm = 0x7FFFFFFF;$/;"	v
+next_syn_addr_tm	src/mcast.c	/^time_t next_syn_addr_tm  = 0x7FFFFFFF;$/;"	v
+now	src/time/timer.c	/^struct timeval  now;$/;"	v	typeref:struct:timeval
+on_client_conn_closed	sample/test.c	/^void on_client_conn_closed(int fd)$/;"	f	signature:(int fd)
+on_client_conn_closed	sample/test.h	/^void on_client_conn_closed(int fd);$/;"	p	signature:(int fd)
+on_client_conn_closed	src/dll.h	/^	void	(*on_client_conn_closed)(int fd);$/;"	m	struct:AsyncServInterface	access:public
+on_client_conn_opened	src/dll.h	/^	void 	(*on_client_conn_opened)(fdsession_t *);$/;"	m	struct:AsyncServInterface	access:public
+on_fd_closed	sample/test.c	/^void on_fd_closed(int fd)$/;"	f	signature:(int fd)
+on_fd_closed	sample/test.h	/^void on_fd_closed(int fd);$/;"	p	signature:(int fd)
+on_fd_closed	src/dll.h	/^	void	(*on_fd_closed)(int fd);$/;"	m	struct:AsyncServInterface	access:public
+online_id	src/bindconf.h	/^	uint32_t	online_id;$/;"	m	struct:bind_config_elem	access:public
+online_name	src/bindconf.h	/^	char		online_name[16];$/;"	m	struct:bind_config_elem	access:public
+open_fd	src/log.c	/^open_fd(int lvl, const struct tm* tm)$/;"	f	file:	signature:(int lvl, const struct tm* tm)
+opfd	src/log.c	/^	int		opfd;$/;"	m	struct:fds_t	file:	access:public
+owner	src/time/timer.h	/^	void*				owner;$/;"	m	struct:micro_timer_struct	access:public
+owner	src/time/timer.h	/^	void*				owner;$/;"	m	struct:timer_struct	access:public
+page_size	src/net.c	/^int page_size;$/;"	v
+parse_args	src/main.c	/^parse_args(int argc, char** argv)$/;"	f	file:	signature:(int argc, char** argv)
+parse_config	src/conf_parser/config.c	/^static int parse_config(char* buffer)$/;"	f	file:	signature:(char* buffer)
+pipe_create	src/util.c	/^int pipe_create(int pipe_handles[2])$/;"	f	signature:(int pipe_handles[2])
+pipe_create	src/util.h	/^int pipe_create(int pipe_handles[2]);$/;"	p	signature:(int pipe_handles[2])
+pipe_handles	src/shmq.h	/^	int pipe_handles[2];$/;"	m	struct:shm_queue	access:public
+pkg_type	src/mcast.c	/^	uint16_t	pkg_type;   \/\/ for mcast_notify_addr: 1st, syn$/;"	m	struct:mcast_pkg_header	file:	access:public
+port	src/mcast.c	/^	uint16_t	port;$/;"	m	struct:addr_mcast_pkg	file:	access:public
+port	src/mcast.h	/^	unsigned short	port;$/;"	m	struct:addr_node	access:public
+port	src/net_if.h	/^	in_addr_t	port;$/;"	m	struct:ip_port	access:public
+prev	src/kernel_ds/list.h	/^  struct list_head *next, *prev;$/;"	m	struct:list_head	typeref:struct:list_head::	access:public
+proc_addr_mcast_pkg	src/mcast.c	/^void proc_addr_mcast_pkg(const mcast_pkg_header_t* hdr, int len)$/;"	f	signature:(const mcast_pkg_header_t* hdr, int len)
+proc_events	sample/test.c	/^void proc_events()$/;"	f
+proc_events	sample/test.h	/^void proc_events();$/;"	p	signature:()
+proc_events	src/dll.h	/^	void	(*proc_events)(uint32_t);$/;"	m	struct:AsyncServInterface	access:public
+proc_mcast_pkg	src/dll.h	/^	void	(*proc_mcast_pkg)(const void* data, int len);$/;"	m	struct:AsyncServInterface	access:public
+proc_pkg_from_client	sample/test.c	/^int proc_pkg_from_client(void* data, int len, fdsession_t* fdsess)$/;"	f	signature:(void* data, int len, fdsession_t* fdsess)
+proc_pkg_from_client	sample/test.h	/^int  proc_pkg_from_client(void* data, int len, fdsession_t* fdsess);$/;"	p	signature:(void* data, int len, fdsession_t* fdsess)
+proc_pkg_from_client	src/dll.h	/^	void	(*proc_pkg_from_client)(void* pkg, int pkglen, fdsession_t* fdsess);$/;"	m	struct:AsyncServInterface	access:public
+proc_pkg_from_serv	sample/test.c	/^void proc_pkg_from_serv(int fd, void* data, int len)$/;"	f	signature:(int fd, void* data, int len)
+proc_pkg_from_serv	sample/test.h	/^void proc_pkg_from_serv(int fd, void* data, int len);$/;"	p	signature:(int fd, void* data, int len)
+proc_pkg_from_serv	src/dll.h	/^	void	(*proc_pkg_from_serv)(int fd, void* pkg, int pkglen);$/;"	m	struct:AsyncServInterface	access:public
+proc_reload_plugin	src/mcast.c	/^void proc_reload_plugin(reload_text_pkg_t* pkg, int len)$/;"	f	signature:(reload_text_pkg_t* pkg, int len)
+proc_udp_pkg	sample/test.h	/^void proc_udp_pkg(int fd,void* data, int len);$/;"	p	signature:(int fd,void* data, int len)
+proc_udp_pkg	src/dll.h	/^	int		(*proc_udp_pkg)(int fd, const void* avail_data, int avail_len );$/;"	m	struct:AsyncServInterface	access:public
+prog_name	src/main.c	/^char* prog_name;$/;"	v
+proto_type	src/mcast.c	/^	uint16_t	proto_type; \/\/ mcast_notify_addr, mcast_reload_text$/;"	m	struct:mcast_pkg_header	file:	access:public
+r5hash	src/kernel_ds/hash_algo.h	/^static inline uint32_t r5hash(const char* p)$/;"	f	signature:(const char* p)
+ranged_random	src/random/random.h	/^static inline int ranged_random(int min, int max)$/;"	f	signature:(int min, int max)
+rcvprotlen	src/net.h	/^	uint32_t	rcvprotlen;$/;"	m	struct:conn_buf	access:public
+recvlen	src/net.h	/^	uint32_t	recvlen;$/;"	m	struct:conn_buf	access:public
+recvptr	src/net.h	/^	uint8_t*	recvptr;$/;"	m	struct:conn_buf	access:public
+recvq	src/bindconf.h	/^	shm_queue_t	recvq;$/;"	m	struct:bind_config_elem	access:public
+refresh_timers_callback	src/time/timer.c	/^void refresh_timers_callback()$/;"	f
+refresh_timers_callback	src/time/timer.h	/^void refresh_timers_callback();$/;"	p	signature:()
+register_data_plugin	src/dll.c	/^int register_data_plugin(const char* file_name)$/;"	f	signature:(const char* file_name)
+register_data_plugin	src/dll.h	/^int  register_data_plugin(const char* file_name);$/;"	p	signature:(const char* file_name)
+register_plugin	src/dll.c	/^int register_plugin(const char* file_name, int flag)$/;"	f	signature:(const char* file_name, int flag)
+register_plugin	src/dll.h	/^int  register_plugin(const char* file_name, int flag);$/;"	p	signature:(const char* file_name, int flag)
+register_timer_callback	src/time/timer.c	/^int register_timer_callback(int nbr, timer_cb_func_t cb)$/;"	f	signature:(int nbr, timer_cb_func_t cb)
+register_timer_callback	src/time/timer.h	/^int register_timer_callback(int nbr, timer_cb_func_t cb);$/;"	p	signature:(int nbr, timer_cb_func_t cb)
+reload_global_data	src/dll.h	/^	int		(*reload_global_data)();$/;"	m	struct:AsyncServInterface	access:public
+reload_text_pkg	src/mcast.c	/^struct reload_text_pkg {$/;"	s	file:
+reload_text_pkg::new_so_name	src/mcast.c	/^	char		new_so_name[32];$/;"	m	struct:reload_text_pkg	file:	access:public
+reload_text_pkg::svr_id	src/mcast.c	/^	uint32_t	svr_id;$/;"	m	struct:reload_text_pkg	file:	access:public
+reload_text_pkg::svr_name	src/mcast.c	/^	char		svr_name[16];$/;"	m	struct:reload_text_pkg	file:	access:public
+reload_text_pkg_t	src/mcast.c	/^typedef struct reload_text_pkg reload_text_pkg_t;$/;"	t	typeref:struct:reload_text_pkg	file:
+remote_ip	src/net.h	/^	uint32_t	remote_ip;$/;"	m	struct:skinfo	access:public
+remote_ip	src/service.h	/^	uint32_t	remote_ip;$/;"	m	struct:fdsession	access:public
+remote_port	src/net.h	/^	uint16_t	remote_port;$/;"	m	struct:skinfo	access:public
+remote_port	src/service.h	/^	uint16_t	remote_port;$/;"	m	struct:fdsession	access:public
+remove_fdsess	src/service.c	/^remove_fdsess(int fd)$/;"	f	file:	signature:(int fd)
+remove_micro_timer	src/time/timer.h	/^remove_micro_timer(micro_timer_struct_t *t, int freed)$/;"	f	signature:(micro_timer_struct_t *t, int freed)
+remove_micro_timers	src/time/timer.c	/^void remove_micro_timers(void* owner)$/;"	f	signature:(void* owner)
+remove_micro_timers	src/time/timer.h	/^void remove_micro_timers(void* owner);$/;"	p	signature:(void* owner)
+remove_timers	src/time/timer.h	/^remove_timers(list_head_t* head)$/;"	f	signature:(list_head_t* head)
+renew_now	src/time/timer.h	/^renew_now()$/;"	f	signature:()
+renew_now	src/time/timer.h	/^static inline void renew_now();$/;"	p	signature:()
+request_log_seq	src/log.c	/^request_log_seq(int lvl)$/;"	f	file:	signature:(int lvl)
+resolve_service_name	src/net_if.c	/^const char* resolve_service_name(const char* service_name, uint32_t svr_id)$/;"	f	signature:(const char* service_name, uint32_t svr_id)
+resolve_service_name	src/net_if.h	/^const char* resolve_service_name(const char* service_name, uint32_t svr_id);$/;"	p	signature:(const char* service_name, uint32_t svr_id)
+restart	src/daemon.c	/^volatile int	restart     = 0;$/;"	v
+restart_child_process	src/service.c	/^void restart_child_process(bind_config_elem_t* bc_elem)$/;"	f	signature:(bind_config_elem_t* bc_elem)
+restart_child_process	src/service.h	/^void restart_child_process(bind_config_elem_t* bc_elem);$/;"	p	signature:(bind_config_elem_t* bc_elem)
+restart_cnt	src/bindconf.h	/^	uint8_t		restart_cnt;$/;"	m	struct:bind_config_elem	access:public
+rlimit_reset	src/daemon.c	/^rlimit_reset()$/;"	f	file:
+rm_files_by_seqno	src/log.c	/^rm_files_by_seqno(int loglvl, int seqno, const struct tm* tm)$/;"	f	file:	signature:(int loglvl, int seqno, const struct tm* tm)
+run_worker_process	src/service.c	/^void run_worker_process(bind_config_t* bc, int bc_elem_idx, int n_inited_bc)$/;"	f	signature:(bind_config_t* bc, int bc_elem_idx, int n_inited_bc)
+run_worker_process	src/service.h	/^void run_worker_process(bind_config_t* bc, int bc_elem_idx, int n_inited_bc);$/;"	p	signature:(bind_config_t* bc, int bc_elem_idx, int n_inited_bc)
+safe_socket_listen	src/inet/tcp.c	/^int safe_socket_listen(const char* ipaddr, in_port_t port, int type)$/;"	f	signature:(const char* ipaddr, in_port_t port, int type)
+safe_socket_listen	src/inet/tcp.h	/^int safe_socket_listen(const char* ipaddr, in_port_t port, int type);$/;"	p	signature:(const char* ipaddr, in_port_t port, int type)
+safe_tcp_accept	src/inet/tcp.c	/^int safe_tcp_accept(int sockfd, struct sockaddr_in* peer, int nonblock)$/;"	f	signature:(int sockfd, struct sockaddr_in* peer, int nonblock)
+safe_tcp_accept	src/inet/tcp.h	/^int safe_tcp_accept(int sockfd, struct sockaddr_in* peer, int nonblock);$/;"	p	signature:(int sockfd, struct sockaddr_in* peer, int nonblock)
+safe_tcp_connect	src/inet/tcp.c	/^int safe_tcp_connect(const char* ipaddr, in_port_t port, int timeout, int nonblock)$/;"	f	signature:(const char* ipaddr, in_port_t port, int timeout, int nonblock)
+safe_tcp_connect	src/inet/tcp.h	/^int safe_tcp_connect(const char* ipaddr, in_port_t port, int timeout, int nonblock);$/;"	p	signature:(const char* ipaddr, in_port_t port, int timeout, int nonblock)
+safe_tcp_recv	src/inet/tcp.c	/^int safe_tcp_recv(int sockfd, void* buf, int bufsize)$/;"	f	signature:(int sockfd, void* buf, int bufsize)
+safe_tcp_recv	src/inet/tcp.h	/^int safe_tcp_recv(int sockfd, void* buf, int bufsize);$/;"	p	signature:(int sockfd, void* buf, int bufsize)
+safe_tcp_recv_n	src/inet/tcp.c	/^int safe_tcp_recv_n(int sockfd, void* buf, int total)$/;"	f	signature:(int sockfd, void* buf, int total)
+safe_tcp_recv_n	src/inet/tcp.h	/^int safe_tcp_recv_n(int sockfd, void* buf, int total);$/;"	p	signature:(int sockfd, void* buf, int total)
+safe_tcp_send_n	src/inet/tcp.c	/^int safe_tcp_send_n(int sockfd, const void* buf, int total)$/;"	f	signature:(int sockfd, const void* buf, int total)
+safe_tcp_send_n	src/inet/tcp.h	/^int safe_tcp_send_n(int sockfd, const void* buf, int total);$/;"	p	signature:(int sockfd, const void* buf, int total)
+saved_argv	src/daemon.c	/^char** saved_argv = NULL;$/;"	v
+scan_microseconds_timer	src/time/timer.c	/^scan_microseconds_timer()$/;"	f
+scan_microseconds_timer	src/time/timer.h	/^void scan_microseconds_timer();$/;"	p	signature:()
+scan_seconds_timer	src/time/timer.c	/^void scan_seconds_timer()$/;"	f
+scan_seconds_timer	src/time/timer.h	/^void scan_seconds_timer();$/;"	p	signature:()
+scan_timer_list	src/time/timer.c	/^scan_timer_list(const int idx)$/;"	f	file:	signature:(const int idx)
+schedule_output	src/net.c	/^static int schedule_output(struct shm_block *mb)$/;"	f	file:	signature:(struct shm_block *mb)
+send_addr_mcast_pkg	src/mcast.c	/^void send_addr_mcast_pkg(uint32_t pkg_type)$/;"	f	signature:(uint32_t pkg_type)
+send_addr_mcast_pkg	src/mcast.h	/^void send_addr_mcast_pkg();$/;"	p	signature:()
+send_mcast_pkg	src/mcast.c	/^int send_mcast_pkg(const void* data, int len)$/;"	f	signature:(const void* data, int len)
+send_mcast_pkg	src/mcast.h	/^int send_mcast_pkg(const void* data, int len);$/;"	p	signature:(const void* data, int len)
+send_pkg_to_client	src/net_if.c	/^int send_pkg_to_client(fdsession_t* fdsess, const void* pkg, const int pkglen)$/;"	f	signature:(fdsession_t* fdsess, const void* pkg, const int pkglen)
+send_pkg_to_client	src/net_if.h	/^int send_pkg_to_client(fdsession_t* fdsess, const void* pkg, const int pkglen);$/;"	p	signature:(fdsession_t* fdsess, const void* pkg, const int pkglen)
+sendlen	src/net.h	/^	uint32_t	sendlen;$/;"	m	struct:conn_buf	access:public
+sendptr	src/net.h	/^	uint8_t*	sendptr;$/;"	m	struct:conn_buf	access:public
+sendq	src/bindconf.h	/^	shm_queue_t	sendq;$/;"	m	struct:bind_config_elem	access:public
+seq	src/log.c	/^	int		seq;$/;"	m	struct:fds_t	file:	access:public
+set_io_blockability	src/inet/tcp.c	/^int set_io_blockability(int fd, int nonblock)$/;"	f	signature:(int fd, int nonblock)
+set_io_blockability	src/inet/tcp.h	/^int set_io_blockability(int fd, int nonblock);$/;"	p	signature:(int fd, int nonblock)
+set_log_dest	src/log.c	/^void set_log_dest(log_dest_t dest)$/;"	f	signature:(log_dest_t dest)
+set_log_dest	src/log.h	/^void set_log_dest(log_dest_t dest);$/;"	p	signature:(log_dest_t dest)
+set_min_exptm	src/time/timer.c	/^set_min_exptm(time_t exptm, int idx)$/;"	f	file:	signature:(time_t exptm, int idx)
+set_min_exptm	src/time/timer.c	/^static inline void set_min_exptm(time_t exptm, int idx);$/;"	p	file:	signature:(time_t exptm, int idx)
+set_sock_rcv_timeo	src/inet/tcp.c	/^int set_sock_rcv_timeo(int sockfd, int millisec)$/;"	f	signature:(int sockfd, int millisec)
+set_sock_rcv_timeo	src/inet/tcp.h	/^int set_sock_rcv_timeo(int sockfd, int millisec);$/;"	p	signature:(int sockfd, int millisec)
+set_sock_snd_timeo	src/inet/tcp.c	/^int set_sock_snd_timeo(int sockfd, int millisec)$/;"	f	signature:(int sockfd, int millisec)
+set_sock_snd_timeo	src/inet/tcp.h	/^int set_sock_snd_timeo(int sockfd, int millisec);$/;"	p	signature:(int sockfd, int millisec)
+setup_timer	src/time/timer.c	/^void setup_timer()$/;"	f
+setup_timer	src/time/timer.h	/^void setup_timer();$/;"	p	signature:()
+shift_fd	src/log.c	/^static int shift_fd(int lvl, const struct tm* tm)$/;"	f	file:	signature:(int lvl, const struct tm* tm)
+shm_block	src/shmq.h	/^typedef struct shm_block {$/;"	s
+shm_block::data	src/shmq.h	/^	uint8_t		data[];$/;"	m	struct:shm_block	access:public
+shm_block::fd	src/shmq.h	/^	uint32_t	fd;$/;"	m	struct:shm_block	access:public
+shm_block::id	src/shmq.h	/^	uint32_t	id;$/;"	m	struct:shm_block	access:public
+shm_block::length	src/shmq.h	/^	uint16_t	length;	\/\/ length of the whole shmblock, including data$/;"	m	struct:shm_block	access:public
+shm_block::type	src/shmq.h	/^	char		type;$/;"	m	struct:shm_block	access:public
+shm_block_t	src/shmq.h	/^} __attribute__ ((packed)) shm_block_t;$/;"	t	typeref:struct:shm_block
+shm_head	src/shmq.h	/^typedef struct shm_head {$/;"	s
+shm_head::blk_cnt	src/shmq.h	/^	atomic_t blk_cnt;$/;"	m	struct:shm_head	access:public
+shm_head::head	src/shmq.h	/^	volatile int head;$/;"	m	struct:shm_head	access:public
+shm_head::tail	src/shmq.h	/^	volatile int tail;$/;"	m	struct:shm_head	access:public
+shm_head_t	src/shmq.h	/^} __attribute__ ((packed)) shm_head_t;$/;"	t	typeref:struct:shm_head
+shm_queue	src/shmq.h	/^typedef struct shm_queue {$/;"	s
+shm_queue::addr	src/shmq.h	/^	shm_head_t* addr;$/;"	m	struct:shm_queue	access:public
+shm_queue::length	src/shmq.h	/^	u_int length;$/;"	m	struct:shm_queue	access:public
+shm_queue::pipe_handles	src/shmq.h	/^	int pipe_handles[2];$/;"	m	struct:shm_queue	access:public
+shm_queue_t	src/shmq.h	/^} shm_queue_t;$/;"	t	typeref:struct:shm_queue
+shmblk_dump	src/shmq.h	/^char* shmblk_dump(const struct shm_block *mb);$/;"	p	signature:(const struct shm_block *mb)
+shmq_create	src/shmq.c	/^int shmq_create(bind_config_elem_t* p)$/;"	f	signature:(bind_config_elem_t* p)
+shmq_create	src/shmq.h	/^int   shmq_create(struct bind_config_elem* bc_elem);$/;"	p	signature:(struct bind_config_elem* bc_elem)
+shmq_destroy	src/shmq.c	/^void shmq_destroy(const bind_config_elem_t* exclu_bc_elem, int max_shmq_num)$/;"	f	signature:(const bind_config_elem_t* exclu_bc_elem, int max_shmq_num)
+shmq_destroy	src/shmq.h	/^void  shmq_destroy(const struct bind_config_elem* exclu_bc_elem, int max_shmq_num);$/;"	p	signature:(const struct bind_config_elem* exclu_bc_elem, int max_shmq_num)
+shmq_pop	src/shmq.c	/^int shmq_pop(struct shm_queue* q, struct shm_block** mb)$/;"	f	signature:(struct shm_queue* q, struct shm_block** mb)
+shmq_pop	src/shmq.h	/^int   shmq_pop(struct shm_queue *q, struct shm_block **mb);$/;"	p	signature:(struct shm_queue *q, struct shm_block **mb)
+shmq_push	src/shmq.c	/^int shmq_push(shm_queue_t* q, shm_block_t* mb, const void* data)$/;"	f	signature:(shm_queue_t* q, shm_block_t* mb, const void* data)
+shmq_push	src/shmq.h	/^int   shmq_push(shm_queue_t* q, shm_block_t* mb, const void* data);$/;"	p	signature:(shm_queue_t* q, shm_block_t* mb, const void* data)
+show_banner	src/main.c	/^void show_banner()$/;"	f
+show_usage	src/main.c	/^show_usage()$/;"	f	file:
+sigchld_handler	src/daemon.c	/^static void sigchld_handler(int signo, siginfo_t *si, void * p) $/;"	f	file:	signature:(int signo, siginfo_t *si, void * p)
+sighup_handler	src/daemon.c	/^static void sighup_handler(int signo) $/;"	f	file:	signature:(int signo)
+signame	src/daemon.c	/^const char* const signame[] = {$/;"	v
+sigterm_handler	src/daemon.c	/^static void sigterm_handler(int signo) $/;"	f	file:	signature:(int signo)
+sk	src/net.h	/^	skinfo_t	sk;$/;"	m	struct:fdinfo	access:public
+skinfo	src/net.h	/^typedef struct skinfo {$/;"	s
+skinfo::last_tm	src/net.h	/^	uint32_t	last_tm;$/;"	m	struct:skinfo	access:public
+skinfo::remote_ip	src/net.h	/^	uint32_t	remote_ip;$/;"	m	struct:skinfo	access:public
+skinfo::remote_port	src/net.h	/^	uint16_t	remote_port;$/;"	m	struct:skinfo	access:public
+skinfo_t	src/net.h	/^} __attribute__((packed)) skinfo_t;$/;"	t	typeref:struct:skinfo
+sndbufsz	src/net.h	/^	uint32_t	sndbufsz;$/;"	m	struct:conn_buf	access:public
+socket_timeout	src/net.c	/^time_t socket_timeout;$/;"	v
+sockfd	src/net.h	/^	int			sockfd;$/;"	m	struct:fdinfo	access:public
+sprite_list	src/time/timer.h	/^	struct list_head	sprite_list;$/;"	m	struct:timer_struct	typeref:struct:timer_struct::list_head	access:public
+status	src/daemon.c	/^static int		status;$/;"	v	file:
+stop	src/daemon.c	/^volatile int	stop        = 0;$/;"	v
+str_split	src/conf_parser/config.c	/^int str_split(const char* ifs, char* line, char* field[], int n)$/;"	f	signature:(const char* ifs, char* line, char* field[], int n)
+str_split	src/conf_parser/config.h	/^int   str_split(const char* ifs, char* line, char* field[], int n);$/;"	p	signature:(const char* ifs, char* line, char* field[], int n)
+svr_id	src/mcast.c	/^	uint32_t	svr_id;$/;"	m	struct:addr_mcast_pkg	file:	access:public
+svr_id	src/mcast.c	/^	uint32_t	svr_id;$/;"	m	struct:reload_text_pkg	file:	access:public
+svr_id	src/mcast.h	/^	uint32_t		svr_id;$/;"	m	struct:addr_node	access:public
+svr_name	src/mcast.c	/^	char		svr_name[16];$/;"	m	struct:addr_cache	file:	access:public
+svr_name	src/mcast.c	/^	char		svr_name[16];$/;"	m	struct:reload_text_pkg	file:	access:public
+svr_tbl	src/mcast.c	/^static GHashTable* svr_tbl;$/;"	v	file:
+tail	src/shmq.h	/^	volatile int tail;$/;"	m	struct:shm_head	access:public
+tail_mb	src/shmq.c	/^tail_mb (const struct shm_queue *q)$/;"	f	signature:(const struct shm_queue *q)
+tcfs	src/time/timer.c	/^static timer_cb_func_t tcfs[max_timer_type];$/;"	v	file:
+test	sample/test.c	/^int test(void* owner, void* data)$/;"	f	signature:(void* owner, void* data)
+timer_add_mode	src/time/timer.h	/^typedef enum timer_add_mode {$/;"	g
+timer_add_mode_t	src/time/timer.h	/^} timer_add_mode_t;$/;"	t	typeref:enum:timer_add_mode
+timer_add_new_timer	src/time/timer.h	/^	timer_add_new_timer,$/;"	e	enum:timer_add_mode
+timer_cb_func_t	src/time/timer.h	/^typedef int (*timer_cb_func_t)(void*, void*);$/;"	t
+timer_list	sample/test.c	/^	list_head_t timer_list;$/;"	m	struct:TmrTest	file:	access:public
+timer_replace_timer	src/time/timer.h	/^	timer_replace_timer,$/;"	e	enum:timer_add_mode
+timer_struct	src/time/timer.h	/^typedef struct timer_struct {$/;"	s
+timer_struct::data	src/time/timer.h	/^	void*				data;$/;"	m	struct:timer_struct	access:public
+timer_struct::entry	src/time/timer.h	/^	struct list_head	entry;$/;"	m	struct:timer_struct	typeref:struct:timer_struct::list_head	access:public
+timer_struct::expire	src/time/timer.h	/^	time_t				expire;$/;"	m	struct:timer_struct	access:public
+timer_struct::func_indx	src/time/timer.h	/^	int					func_indx;$/;"	m	struct:timer_struct	access:public
+timer_struct::function	src/time/timer.h	/^	timer_cb_func_t		function;$/;"	m	struct:timer_struct	access:public
+timer_struct::owner	src/time/timer.h	/^	void*				owner;$/;"	m	struct:timer_struct	access:public
+timer_struct::sprite_list	src/time/timer.h	/^	struct list_head	sprite_list;$/;"	m	struct:timer_struct	typeref:struct:timer_struct::list_head	access:public
+timer_struct_t	src/time/timer.h	/^} timer_struct_t ;$/;"	t	typeref:struct:timer_struct
+tm_cur	src/time/timer.c	/^struct tm       tm_cur;$/;"	v	typeref:struct:tm
+tmr	sample/test.c	/^tmr_test_t tmr;$/;"	v
+tmr_test_t	sample/test.c	/^} tmr_test_t;$/;"	t	typeref:struct:TmrTest	file:
+trash_size	src/net.c	/^	trash_size		= 4096,$/;"	e	enum:__anon12	file:
+tv	src/time/timer.h	/^	struct timeval		tv;$/;"	m	struct:micro_timer_struct	typeref:struct:micro_timer_struct::timeval	access:public
+tvec_root_s	src/time/timer.c	/^struct tvec_root_s {$/;"	s	file:
+tvec_root_s::expire	src/time/timer.c	/^	int     expire;$/;"	m	struct:tvec_root_s	file:	access:public
+tvec_root_s::head	src/time/timer.c	/^	struct list_head head;$/;"	m	struct:tvec_root_s	typeref:struct:tvec_root_s::list_head	file:	access:public
+tvec_root_s::min_expiring_time	src/time/timer.c	/^	time_t  min_expiring_time;$/;"	m	struct:tvec_root_s	file:	access:public
+type	src/net.h	/^	uint8_t		type;$/;"	m	struct:fdinfo	access:public
+type	src/shmq.h	/^	char		type;$/;"	m	struct:shm_block	access:public
+udp_pkg_size	src/net.c	/^	udp_pkg_size	= 8192$/;"	e	enum:__anon12	file:
+unlikely	src/log.c	25;"	d	file:
+unlikely	src/log.c	27;"	d	file:
+unlikely	src/util.h	14;"	d
+unlikely	src/util.h	16;"	d
+unregister_data_plugin	src/dll.c	/^void unregister_data_plugin()$/;"	f
+unregister_data_plugin	src/dll.h	/^void unregister_data_plugin();$/;"	p	signature:()
+unregister_plugin	src/dll.c	/^void unregister_plugin()$/;"	f
+unregister_plugin	src/dll.h	/^void unregister_plugin();$/;"	p	signature:()
+unregister_timers_callback	src/time/timer.c	/^void unregister_timers_callback()$/;"	f
+unregister_timers_callback	src/time/timer.h	/^void unregister_timers_callback();$/;"	p	signature:()
+val	src/conf_parser/config.c	/^	char* val;$/;"	m	struct:config_pair	file:	access:public
+vec	src/time/timer.c	/^static struct tvec_root_s  vec[TIMER_VEC_SIZE];$/;"	v	typeref:struct:tvec_root_s	file:
+version	src/main.c	/^static const char version[] = "1.1.1";$/;"	v	file:
+write_log	src/log.c	/^void write_log(int lvl,uint32_t key, const char *fmt, ...)$/;"	f	signature:(int lvl,uint32_t key, const char *fmt, ...)
+write_log	src/log.h	/^void write_log(int lvl,uint32_t key, const char* fmt, ...);$/;"	p	signature:(int lvl,uint32_t key, const char* fmt, ...)
+write_syslog	src/log.c	/^void write_syslog(int lvl, const char* fmt, ...)$/;"	f	signature:(int lvl, const char* fmt, ...)
+write_syslog	src/log.h	/^void write_syslog(int lvl, const char* fmt, ...);$/;"	p	signature:(int lvl, const char* fmt, ...)

@@ -63,10 +63,10 @@ static void sighup_handler(int signo)
 	stop     = 1;
 }
 
+//为子进程打印详细信息
 static void sigchld_handler(int signo, siginfo_t *si, void * p) 
 {
 	while (waitpid (-1, &status, WNOHANG|__WALL) > 0);
-#if 0
 	char *corename;
 
 	switch (si->si_code) {
@@ -92,7 +92,7 @@ static void sigchld_handler(int signo, siginfo_t *si, void * p)
 		case CLD_CONTINUED:
 			DEBUG_LOG("child %d continued", si->si_pid);
 			return;
-		case CLD_DUMPED:
+		case CLD_DUMPED: //child terminated abnormally
 			DEBUG_LOG("child %d coredumped by signal %s",
 					si->si_pid, signame[WTERMSIG(si->si_status)]);
 			chmod("core", 700);
@@ -104,7 +104,6 @@ static void sigchld_handler(int signo, siginfo_t *si, void * p)
 			stop = 1;
 			break;
 	}
-#endif
 }
 
 static inline void
@@ -163,6 +162,7 @@ int daemon_start(int argc, char** argv)
 
 	sa.sa_flags = SA_RESTART|SA_SIGINFO;
 	sa.sa_sigaction = sigchld_handler;
+    //把下面这些信号开启
 	sigaction(SIGCHLD, &sa, NULL);
 	sigaction(SIGSEGV, &sa, NULL);
 	sigaction(SIGBUS, &sa, NULL);
@@ -200,6 +200,7 @@ void daemon_stop(void)
 		printf("Server stopping...\n");
 	}
 
+    //重新启动 execv
 	if (restart && prog_name && saved_argv) {
 		WARN_LOG("%s", "Server restarting...");
 		if (-1 != chdir(current_dir))

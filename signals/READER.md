@@ -39,6 +39,13 @@ in /usr/include/bit/signum.h
 6.  SIGTERM 采用自己的handler，优雅的终结process。通常是kill
 
 
+### siganl
+SIGPOLL SIGIO
+SIGPOLL
+用于异步IO 
+SysV 用 SIGPOLL BSD 用 SIGIO 
+
+
 ###可重入(Reentrant)
 1：什么是可重入：
 当程序正在调用一个系统apiA, 还没返回，这是被一个signal中断，
@@ -170,6 +177,63 @@ SA-RESTART 如果一个syscall是因为signal中断则signal处理完后重启sy
 SA-INFO 使用actinfo
 SA-ONSTACK 使用专门的stack处理handle
 SA-NODEFER 不屏蔽正在处理的signal
+
+### SA-INFO
+使用 siginfo_t 
+
+
+                  //signo 发送的信号 和 si->_si_signo 相同
+void sigchld_handler(int signo, siginfo_t *si, void * p) 
+{
+    //ci_code 说明了信号产生的原因
+    SI_* 对于所有信号都实用
+    CLD_* 和 SIGCHLD 信号相关
+
+	switch (si->si_code) {
+		case SI_USER: //信号由kill raise 发送的
+		case SI_TKILL:// 信号由tkill tgkill 发送
+			DEBUG_LOG("SIGCHLD from pid=%d uid=%d, IGNORED",
+					si->si_pid, si->si_uid);
+			return; /* someone send use fake SIGCHLD */
+		case CLD_KILLED: //SIGCHLD 信号引发 子进程被终结了
+			DEBUG_LOG("child %d killed by signal %s",
+					si->si_pid, signame[WTERMSIG(si->si_status)]);
+			stop = 1;
+			if (WTERMSIG(si->si_status) == SIGABRT)
+				restart = 1;
+			break;
+		case CLD_TRAPPED: //
+			DEBUG_LOG("child %d trapped", si->si_pid);
+			return;
+		case CLD_STOPPED: //child has stopped
+			DEBUG_LOG("child %d stopped", si->si_pid);
+			if(si->si_pid > 1) kill(si->si_pid, SIGCONT);
+			return;
+		case CLD_CONTINUED:
+			DEBUG_LOG("child %d continued", si->si_pid);
+			return;
+		case CLD_DUMPED: //traced child has trapped
+			DEBUG_LOG("child %d coredumped by signal %s",
+					si->si_pid, signame[WTERMSIG(si->si_status)]);
+			restart = 1;
+			stop = 1;
+			break;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### signal handler 中errno的使用
 因为errno是个全局变量所以在handler中使用时要先记录errno的原始值
