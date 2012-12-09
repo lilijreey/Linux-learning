@@ -12,6 +12,13 @@
 5.单独服务器
 
 //Linux 下iconv 库提供字符集
+先生成转换句柄
+iconv_t h = iconv_open("tocoding", "fromcoding");
+转换
+iconv(h, &inbuf, &inlen, &outbuf, &outlen);
+
+释放 h
+iconv_close(h)
 
 //常用实现算法
 1.基于 TrieTree
