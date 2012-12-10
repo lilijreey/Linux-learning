@@ -49,8 +49,8 @@ UTF-8就是以8位为单元对UCS进行编码。从UCS-2到UTF-8的编码方式�
 对于UTF-8来说最重要的是 每个字节的前两位
 UCS-2编码(16进制) 	UTF-8 字节流(二进制)
 0000 - 007F 	0xxxxxxx
-0080 - 07FF 	110xxxxx 10xxxxxx          B0 80
-0800 - FFFF 	1110xxxx 10xxxxxx 10xxxxxx E0 80 
+0080 - 07FF 	110xxxxx 10xxxxxx          B0 80 以B或B以上开头 
+0800 - FFFF 	1110xxxx 10xxxxxx 10xxxxxx E0 80 以E或B以上开头  
 
 按照UTF-8标准，
 （1）所有以0开始的字节，都与原来的ASCII码兼容，也就是说，0xxxxxxx不需要额外转换，就是我们平时用的ASCII码。
