@@ -17,7 +17,7 @@
 
 *create-epoll*
  得到一个epoll的fd (instance). 
- |epoll_create|(int size //这个参数已经不用了)
+ |epoll_create|(int size //这个参数已经不用了) since 2.6
  |epoll_create1|(int flag see man)
 
 *epoll-limit* /proc/sys/fs/epoll/max_user_watches

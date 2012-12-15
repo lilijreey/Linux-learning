@@ -1,0 +1,81 @@
+mmap, munmap - map or unmap files or devices into memory
+
+共享内存不经过内核态是最快的IPC.
+一块物理内存被映射到进程A、B各自的进程地址空间。
+进程A可以即时看到进程B对共享内存中数据的更新，反之亦然。
+由于多个进程共享同一块内存区域，必然需要某种同步机制，互斥锁和信号量都可以
+
+EE 使用方法
+1.不同process 映射同一个有名文件,来交互
+ fd 为open() 的返回值
+e.g.
+   fd = open();
+   ptr = mmap(NULL, len, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);
+   close(fd);
+
+2.父子process 通过foke来同时映射一个匿名文件. 
+  fd 必须为-1 并且要在 flags中指明 MAP_ANON. 来采用匿名映射，避免了文件的打开
+  者只能用在有亲缘关系的process中
+  e.g.
+   ptr = mmap(NULL, len, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+   fork();
+
+
+|include-file|
+ <sys/mman.h>
+
+
+|mmap|
+void *mmap(void *addr, size_t length, int prot, int flags, int fd, off_t offset);
+|mmap2|  since 2.4 以后已经使用mmap2 来代替mmap了 mmap2 的pgoffset page的数量
+       来This enables applications that  use  a  32-bit off_t to map large files (up to 2^44 bytes).
+
+
+return: 映射内存的首地址
+addr:   指定映射内存的起始地址，通常NULL 留给系统分配
+length: 映射buf大小
+prot:   参数指定共享内存的访问权限。
+flags:  MAP_SHARED, MAP_PRIVATE, 必选一个
+offset: fd不为-1时才有效， 映射文件开始偏移量
+
+1. mmap()系统调用使得进程之间通过映射同一个普通文件实现共享内存。
+   普通文件被映射到进程地址空间后，进程可以向访问普通内存一样对文件进行访问，
+   不必再调用read()，write（）等操作。
+
+   注：实际上，mmap()系统调用并不是完全为了用于共享内存而设计的。
+       它本身提供了不同于一般对普通文件的访问方式，进程可以像读写内存一样对普通文件的操作。
+       而Posix或系统V的共享内存IPC则纯粹用于共享目的，当然mmap()实现共享内存也是其主要应用之一。
+   e.g. 把配置文件映射内存中，使用strcmp 来解析配置
+
+   Qus. 实际映射buf size 和 length 和 文件大小 的关系
+        length 决定进程在自己地址空间新增空间的大小,
+        映射的文件大小,是进程能够访问的空间大小
+        length >= fd-size
+        多出的部分空间，访问时会收到SIGBUS信号
+
+|msync|
+//??
+
+
+
+|munmap|
+int munmap(void *addr, size_t length);
+
+释放映射
+addr: mmap 返回的地址
+length: mmap 的length
+ 注： 1. 释放后的内存地址不能在访问
+      2. 当addr 不包含映射内存时不会报错
+      3. 重复释放一个addr也不会报错
+      4. lenght 小于等于mmap时的length也不会报错
+
+
+EE 
+//得到页大小的三种方法
+printf("system page size:%ld\n", sysconf(_SC_PAGESIZE)) ;
+//linux provide
+//printf("system page size:%d\n", getpagesize()) ;
+
+
+
+vim:ft=help
