@@ -24,7 +24,7 @@
 #include	<stdlib.h>
 #include	<string.h>
 #include	<signal.h>
-#include	<zhao/tools.h>
+#include <strings.h>
 
 const char* const signame[] = {
 	"SIG_0",
@@ -94,11 +94,11 @@ static void sigchld_handle(int signo) {
 
 	//SIGCHLD只有child结束时才会产生，fork时不会产生
 static void init_signal() {
-	E_TEST(SIG_ERR , signal(SIGALRM, sigalrm_handle)) ;
-	E_TEST(SIG_ERR , signal(SIGCHLD, sigchld_handle)) ;
-	E_TEST(SIG_ERR , signal(SIGINT, siginit_handle)) ;
-	E_TEST(SIG_ERR , signal(SIGTERM, sigterm_handle)) ;
-	E_TEST(SIG_ERR , signal(SIGQUIT, sigquit_handle)) ;
+//	E_TEST(SIG_ERR , signal(SIGALRM, sigalrm_handle)) ;
+//	E_TEST(SIG_ERR , signal(SIGCHLD, sigchld_handle)) ;
+//	E_TEST(SIG_ERR , signal(SIGINT, siginit_handle)) ;
+//	E_TEST(SIG_ERR , signal(SIGTERM, sigterm_handle)) ;
+//	E_TEST(SIG_ERR , signal(SIGQUIT, sigquit_handle)) ;
 
 //
 
@@ -109,13 +109,12 @@ static void init_signal() {
 }
 int main()
 {
-	
-		//signal 可以打断sleep，
+	//signal 可以打断sleep，
 	// 主进程给自己发singal，子进程会收到吗。
 	// 不会
 
-#if 1
 	//fork child
+#if 0
 	int pid  ;
 	pid = fork() ;
 	if (pid < 0) {
@@ -143,8 +142,8 @@ int main()
 	}
 #endif
 
-#if 0
 	//block sigalrm
+#if 0
 	sigset_t sset ;
 	E_TEST(-1, sigemptyset(&sset)) ;
 	E_TEST(-1, sigaddset(&sset, SIGALRM)) ;
@@ -158,6 +157,25 @@ int main()
 	sleep(4) ;
 
 #endif
+
+    
+    // set different siganl with one sigaction
+    // ok
+	struct sigaction sa;
+    bzero(&sa, sizeof(sa));
+
+	sa.sa_handler = sigalrm_handle;
+	sigaction(SIGALRM, &sa, NULL);
+	sa.sa_handler = sigquit_handle;
+	sigaction(SIGQUIT, &sa, NULL);
+	sa.sa_handler = siginit_handle;
+	sigaction(SIGINT, &sa, NULL);
+
+    for (;;) {
+        pause();
+    }
+
+
 	return 0 ;
 
 

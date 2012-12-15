@@ -4,8 +4,7 @@ in /usr/include/bit/signum.h
 信号是异步事件，只能告诉内核，在此信号出现是的动作，而不能简单的检测一个变量， 来判断是否出现一个信号。
 
 ##信号操作
-+   接受信号
-+   无视信号
++   接受信号 +   无视信号
 +   屏蔽信号
 
 ###信号处理的3种方式：
@@ -38,6 +37,13 @@ in /usr/include/bit/signum.h
 4.  errno的处理
 5.  SIGABRT 采用默认行为，或者在hanler中exit assert可以终结process
 6.  SIGTERM 采用自己的handler，优雅的终结process。通常是kill
+
+
+### siganl
+SIGPOLL SIGIO
+SIGPOLL
+用于异步IO 
+SysV 用 SIGPOLL BSD 用 SIGIO 
 
 
 ###可重入(Reentrant)
@@ -131,10 +137,11 @@ if (cnt == -1)
 
 #### structs
 +   sigaction `{
-	      1. void	(*sa_handler)(int); // signal handler SIG_DFL,SIG_IGN.
-	      2. void	(*sa_sigaction)(int, siginfo_t *, void *);
+	       void	(*sa_handler)(int); // signal handler SIG_DFL,SIG_IGN.
+	      void	(*sa_sigaction)(int, siginfo_t *, void *);
 	       sigset_t   sa_mask; //block mask
-           //标记 使用1作为信号handler还是2 SA_SIGINFO 使用2
+           //标记 默认使用sa_handler作为信号handler
+           // 设置为 SA_SIGINFO 使用 sa_sigaction 
 	       int	  sa_flags; 
 	       void	(*sa_restorer)(void); // 过时了的
         }
@@ -157,6 +164,7 @@ if (cnt == -1)
 正在被处理的signal默认在sa-mash 中.阻塞当前处理的signal。 
 不阻塞 设定为SA—NODEFER
 +   sa-flags 控制信号的处理行为
++   一个sigaction 可为多个signal 设置handler
 
 ### sa-flags
 SA-RESTART 如果一个syscall是因为signal中断则signal处理完后重启syscall
@@ -169,6 +177,63 @@ SA-RESTART 如果一个syscall是因为signal中断则signal处理完后重启sy
 SA-INFO 使用actinfo
 SA-ONSTACK 使用专门的stack处理handle
 SA-NODEFER 不屏蔽正在处理的signal
+
+### SA-INFO
+使用 siginfo_t 
+
+
+                  //signo 发送的信号 和 si->_si_signo 相同
+void sigchld_handler(int signo, siginfo_t *si, void * p) 
+{
+    //ci_code 说明了信号产生的原因
+    SI_* 对于所有信号都实用
+    CLD_* 和 SIGCHLD 信号相关
+
+	switch (si->si_code) {
+		case SI_USER: //信号由kill raise 发送的
+		case SI_TKILL:// 信号由tkill tgkill 发送
+			DEBUG_LOG("SIGCHLD from pid=%d uid=%d, IGNORED",
+					si->si_pid, si->si_uid);
+			return; /* someone send use fake SIGCHLD */
+		case CLD_KILLED: //SIGCHLD 信号引发 子进程被终结了
+			DEBUG_LOG("child %d killed by signal %s",
+					si->si_pid, signame[WTERMSIG(si->si_status)]);
+			stop = 1;
+			if (WTERMSIG(si->si_status) == SIGABRT)
+				restart = 1;
+			break;
+		case CLD_TRAPPED: //
+			DEBUG_LOG("child %d trapped", si->si_pid);
+			return;
+		case CLD_STOPPED: //child has stopped
+			DEBUG_LOG("child %d stopped", si->si_pid);
+			if(si->si_pid > 1) kill(si->si_pid, SIGCONT);
+			return;
+		case CLD_CONTINUED:
+			DEBUG_LOG("child %d continued", si->si_pid);
+			return;
+		case CLD_DUMPED: //traced child has trapped
+			DEBUG_LOG("child %d coredumped by signal %s",
+					si->si_pid, signame[WTERMSIG(si->si_status)]);
+			restart = 1;
+			stop = 1;
+			break;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ### signal handler 中errno的使用
 因为errno是个全局变量所以在handler中使用时要先记录errno的原始值

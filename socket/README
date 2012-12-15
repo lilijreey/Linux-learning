@@ -8,7 +8,7 @@ TCP 连接关闭情况
 另一端不会立即知道，除非调用write，或使用心跳SO_KEEPALIVE
     A：Qus. 会发出FIN吗？, 不会
     B： 调用read的返回是什么？会指定A已经崩溃了吗? 不会阻塞，或timeout
-    C:  调用write回阻塞直到timeout或ICMP返回不可达
+    C:  调用write回阻塞直到timeout或ICMP返回不可达?? 收到RST
    
 
 3. A突然断电，网线断掉：
