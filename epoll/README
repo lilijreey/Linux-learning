@@ -48,8 +48,8 @@ EPOLLONESHOT
 EPOLLERR :这两个events epoll_wait 总是会监听，不需要在epoll_ctl 中设置
 EPOLLHUP
 
-
-*epoll-op* 操作epoll都使用 |epoll_ctl| 函数， 不同的op参数代表不同的操作
+|epoll_ctl|
+*epoll-op* 操作epoll都使用 函数， 不同的op参数代表不同的操作
 ------------------
   *add-fd*
   	*fd type* epoll_ctl 不支持一般文件和目录文件fd，???
