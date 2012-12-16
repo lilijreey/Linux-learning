@@ -32,7 +32,6 @@ int main()
 	//read in stream from uname_fp
 	fgets(buf, sizeof(buf), uname_fp) ;
 	fputs(buf, stdout) ;
-	
 	E_TEST(-1, pclose(uname_fp))
 
 	//write to wc

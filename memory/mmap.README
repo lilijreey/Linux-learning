@@ -17,8 +17,11 @@ e.g.
   fd 必须为-1 并且要在 flags中指明 MAP_ANON. 来采用匿名映射，避免了文件的打开
   者只能用在有亲缘关系的process中
   e.g.
-   ptr = mmap(NULL, len, PROT_READ | PROT_WRITE, MAP_PRIVATE | MAP_ANON, -1, 0);
+   ptr = mmap(NULL, len, PROT_READ | PROT_WRITE, MAP_SHARED | MAP_ANON, -1, 0);
    fork();
+   对于匿名MMAP MAP_PRIVATE he MAP_SHARED 的效果相同????
+   匿名映射的内存全部初始化为0
+   使用匿名映射时 和MAP_SHARED结合从2.4开始支持
 
 
 |include-file|
@@ -36,7 +39,20 @@ addr:   指定映射内存的起始地址，通常NULL 留给系统分配
 length: 映射buf大小
 prot:   参数指定共享内存的访问权限。
 flags:  MAP_SHARED, MAP_PRIVATE, 必选一个
+       *MAP_SHARED* Share  this  mapping.   
+                  Updates  to the mapping are visible to other processes that map
+                  this file, and are carried through to the underlying file. 
+                  The file may not actually be updated until msync(2) or munmap() is called.
+
+       *MAP_PRIVATE*
+		  Create a private copy-on-write mapping. 
+                  Updates to the mapping are not visible to other processes mapping the same file,
+                  and are not carried through  to  the  underlying file.
+                  It is unspecified whether changes made to the file after the mmap() call are
+		  visible in the mapped region.
+
 offset: fd不为-1时才有效， 映射文件开始偏移量
+
 
 1. mmap()系统调用使得进程之间通过映射同一个普通文件实现共享内存。
    普通文件被映射到进程地址空间后，进程可以向访问普通内存一样对文件进行访问，
@@ -52,7 +68,10 @@ offset: fd不为-1时才有效， 映射文件开始偏移量
         映射的文件大小,是进程能够访问的空间大小
         length >= fd-size
         多出的部分空间，访问时会收到SIGBUS信号
+       2. fork 后父子进程都要调用unmap
 
+
+  
 |msync|
 //??
 
@@ -68,6 +87,9 @@ length: mmap 的length
       2. 当addr 不包含映射内存时不会报错
       3. 重复释放一个addr也不会报错
       4. lenght 小于等于mmap时的length也不会报错
+      5. addr = NULL 调用不会出错
+      6. fork 后父进程都要调用munmap
+      7. exit 后系统会自动munmap 没有munmap 的memory
 
 
 EE 

@@ -39,8 +39,17 @@ void read_from_mmap(void *buf) {
 
 }
 
-int main() {
+//匿名
+//void  mmm
 
+struct ok
+{
+    int a;
+    int b;
+};
+
+int main() 
+{
     void *buf;
     buf = mmap(NULL, 
                 BUF_SIZE, 
@@ -53,6 +62,11 @@ int main() {
         exit(1);
     }
 
+//   struct ok * ss = (struct ok*)buf;
+//   ss->a=1;
+//   ss->b=2;
+
+#if 0
    //write hello to mmap
    const char str[] = "hello";
    memcpy(buf, str, strlen(str));
@@ -70,9 +84,10 @@ int main() {
            wait(NULL);
            break;
    }
+#endif
 
-   //fork 后两个process都要调用 munmap ??
-   if (-1 == munmap(buf, BUF_SIZE)) {
+   //fork 后两个process都要调用 munmap ? 是的
+   if (-1 == munmap(NULL, BUF_SIZE)) {
         perror("mmap falied:");
         exit(1);
     }
