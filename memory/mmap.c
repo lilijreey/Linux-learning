@@ -86,8 +86,9 @@ int main()
    }
 #endif
 
+   //free 释放 //不可以 是能用 munmap 释放
    //fork 后两个process都要调用 munmap ? 是的
-   if (-1 == munmap(NULL, BUF_SIZE)) {
+   if (-1 == munmap(buf, BUF_SIZE)) {
         perror("mmap falied:");
         exit(1);
     }

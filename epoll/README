@@ -47,7 +47,9 @@ EPOLLET
 EPOLLONESHOT
 
 EPOLLERR :这两个events epoll_wait 总是会监听，不需要在epoll_ctl 中设置
-EPOLLHUP //对应fd有挂起事件 ,可能会在接受了RST 的socket上write时收到
+EPOLLHUP //对应fd有挂起事件 ,
+          可能会在接受了RST 的socket上write时收到
+         //子进程crashed
 
 //触发事件
 1. EPOLLIN。
