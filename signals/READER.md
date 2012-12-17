@@ -112,8 +112,8 @@ if (cnt == -1)
 	sigemptyset : 初始化为空机会
     sigfillset  : 初始化为包含所有的signal(包括 KILL,STOP)
 +   信号集的增减
-	sigaddset
-	sigdelset
+	sigaddset //对同一个signal多次调用没有问题
+	sigdelset //对同一个signal多次调用没有问题
 
 +   查询指定信号
 	sigismember

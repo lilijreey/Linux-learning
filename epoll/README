@@ -38,6 +38,7 @@ RST ?
 *ET* 边沿触发 (需要使用EPOLLET 设置)
 *LT* 水平触发 (默认的)
 
+//see *epoll_ctl*
 EPOLLIN
 EPOLLPRI
 EPOLLRDHUP
@@ -46,7 +47,29 @@ EPOLLET
 EPOLLONESHOT
 
 EPOLLERR :这两个events epoll_wait 总是会监听，不需要在epoll_ctl 中设置
-EPOLLHUP
+EPOLLHUP //对应fd有挂起事件 ,可能会在接受了RST 的socket上write时收到
+
+//触发事件
+1. EPOLLIN。
+   1、listen fd，有新连接请求，触发
+   2、对端发送普通数据，触发
+
+2.EPOLLPRI
+  1.带外数据，只触发EPOLLPRI。
+
+3. EPOLLIN和EPOLLRDHUP
+   对端正常关闭（程序里close()，shell下kill或ctr+c），
+   触发，但是不触发EPOLLERR和EPOLLHUP。
+
+4. EPOLLERR
+	！！！！！！socket能检测到对方出错吗？目前为止，好像我还不知道如何检测。
+	但是，在给已经关闭的socket写时，会发生EPOLLERR，也就是说，只有在采取行动（比如
+	读一个已经关闭的socket，或者写一个已经关闭的socket）时候，才知道对方是否关闭了。
+	这个时候，如果对方异常关闭了，则会出现EPOLLERR，出现Error把对方DEL掉，close就可以
+	了。！！！！！！！
+
+4、对端异常断开连接（只测了拔网线），没触发任何事件。
+   所以server中检查超时很重要！！！！！！！！！！！！！！！！！！！！！！！
 
 
 *epoll-op* 操作epoll都使用 |epoll_ctl| 函数， 不同的op参数代表不同的操作
