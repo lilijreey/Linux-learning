@@ -54,7 +54,7 @@ int main()
     buf = mmap(NULL, 
                 BUF_SIZE, 
                 PROT_READ | PROT_WRITE,
-                MAP_PRIVATE | MAP_ANON,
+                MAP_SHARED| MAP_ANON, //MAP_PRIVATE 会时parent和client各自有自己的mmap
                 -1, 0);
 
    if (buf == MAP_FAILED) {
@@ -62,14 +62,9 @@ int main()
         exit(1);
     }
 
-//   struct ok * ss = (struct ok*)buf;
-//   ss->a=1;
-//   ss->b=2;
-
-#if 0
    //write hello to mmap
    const char str[] = "hello";
-   memcpy(buf, str, strlen(str));
+#if 1
 
    //fork
    switch (fork()) {
@@ -79,8 +74,10 @@ int main()
        case 0: //chiled 
            sleep(2);
            read_from_mmap(buf);
+
            break;
        default:
+           memcpy(buf, str, strlen(str));
            wait(NULL);
            break;
    }
