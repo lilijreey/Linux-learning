@@ -78,6 +78,7 @@ int main()
            break;
        default:
            memcpy(buf, str, strlen(str));
+           sleep(2);
            wait(NULL);
            break;
    }

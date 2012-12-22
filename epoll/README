@@ -35,7 +35,7 @@ RST ?
 
 *events*
 ---------------------
-*ET* 边沿触发 (需要使用EPOLLET 设置)
+*ET* 边沿触发 (需要使用EPOLLET 设置) //必须使用非阻塞fd
 *LT* 水平触发 (默认的)
 
 //see *epoll_ctl*
