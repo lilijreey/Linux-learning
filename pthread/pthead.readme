@@ -1,8 +1,11 @@
  vim: ft=markdown   
 
+Qus.
+1. 主线程如何等待所有的子线程，而不是某一个(pthread-join) ??
+
 EE 首先需要安装lib
 compile and link command
-`cc -D_REENTRANT file -lpthread`
+`cc -D_REENTRANT file -pthread`
 
 EE wait 的宏解析
 W 表示wait
@@ -69,7 +72,5 @@ EE 线程终止
 
 EE 系统资源（malloc,mmap) _可以在任何时候由任何线程释放_. 
    信号量，互斥量,条件变量,信号灯可以由任何线程销毁. 前提没被解锁或现成等待. _但是有只有互斥量的主人才能释放解锁,所以线程终止时一定要解锁_
-
-
 
 
