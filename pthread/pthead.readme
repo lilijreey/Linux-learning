@@ -3,6 +3,15 @@
 Qus.
 1. 主线程如何等待所有的子线程，而不是某一个(pthread-join) ??
 
+EE 最佳实践
+不要对新产生的线程的执行顺序有任何的假设
+
+
+EE
+////线程不会共享局部变量,因为这些局部变量都是在调用
+//堆上的，每个线程有自己的调用堆栈
+所以不需要使用锁
+
 EE 首先需要安装lib
 compile and link command
 `cc -D_REENTRANT file -pthread`
