@@ -3,8 +3,27 @@
 Qus.
 1. 主线程如何等待所有的子线程，而不是某一个(pthread-join) ??
 
+2. 如果一个线程crash了会影响别的线程吗？
+
+3. 同一个process生成的线程，调用getpid 相同吗? 
+        相同。
+
+4. 主线程getpid 返回的值和自己的pthread id相同吗？
+       不相同。pid
+       gettid()  returns  the  caller's  thread  ID (TID).  
+       In a single-threaded process, the thread ID is equal to the 
+       process ID (PID, as returned by getpid(2)).  In a multi‐threaded process, 
+       all threads have the same PID, but each one has a unique TID.
+
+5. gettid 和 pthread-self 返回的值相同吗?
+       不相同， gettid 返回的值时linux kernel 对一个线程的标记
+       而pthread-self 时 pthread 线程库对一个线程的标记
+
 EE 最佳实践
 不要对新产生的线程的执行顺序有任何的假设
+
+EE gettid
+glibc 不提供gettid 要使用syscall 调用
 
 
 EE
