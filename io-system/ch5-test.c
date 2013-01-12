@@ -114,6 +114,7 @@ int main() {
 	fprintf(stderr, "123"); //如果超过了buf size 就直接写,不还冲
 	sleep(2) ;
     fflush(stderr);
+    //在关闭程序钱必须调用fflush 否则可能不能把buf中的所有数据flush到文件上
 
 	return 0 ;
 }
