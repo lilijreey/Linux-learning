@@ -16,11 +16,11 @@
  * =====================================================================================
  */
 
+#include <unistd.h>
 #include	<signal.h>
 #include	<stdlib.h>
 #include	<stdio.h>
 #include	<errno.h>
-#include <zhao/tools.h>
 
 void pr_mask() {
 	sigset_t sigset ;
@@ -35,27 +35,63 @@ void pr_mask() {
 
 
     //EE fillset 包括所有signal kill， stop
-    E_TEST(-1, sigfillset(&sigset));
+    //E_TEST(-1, sigfillset(&sigset));
     if (sigismember(&sigset, SIGKILL) == 1)
         printf("SIGKILL is in fill set\n");
     else
         printf("SIGKILL not in fill set\n");
     
     //EE 解除一个没有被block的信号,不会引起错误
-    E_TEST(-1, sigprocmask(SIG_UNBLOCK, &sigset, NULL));
+    //E_TEST(-1, sigprocmask(SIG_UNBLOCK, &sigset, NULL));
 }
 
+//多次block 同一个signal
 
+void  hh(int s ) {
+    printf("%d\n", s);
+}
+void nbdig()
+{
+	sigset_t sigset ;
+    sigemptyset(&sigset);
+    if (-1 == sigaddset(&sigset, SIGALRM)) {
+        perror("sigdset sig");
+        return;
+    }
 
-/* 
- * ===  FUNCTION  ======================================================================
- *         Name:  main
- *  Description:  
- * =====================================================================================
- */
-	int
+    if (-1 ==sigprocmask(SIG_UNBLOCK, &sigset, NULL)) {
+        perror("sigprocmask sig");
+        return;
+    }
+}
+void bbsig()
+{
+#if 1
+	sigset_t sigset ;
+    sigemptyset(&sigset);
+    if (-1 == sigaddset(&sigset, SIGALRM)) {
+        perror("sigaddset sig");
+        return;
+    }
+
+    if (-1 ==sigprocmask(SIG_BLOCK, &sigset, NULL)) {
+        perror("sigprocmask sig");
+        return;
+    }
+#endif
+}
+
+int
 main ( int argc, char *argv[] )
 {
-	pr_mask();
+	//pr_mask();
+
+    //多次block一个singal和调用1次相同，
+    bbsig();
+    bbsig();
+    nbdig();
+    for (;;) {
+        pause();
+    }
 	return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */

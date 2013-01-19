@@ -39,13 +39,22 @@ void read_from_mmap(void *buf) {
 
 }
 
-int main() {
+//匿名
+//void  mmm
 
+struct ok
+{
+    int a;
+    int b;
+};
+
+int main() 
+{
     void *buf;
     buf = mmap(NULL, 
                 BUF_SIZE, 
                 PROT_READ | PROT_WRITE,
-                MAP_PRIVATE | MAP_ANON,
+                MAP_SHARED| MAP_ANON, //MAP_PRIVATE 会时parent和client各自有自己的mmap
                 -1, 0);
 
    if (buf == MAP_FAILED) {
@@ -55,7 +64,7 @@ int main() {
 
    //write hello to mmap
    const char str[] = "hello";
-   memcpy(buf, str, strlen(str));
+#if 1
 
    //fork
    switch (fork()) {
@@ -65,13 +74,18 @@ int main() {
        case 0: //chiled 
            sleep(2);
            read_from_mmap(buf);
+
            break;
        default:
+           memcpy(buf, str, strlen(str));
+           sleep(2);
            wait(NULL);
            break;
    }
+#endif
 
-   //fork 后两个process都要调用 munmap ??
+   //free 释放 //不可以 是能用 munmap 释放
+   //fork 后两个process都要调用 munmap ? 是的
    if (-1 == munmap(buf, BUF_SIZE)) {
         perror("mmap falied:");
         exit(1);

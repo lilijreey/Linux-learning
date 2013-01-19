@@ -38,12 +38,10 @@ int main()
 	
 	//create a child process
 	EV_TEST(-1, pid, fork())
-	if(0 == pid) {
-		//child process
+	if(0 == pid) { //child process
 		sprintf(buf, "%d", pipedf[0]) ;
 		E_TEST(-1, execl("pip_read", "pip_read", buf, (char *)0))
 		return 0 ;
-
 	} else {
 		//parent process write data to pipe
 		write(pipedf[1], str, sizeof(str)) ;

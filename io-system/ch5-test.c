@@ -21,7 +21,7 @@
 #include	<errno.h>
 #include    <unistd.h>
 
-#include	<zhao_include/myUtility.h>
+//#include	<zhao_include/myUtility.h>
 /*
  * fopen 建立一个文件的默认权限与umask 的关系
  * From manpage: Any created files will have mode 
@@ -91,19 +91,30 @@ int main() {
        setvbuf(). 
 	The setbuf() function is exactly equivalent to the call
            setvbuf(stream, buf, buf ? _IOFBF : _IONBF, BUFSIZ);
+        setbuffer(FILE *stream, char *buf, size_t buf_size);
  */
 
-#if 0
+#if 1
 int main() {
-	fprintf(stderr, "default stderr is nobuffer\n") ;
+	//fprintf(stderr, "default stderr is nobuffer\n") ;
 
 	char stream_buf[BUFSIZ] ; /* BUFSIZ is 8019 */
+	char stream_buf2[5] ; /* BUFSIZ is 8019 */
+//	setbuf(stderr, stream_buf) ; //改变stderr的默认缓冲为全缓冲模式
+//	fprintf(stderr, "strderr flushed\n") ;
+//    printf("out buf: %s\n",stream_buf);
+/////	fflush(stderr) ; /* immedatle send buffer data to kernel, if stream is NULL clear all out stream */
+//	sleep(2) ;
 
-	fprintf(stderr, "strderr flushed\n") ;
-	setbuf(stderr, stream_buf) ;
-	fprintf(stderr, "default stderr is nobuffer\n") ;
-///	fflush(stderr) ; /* immedatle send buffer data to kernel, if stream is NULL clear all out stream */
-	sleep(3) ;
+    //和setbuf 很像只是buf的长度可自己指定
+    //再次设置缓冲模式，以前的数据会flush吗? 会
+    //setbuffer第一句话没有缓冲 ??
+    setbuffer(stderr, stream_buf2, sizeof(stream_buf2));
+	fprintf(stderr, "xxxx") ;
+	fprintf(stderr, "123"); //如果超过了buf size 就直接写,不还冲
+	sleep(2) ;
+    fflush(stderr);
+    //在关闭程序钱必须调用fflush 否则可能不能把buf中的所有数据flush到文件上
 
 	return 0 ;
 }

@@ -38,6 +38,10 @@ in /usr/include/bit/signum.h
 5.  SIGABRT 采用默认行为，或者在hanler中exit assert可以终结process
 6.  SIGTERM 采用自己的handler，优雅的终结process。通常是kill
 
+###可靠信号 不可靠信号
+传统的信号都是不可靠的。（多个相同信号到达时时，只保留一个)
+时事信号都是可靠的。（多个相同信号到达时时，都会安序保留)
+
 
 ### siganl
 SIGPOLL SIGIO
@@ -108,8 +112,8 @@ if (cnt == -1)
 	sigemptyset : 初始化为空机会
     sigfillset  : 初始化为包含所有的signal(包括 KILL,STOP)
 +   信号集的增减
-	sigaddset
-	sigdelset
+	sigaddset //对同一个signal多次调用没有问题
+	sigdelset //对同一个signal多次调用没有问题
 
 +   查询指定信号
 	sigismember
@@ -220,19 +224,6 @@ void sigchld_handler(int signo, siginfo_t *si, void * p)
 			break;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 ### signal handler 中errno的使用
