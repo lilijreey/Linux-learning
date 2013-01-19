@@ -46,6 +46,7 @@ int main()
     e.events |= EPOLLET;
     E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_MOD, e.data.fd, &e));
 
+    close(epoll_fd);
     // EE get read fd
     struct epoll_event evlist[EPOLL_LIST_SIZE] ;
     int size=0;
