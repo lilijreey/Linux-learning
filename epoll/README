@@ -49,8 +49,9 @@ EPOLLERR :这两个events epoll_wait 总是会监听，不需要在epoll_ctl 中
 EPOLLHUP
 
 |epoll_ctl|
-*epoll-op* 操作epoll都使用 函数， 不同的op参数代表不同的操作
 ------------------
+epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);
+操作epoll都使用 函数， 不同的op参数代表不同的操作
   *add-fd*
   	*fd type* epoll_ctl 不支持一般文件和目录文件fd，???
         我使用一个文本文件的fd 都OK 没有报错??? 为啥？？？
