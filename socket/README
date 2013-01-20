@@ -132,6 +132,7 @@ port<->service-name
    当连接请求由数据到达是在返回。 用于拒绝接收只建立连接不发送数据的请求。
    
 7. SO_LINGER
+   用于区分，正常关闭和异常关闭
    改变 close 的默认动作，通常close立即返回。如果close时还有没有发出的msg
    系统将试着把这些msg发出
    传递参数 linger { int l_onoff /*0 is off*/
