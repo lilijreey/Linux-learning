@@ -42,7 +42,8 @@ static int sendPayload(SSL *sslPtr,
     {
         uint16_t token_size = strlen(token);
         int data_size = 1 + 2 + token_size + 2 + payloadLength;
-        printf("send data size:%u\n", data_size);
+        printf("send data size:%d token_size%u psize:%lu\n", 
+               data_size, token_size, payloadLength);
 
         char *binaryMessagePt = buf;
         uint16_t networkOrderTokenLength = htons(token_size);
@@ -63,8 +64,8 @@ static int sendPayload(SSL *sslPtr,
         memcpy(binaryMessagePt, &networkOrderPayloadLength, sizeof(uint16_t));
         binaryMessagePt += sizeof(uint16_t);
         /* payload */
-        memcpy(binaryMessagePt, payloadBuff, payloadLength);
 
+        memcpy(binaryMessagePt, payloadBuff, payloadLength);
         binaryMessagePt += payloadLength;
 
         /* 发消息给服务器 */
@@ -122,23 +123,32 @@ int main(int argc, char **argv)
         exit(1);
     }
 
-//    /* 载入用户的数字证书， 此证书用来发送给客户端。 证书里包含有公钥 */
-//    if (SSL_CTX_use_certificate_file(ctx, "./push_cer.pem", SSL_FILETYPE_PEM) != 1) {
-//        ERR_print_errors_fp(stdout);
-//        exit(1);
-//    }
-//
-//    /* 载入用户私钥 */
-//    if (SSL_CTX_use_PrivateKey_file(ctx, "./push_cer.pem", SSL_FILETYPE_PEM) != 1) {
-//        ERR_print_errors_fp(stdout);
-//        exit(1);
-//    }
-//
-//    /* 检查用户私钥是否正确 */
-//    if (!SSL_CTX_check_private_key(ctx)) {
-//        ERR_print_errors_fp(stdout);
-//        exit(1);
-//    }
+
+    //加载可信任证书库 AC
+    if (0 == SSL_CTX_load_verify_locations(ctx, NULL, "/etc/ssl/certs")) {
+        printf("err func:%s\n reaseon:%s", ERR_func_error_string(ERR_get_error()),
+               ERR_reason_error_string(ERR_get_error()));
+        ERR_print_errors_fp(stdout);
+        exit(1);
+    }
+
+    /* 载入用户的数字证书， 此证书用来发送给客户端。 证书里包含有公钥 */
+    if (SSL_CTX_use_certificate_file(ctx, "./ssl.pem", SSL_FILETYPE_PEM) != 1) {
+        ERR_print_errors_fp(stdout);
+        exit(1);
+    }
+
+    /* 载入用户私钥 */
+    if (SSL_CTX_use_PrivateKey_file(ctx, "./pri.pem", SSL_FILETYPE_PEM) != 1) {
+        ERR_print_errors_fp(stdout);
+        exit(1);
+    }
+
+    /* 检查用户私钥是否正确 */
+    if (!SSL_CTX_check_private_key(ctx)) {
+        ERR_print_errors_fp(stdout);
+        exit(1);
+    }
 
 
 //    struct host *hptr = gethostbyname("gateway.sandbox.push.apple.com");
@@ -196,13 +206,14 @@ int main(int argc, char **argv)
 //        ShowCerts(ssl);
     }
 
-    //char *json = "{\"aps\" : { \"alert\" : \"hello world\"}}";
-    char *json = "{\"aps\":{\"badge\":123}}";
+    char *json = "{\"aps\" : { \"alert\" : \"hello world\"}}";
+ //   char *json = "{\"aps\":{\"badge\":123}}";
 
     sendPayload(ssl, token, json, strlen(json));
 
     /* 接收对方发过来的消息，最多接收 MAXBUF 个字节 */
     bzero(buffer, MAXBUF + 1);
+
     /* 接收服务器来的消息 */
     len = SSL_read(ssl, buffer, MAXBUF);
     if (len > 0)
@@ -223,7 +234,7 @@ int main(int argc, char **argv)
 
 finish:
     /* 关闭连接 */
-    SSL_shutdown(ssl);
+//    SSL_shutdown(ssl);
     SSL_free(ssl);
     close(sockfd);
     SSL_CTX_free(ctx);
