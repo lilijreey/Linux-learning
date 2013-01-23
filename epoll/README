@@ -75,9 +75,10 @@ EPOLLHUP //对应fd有挂起事件
 4、对端异常断开连接（只测了拔网线），没触发任何事件。
    所以server中检查超时很重要！！！！！！！！！！！！！！！！！！！！！！！
 
-
-*epoll-op* 操作epoll都使用 |epoll_ctl| 函数， 不同的op参数代表不同的操作
+|epoll_ctl|
 ------------------
+epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);
+操作epoll都使用 函数， 不同的op参数代表不同的操作
   *add-fd*
   	*fd type* epoll_ctl 不支持一般文件和目录文件fd，???
         我使用一个文本文件的fd 都OK 没有报错??? 为啥？？？

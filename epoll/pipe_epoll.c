@@ -84,6 +84,7 @@ void child_run()
         if (e.events & EPOLLHUP) {//如果不把产生的HUP的df移除会一直产生
             printf("EPOLLHUP\n");
             epoll_ctl(epoll_fd, EPOLL_CTL_DEL, e.data.fd, NULL);
+            break ;
         }
 
         if (e.events & EPOLLOUT) {
@@ -131,7 +132,11 @@ void parent_run()
         }
         sleep(1);
     }
+
+    //close 后client process pipe 另一端 会回收到EPOLLHUP 信号
+    printf("clsoe se\n");
     close(sendfd);
+    printf("clsoe ss\n");
     //abort();
 
     E_TEST(-1, wait(NULL));

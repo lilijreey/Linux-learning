@@ -40,11 +40,13 @@ int main()
     // EE set epoll
     // add new fd EPOLLET 边沿触发
     struct epoll_event e = {EPOLLIN | EPOLLERR, (epoll_data_t)ofd};
+    //epoll 内部会复制一个e
     E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_ADD, e.data.fd, &e));
     //E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_DEL, e.data.fd, NULL/* ignore the arg */));
     e.events |= EPOLLET;
     E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_MOD, e.data.fd, &e));
 
+    close(epoll_fd);
     // EE get read fd
     struct epoll_event evlist[EPOLL_LIST_SIZE] ;
     int size=0;
@@ -60,6 +62,7 @@ int main()
         }
     }
 
+    //close fd epoll will auto clean epoll_fd
     close(epoll_fd);
 
     return 0;
