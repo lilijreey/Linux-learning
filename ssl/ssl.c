@@ -23,70 +23,105 @@
 #include <unistd.h>
 #include <netdb.h>
 #include <openssl/ssl.h>
+#include <openssl/x509.h>
 #include <openssl/bio.h>
 #include <openssl/err.h>
 
 #define MAXBUF 1024
 
-static char *token  ="aa994d28c89422d11c58ba4ab6d18309427699719e6f208395d0d5a40eb90d21";
-
 
 char buf[MAXBUF];
-static int sendPayload(SSL *sslPtr, 
+
+unsigned long packMessage(char *message, const unsigned char command, const char *tokenBytes, const char *payload)
+{
+    unsigned long payloadLength = strlen(payload);
+    unsigned short networkTokenLength = htons(32);
+    unsigned short networkPayloadLength = htons(payloadLength);
+ 
+    memcpy(message, &command, sizeof(unsigned char));
+    message += sizeof(unsigned char);
+    memcpy(message, &networkTokenLength, sizeof(unsigned short));
+    message += sizeof(unsigned short);
+    memcpy(message, tokenBytes, 32);
+    message += 32;
+    memcpy(message, &networkPayloadLength, sizeof(unsigned short));
+    message += sizeof(unsigned short);
+    memcpy(message, payload, payloadLength);
+ 
+    return payloadLength + 37;
+}
+
+// 将deviceToken字符串转成对应的binary bytes
+void token2bytes(const char *token, char *bytes)
+{
+    int val;
+    while (*token) {
+        sscanf(token, "%2x", &val);
+        *(bytes++) = (char)val;
+ 
+        token += 2;
+        while (*token == ' ') { // skip space
+            ++token;
+        }
+    }
+}
+
+static int sendPayloadB(BIO *bio,
                        char *token, 
                        char *payloadBuff,
                        size_t payloadLength)
 {
     int rtn = 1;
-    if (sslPtr && token && payloadBuff && payloadLength)
-    {
-        uint16_t token_size = strlen(token);
-        int data_size = 1 + 2 + token_size + 2 + payloadLength;
-        printf("send data size:%d token_size%u psize:%lu\n", 
-               data_size, token_size, payloadLength);
-
-        char *binaryMessagePt = buf;
-        uint16_t networkOrderTokenLength = htons(token_size);
-        uint16_t networkOrderPayloadLength = htons(payloadLength);
-
-        /* command */
-        uint8_t command = 0; /* command number */
-        *binaryMessagePt++ = command;
-
-        /* token length network order */
-        memcpy(binaryMessagePt, &networkOrderTokenLength, sizeof(uint16_t));
-        binaryMessagePt += sizeof(uint16_t);
-        /* device token */
-        memcpy(binaryMessagePt, token, token_size);
-        binaryMessagePt += token_size;
-
-        /* payload length network order */
-        memcpy(binaryMessagePt, &networkOrderPayloadLength, sizeof(uint16_t));
-        binaryMessagePt += sizeof(uint16_t);
-        /* payload */
-
-        memcpy(binaryMessagePt, payloadBuff, payloadLength);
-        binaryMessagePt += payloadLength;
-
+    char tokenBytes[32];
+    char message[293];
+    unsigned long msgLength;
+ 
+    token2bytes(token, tokenBytes);
+    msgLength = packMessage(message, 0, tokenBytes, payloadBuff);
         /* 发消息给服务器 */
-        rtn = SSL_write(sslPtr, buf, data_size);
+        rtn = BIO_write(bio, message, msgLength);
         if (rtn < 0) {
             printf ("消息发送失败！");
         }
         else
             printf("消息发送成功, 共发送了%d个字节！\n", rtn);
-    }
+        return rtn;
+}
+static int sendPayload(SSL *ssl, 
+                       char *token, 
+                       char *payloadBuff,
+                       size_t payloadLength)
+{
+    int rtn = 1;
+    char tokenBytes[32];
+    char message[293];
+    unsigned long msgLength;
+ 
+    token2bytes(token, tokenBytes);
+    msgLength = packMessage(message, 0, tokenBytes, payloadBuff);
+    return SSL_write(ssl, message, (int)msgLength);
     return rtn;
 }
 
-void ShowCerts(SSL * ssl)
+void check_cert_chain(SSL * ssl)
 {
     X509 *cert;
     char *line;
+    char peer_CN[256];
+
+    if (SSL_get_verify_result(ssl) != X509_V_OK) {
+        printf("SSL_get_verify_result failed\n");
+        exit(1);
+    }
 
     cert = SSL_get_peer_certificate(ssl);
     if (cert != NULL) {
         printf("数字证书信息:\n");
+        //答应server的DNS 域名 geteway.sandbox.push.app
+        X509_NAME_get_text_by_NID(X509_get_subject_name(cert),
+                                  NID_commonName, peer_CN, 256);
+        printf("peer_CN:%s\n", peer_CN);
+
         line = X509_NAME_oneline(X509_get_subject_name(cert), 0, 0);
         printf("证书: %s\n", line);
         free(line);
@@ -117,11 +152,14 @@ int main(int argc, char **argv)
     ERR_load_BIO_strings();
     SSL_library_init();
     OpenSSL_add_all_algorithms();
+    OpenSSL_add_all_ciphers();
     ctx = SSL_CTX_new(SSLv23_client_method());
     if (ctx == NULL) {
         ERR_print_errors_fp(stdout);
         exit(1);
     }
+
+    //SSL_CTX_set_options(ctx, SSL_OP_ALL);
 
 
     //加载可信任证书库 AC
@@ -132,12 +170,15 @@ int main(int argc, char **argv)
         exit(1);
     }
 
+//    if (SSL_CTX_use_certificate_chain_file(ctx, "./ssl.pem") != 1) //Qus. 干嘛用的?
     /* 载入用户的数字证书， 此证书用来发送给客户端。 证书里包含有公钥 */
     if (SSL_CTX_use_certificate_file(ctx, "./ssl.pem", SSL_FILETYPE_PEM) != 1) {
         ERR_print_errors_fp(stdout);
         exit(1);
     }
 
+    //设置私钥的使用密码
+    SSL_CTX_set_default_passwd_cb_userdata(ctx, "Hx13917341682");
     /* 载入用户私钥 */
     if (SSL_CTX_use_PrivateKey_file(ctx, "./pri.pem", SSL_FILETYPE_PEM) != 1) {
         ERR_print_errors_fp(stdout);
@@ -151,13 +192,13 @@ int main(int argc, char **argv)
     }
 
 
-//    struct host *hptr = gethostbyname("gateway.sandbox.push.apple.com");
-//    if (hptr == NULL) {
-//        perror("gethostbyname faild");
+    //设置一个临时RSA，
+//    RSA *rsa = RSA_generate_key(512, RSA_F4, NULL, NULL);
+//    if (SSL_CTX_set_tmp_rsa(ctx, rsa) != 1) {
+//        ERR_print_errors_fp(stdout);
 //        exit(1);
 //    }
-//
-//    printf("addrs:%s\n",hptr->h_name);
+
 
 
     /* 创建一个 socket 用于 tcp 通信 */
@@ -189,11 +230,19 @@ int main(int argc, char **argv)
         goto finish;
     }
 
-    if (0 == SSL_set_fd(ssl, sockfd)) {
-        printf("SSL_set_fd error\n");
+    BIO *bio = BIO_new_socket(sockfd, BIO_NOCLOSE);
+    if (NULL == bio) {
         ERR_print_errors_fp(stderr);
-        exit(1);
+        goto finish;
     }
+
+    //把ssl和bio绑定
+    SSL_set_bio(ssl, bio, bio);
+//    if (0 == SSL_set_fd(ssl, sockfd)) {  //使用了BIO 就不用这步了
+//        printf("SSL_set_fd error\n");
+//        ERR_print_errors_fp(stderr);
+//        exit(1);
+//    }
 
     /* 建立 SSL 连接 */
     if (SSL_connect(ssl) != 1) {
@@ -203,12 +252,18 @@ int main(int argc, char **argv)
     }
     else {
         printf("Connected with %s encryption\n", SSL_get_cipher(ssl));
-//        ShowCerts(ssl);
     }
 
-    char *json = "{\"aps\" : { \"alert\" : \"hello world\"}}";
+    //检测server身份
+    check_cert_chain(ssl);
+
+//    read_write(ssl, sockfd);
+
+    char json[] = "{\"aps\":{\"alert\":\"Hello world!!!\",\"badge\":1}}";
+//    char *json = "{\"aps\":{\"alert\":\"hello HHH\"}}";
  //   char *json = "{\"aps\":{\"badge\":123}}";
 
+    char *token  ="aa994d28c89422d11c58ba4ab6d18309427699719e6f208395d0d5a40eb90d21";
     sendPayload(ssl, token, json, strlen(json));
 
     /* 接收对方发过来的消息，最多接收 MAXBUF 个字节 */
