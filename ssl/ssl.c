@@ -66,27 +66,6 @@ void token2bytes(const char *token, char *bytes)
     }
 }
 
-static int sendPayloadB(BIO *bio,
-                       char *token, 
-                       char *payloadBuff,
-                       size_t payloadLength)
-{
-    int rtn = 1;
-    char tokenBytes[32];
-    char message[293];
-    unsigned long msgLength;
- 
-    token2bytes(token, tokenBytes);
-    msgLength = packMessage(message, 0, tokenBytes, payloadBuff);
-        /* 发消息给服务器 */
-        rtn = BIO_write(bio, message, msgLength);
-        if (rtn < 0) {
-            printf ("消息发送失败！");
-        }
-        else
-            printf("消息发送成功, 共发送了%d个字节！\n", rtn);
-        return rtn;
-}
 static int sendPayload(SSL *ssl, 
                        char *token, 
                        char *payloadBuff,
@@ -106,8 +85,9 @@ static int sendPayload(SSL *ssl,
 void check_cert_chain(SSL * ssl)
 {
     X509 *cert;
-    char *line;
     char peer_CN[256];
+    char sub[256];
+    char iss[256];
 
     if (SSL_get_verify_result(ssl) != X509_V_OK) {
         printf("SSL_get_verify_result failed\n");
@@ -120,17 +100,15 @@ void check_cert_chain(SSL * ssl)
         //答应server的DNS 域名 geteway.sandbox.push.app
         X509_NAME_get_text_by_NID(X509_get_subject_name(cert),
                                   NID_commonName, peer_CN, 256);
-        printf("peer_CN:%s\n", peer_CN);
 
-        line = X509_NAME_oneline(X509_get_subject_name(cert), 0, 0);
-        printf("证书: %s\n", line);
-        free(line);
-        line = X509_NAME_oneline(X509_get_issuer_name(cert), 0, 0);
-        printf("颁发者: %s\n", line);
-        free(line);
+        X509_NAME_oneline(X509_get_subject_name(cert), sub, 256);
+        X509_NAME_oneline(X509_get_issuer_name(cert), iss, 256);
+        printf("peer_CN:%s\n sub:%s \n iss:%s\n", peer_CN, sub, iss);
         X509_free(cert);
     } else
-        printf("无证书信息！\n");
+        printf("没有数字证书\n");
+
+
 }
 
 int main(int argc, char **argv)
@@ -230,19 +208,23 @@ int main(int argc, char **argv)
         goto finish;
     }
 
-    BIO *bio = BIO_new_socket(sockfd, BIO_NOCLOSE);
-    if (NULL == bio) {
-        ERR_print_errors_fp(stderr);
-        goto finish;
-    }
+//使用 BIO
+//    BIO *bio = BIO_new_socket(sockfd, BIO_NOCLOSE);
+//    if (NULL == bio) {
+//        ERR_print_errors_fp(stderr);
+//        goto finish;
+//    }
 
     //把ssl和bio绑定
-    SSL_set_bio(ssl, bio, bio);
-//    if (0 == SSL_set_fd(ssl, sockfd)) {  //使用了BIO 就不用这步了
-//        printf("SSL_set_fd error\n");
-//        ERR_print_errors_fp(stderr);
-//        exit(1);
-//    }
+//    SSL_set_bio(ssl, bio, bio);
+//
+
+    //不使用BIO
+    if (0 == SSL_set_fd(ssl, sockfd)) {  //使用了BIO 就不用这步了
+        printf("SSL_set_fd error\n");
+        ERR_print_errors_fp(stderr);
+        exit(1);
+    }
 
     /* 建立 SSL 连接 */
     if (SSL_connect(ssl) != 1) {

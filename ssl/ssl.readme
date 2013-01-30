@@ -1,0 +1,12 @@
+SSL 
+
+错误处理
+ssl的错误码由 ERR_get_error() 
+提供最近一次的错误吗
+而不是产生错误的函数的返回码
+
+使用ERR_reason_error_string(ERR_get_error())
+输出错误原因
+
+注意： 使用ERR_reason_error_string 的前台必须是
+调用 SSL_load_error_strings(); //加载设个后ERR_reason_error_string

@@ -33,14 +33,24 @@ void error(const char *msg)
  
 SSL_CTX *setup_client_ctx()
 {
+    SSL_load_error_strings(); //加载设个后ERR_reason_error_string
+    //才会有输出
+
     ctx = SSL_CTX_new(SSLv23_method());
 
+    printf("err;%lu\n", ERR_get_error());
+    SSL_CTX_set_options(ctx, SSL_OP_MICROSOFT_SESS_ID_BUG);
+    SSL_CTX_set_options(ctx, SSL_OP_NETSCAPE_CHALLENGE_BUG);
     if (SSL_CTX_use_certificate_file(ctx, "./ssl.pem", SSL_FILETYPE_PEM) != 1) {
         error("Error loading certificate from file\n");
     }
 
     SSL_CTX_set_default_passwd_cb_userdata(ctx, "Hx13917341682");
-    if (SSL_CTX_use_PrivateKey_file(ctx, "./pri.pem", SSL_FILETYPE_PEM) != 1) {
+    int ret = SSL_CTX_use_PrivateKey_file(ctx, "./pr.pem", SSL_FILETYPE_PEM);
+
+    if (ret != 1) {
+        unsigned long ret = ERR_get_error();
+        printf("error:%lu %s\n", ret,  ERR_reason_error_string(ret));
         error("Error loading private key from file\n");
     }
     return ctx;
