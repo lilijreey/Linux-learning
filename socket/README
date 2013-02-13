@@ -122,7 +122,8 @@ port<->service-name
    bind 之前设置
   允许重用地址， 在time_wait 状态下的地址是否可以重用
    一般用于重启后马上要重新绑定到原来地址的
-  try?
+   使用SO_REUSEADDR 的不足是他允许你有可能两个进行绑定同一个
+   地址??? 不可能吧，操作系统不允许这样，哪步会返回错误呢？
 
 5. TCP_NODELAY
    禁止Nagle算法
