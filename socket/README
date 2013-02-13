@@ -4,20 +4,25 @@ TCP 连接关闭情况
   B: 调用read 返回0. 表示A：已经关闭（不能在发送数据了)但是还可以接受数据
   Qus. 如果B不掉用 read可以知道A：发送的FIN吗？
 
-2.程序崩溃。
-另一端不会立即知道，除非调用write，或使用心跳SO_KEEPALIVE
-    A：Qus. 会发出FIN吗？, 不会
-    B： 调用read的返回是什么？会指定A已经崩溃了吗? 不会阻塞，或timeout
-    C:  调用write回阻塞直到timeout或ICMP返回不可达?? 收到RST
+2.server段程序崩溃。
+   client 段也许会知道(操作系统为打开的fd调用了close）
+                      也可能不会知道,两中情况
+   另一端不会立即知道，除非调用write，read,或使用心跳SO_KEEPALIVE
+    A：Qus. 会发出FIN吗？, 都有可能
+    B： 调用read的会收到 EOF,或一直阻塞
+    C:  调用write到RST, PIPE,或一直阻塞
    
-
-3. A突然断电，网线断掉：
-  和2的情况相同
 
 4.崩溃并重启
   另一端是否知道？ 如果在崩溃时不主动发送消息，则不知道server是否已经崩溃
- A:调用read时server以重启: 阻塞，或timeout
+ A:调用read时server以重启: server会收到一个client的重传data，而
+       server不知如何处理他，server会给client发送一条RST，并断开链接
+       client read返回EOF或其他错误
  B:调用write时server以重启: 会收到RST分节,到时write 返回 ECONNRESET 错误
+
+3. A突然断电，网线断掉：
+   所有操作都阻塞，或超时
+
 
 
 Socket API 注意是不是可重入的
