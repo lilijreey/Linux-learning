@@ -110,6 +110,30 @@ port<->service-name
 
 |getprotobynumber|
 
+EE 健壮SOCKET 程序需要注意的几点
+  0. 检查系统调用返回值
+  1. 捕捉信号：
+     +. SIGPIPE. 
+        给一个对方已经关闭的socket写数据时产生
+          通常做忽略处理.
+     +. SIGURG
+        紧急IO处理，外带数据OOB到来时产生
+          可以log出来
+     +. SIGCHLD
+        多进程模式下，通常检测SIGCHLD来wait结束的进程
+             while(waitpid(-1,0,WNOHANG) > 0);
+     +. SIGHUP
+         在守护进程模式下，通常使用SIGHUP信号来让程序restart
+     +. SIGIO
+         ???
+     +. SIGALRM
+          需要时处理
+   
+    2. 资源管理
+        CPU memory Processes
+           
+
+
 |setsockopt| more see *tcp(7)*
 几种常见的选项
 1. SO_KEEPALIVE 
