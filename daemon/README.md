@@ -9,6 +9,7 @@ Qus.
 2.  It runs in the backgroud and has no controling terminal.
     是为了确保，kernel永远不会自动生成任何作用控制，或终端
     有关的信号(SIGINT,SIGTSTP,SIGHUP)
+    SIGHUP 通常来用来重启server
 
 ###特点:
 +   必须是init的子进程，没有控制器终端， TTY=? TGPID = -1,
