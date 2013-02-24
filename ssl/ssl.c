@@ -51,20 +51,6 @@ unsigned long packMessage(char *message, const unsigned char command, const char
     return payloadLength + 37;
 }
 
-// 将deviceToken字符串转成对应的binary bytes
-void token2bytes(const char *token, char *bytes)
-{
-    int val;
-    while (*token) {
-        sscanf(token, "%2x", &val);
-        *(bytes++) = (char)val;
- 
-        token += 2;
-        while (*token == ' ') { // skip space
-            ++token;
-        }
-    }
-}
 
 static int sendPayload(SSL *ssl, 
                        char *token, 

@@ -46,7 +46,7 @@ SSL_CTX *setup_client_ctx()
     }
 
     SSL_CTX_set_default_passwd_cb_userdata(ctx, "Hx13917341682");
-    int ret = SSL_CTX_use_PrivateKey_file(ctx, "./pr.pem", SSL_FILETYPE_PEM);
+    int ret = SSL_CTX_use_PrivateKey_file(ctx, "./pri.pem", SSL_FILETYPE_PEM);
 
     if (ret != 1) {
         unsigned long ret = ERR_get_error();
