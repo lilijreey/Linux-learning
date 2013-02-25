@@ -7,7 +7,9 @@ SSL 链接过程
         1.协商加密算法
         2.对server，clent进程认证
         3.生成加密密码
+
 2.发送数据
+3 结束ssl  发送close_notify 信息
 
 Qus. ssl 发送数据的格式
      设置nonblock fd 对ssl的影响
@@ -28,3 +30,7 @@ ssl的错误码由 ERR_get_error()
 openssl s_client -connect gateway.sandbox.push.apple.com:2195 -CApath /etc/ssl/certs/ -cert aps_development.pem -key andyhuang.pem
 
 -CApath 指定 CA 的存储文件夹
+
+EE ssldump 一种用来查看ssl通讯的工具
+
+EE openssl s_server | s_client 用来测试使用 
