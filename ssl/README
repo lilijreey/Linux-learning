@@ -1,3 +1,0 @@
-openssl s_client -connect gateway.sandbox.push.apple.com:2195 -CApath /etc/ssl/certs/ -cert aps_development.pem -key andyhuang.pem
-
--CApath 指定 CA 的存储文件夹

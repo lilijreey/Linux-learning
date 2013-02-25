@@ -1,5 +1,19 @@
 SSL 
 
+SSL 链接过程
+0.建立TCP链接
+1.建立SSL握手，
+     +.握手的目的
+        1.协商加密算法
+        2.对server，clent进程认证
+        3.生成加密密码
+2.发送数据
+
+Qus. ssl 发送数据的格式
+     设置nonblock fd 对ssl的影响
+     epoll 和 ssl的交互
+     ssl 链接的结束
+     
 错误处理
 ssl的错误码由 ERR_get_error() 
 提供最近一次的错误吗
@@ -10,3 +24,7 @@ ssl的错误码由 ERR_get_error()
 
 注意： 使用ERR_reason_error_string 的前台必须是
 调用 SSL_load_error_strings(); //加载设个后ERR_reason_error_string
+
+openssl s_client -connect gateway.sandbox.push.apple.com:2195 -CApath /etc/ssl/certs/ -cert aps_development.pem -key andyhuang.pem
+
+-CApath 指定 CA 的存储文件夹
