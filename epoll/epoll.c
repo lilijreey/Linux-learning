@@ -46,7 +46,7 @@ int main()
     e.events |= EPOLLET;
     E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_MOD, e.data.fd, &e));
 
-    close(epoll_fd);
+//    close(ofd); close 掉epoll 中添加的fd epoll会自动删除fd event, 不会触发任何的event
     // EE get read fd
     struct epoll_event evlist[EPOLL_LIST_SIZE] ;
     int size=0;
