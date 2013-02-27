@@ -10,21 +10,27 @@ TCP 连接关闭情况
   B: 调用read 返回0. 表示A：已经关闭（不能在发送数据了)但是还可以接受数据
   Qus. 如果B不掉用 read可以知道A：发送的FIN吗？
 
-2.server段程序崩溃。
+2.server段程序崩溃。system 会发送FIN 包
    client 段也许会知道(操作系统为打开的fd调用了close）
                       也可能不会知道,两中情况
-   另一端不会立即知道，除非调用write，read,或使用心跳SO_KEEPALIVE
-    A：Qus. 会发出FIN吗？, 都有可能
+    另一端会立即知道
+    TEST
     B： 调用read的会收到 EOF,或一直阻塞
-    C:  调用write到RST, PIPE,或一直阻塞
+    C:  调用write ok, 在read时会收到RST, 收到RST后内核会断开TCP链接
+        如果忽略RST 错误，再次调用write 会收到SIGPIPE.
+
+3. server 主机崩溃 不会发送FIN 包
+    另一不会收到任何信息，在主机重启之前这种情况看起了和网络故障
+    一样, write 发送的msg都会tiemout 返回ETIMEDOUT
    
 
-4.崩溃并重启
-  另一端是否知道？ 如果在崩溃时不主动发送消息，则不知道server是否已经崩溃
- A:调用read时server以重启: server会收到一个client的重传data，而
-       server不知如何处理他，server会给client发送一条RST，并断开链接
+4. server主机崩溃并重启
+     server会收到一个client的重传data，而
+     server不知如何处理他，server会给client发送一条RST，并断开链接
+     client 收到一个RST后会丢弃链接
+ A:调用read时server以重启: 
        client read返回EOF或其他错误
- B:调用write时server以重启: 会收到RST分节,到时write 返回 ECONNRESET 错误
+ B:调用write时server以重启: SIGPIPE
 
 3. A突然断电，网线断掉：
    所有操作都阻塞，或超时
@@ -51,6 +57,8 @@ Socket API 注意是不是可重入的
 
 3. 路由不可达
 
+4. 对方主机可链接数量满了,返回ECONNREFUSED
+
 |bind| 绑定socket到一个协议地址
 
 如果不帮定。那么在connect 或 listen 时，内核就要为socket
@@ -74,7 +82,7 @@ IP: 统配地址 ipv4 INADDR_ANY, 内核指定, 何时指定？
 getsockname  //通常client调用，得到自己的
 getpeerkname //通常server调用，得到client的
 
-|listen|
+|listen/2|
 做两件事
 1.把fd从主动接口，设置为被动接口.监听状态 
   当主机收到一个链接请求时，kernel就会查找监听socket列表
@@ -90,6 +98,14 @@ getpeerkname //通常server调用，得到client的
   syncookies are enabled there is no logical maximum length and this set‐
   ting is ignored.  See tcp(7) for more information.
   more see *listen(3)*
+
+3. backlog 参数的含义:
+       从linux2.2 开始， backlog定义为:
+        已经完成链接但还未accepted的 sockets 等待队列大小
+        backlog 最大不会大于 /proc/sys/net/core/somaxconn 
+        需要修改somaxconn 
+
+4. 未完成的链接队列的大小由 /proc/sys/net/ipv4/tcp_max_syn_backlog 指定
 
 
 |accept|
@@ -163,6 +179,37 @@ EE 健壮SOCKET 程序需要注意的几点
   接收发送缓存大小，tcp窗口的小
   必须在connect bind前调用
   linux  SO_RCVBUF=87380, SO_SNDBUF=16384
+  
+  每个TCP链接都维护一个接收窗口和发送窗口
+  窗口主要用于流量控制，和超时重传
+
+  receive winodw
+  +----+----+----+----+----+
+  | 14 | 15 | 16 | 17 | 18 |
+  +----+----+----+----+----+
+  左边是期望收到的下一个segment的序号，右边是可以接受的最大的segment的序号，
+  tcp 只会接收在窗口中的segment，也就是说 不再receive-winodw 序号中的segment都将被抛弃
+
+
+  send window
+  +----+----+----+----+----+
+  | 14 | 15 | 16 | 17 | 18 |
+  +----+----+----+----+----+
+                 ^
+                 |
+       next-send/
+  send-window 有已发送还被确认的segment和可以发送还没发送的segment组成
+
+  Qus. TCP 何时通知应用层有数据到了??
+  TCP 是一种流协议：
+       没有固定报文边界的协议，读取TCP数据就向从串口读数据一样，
+       无法预先得知在一次读取时会返回多少字节
+  send 默认情况下应用层调用send, send在把数据复制到内核TCP栈后就返回了，至于
+       何时发送，是不是会和其他send的数据合并成一个pkg发送，都是有内核决定的
+       也就是说，tcp实际发送的包和调用send的时候的数据基本上没有直接关系.
+       而且读取时也无法判断数据是一次到来的，还是多次到来的.
+       所以，不要对read时的数据有任何的假设, 对应用层来说TCP没有分组的概念
+
 
 3. SO_RCVTIMEO SO_SNDTIMEO
   接收发送超时设置. default is 0
@@ -213,4 +260,91 @@ send 和write的前3个参数相同，但是有一个flags 参数
   e.g. sockaddr_in addr.sin_addr.s_addr = inet_addr(x.x.x.)
  e.g.
 
+brocdcase
+ +. 有限广播地址
+   255.255.255.255 路由不会转发此地址的msg，也就是说这个msg不会跑的子网
+   以外的地方。 主要用来得到自己的IP
+ +. 网络广播
+   向一个指定网络的所有主机广播msg
+   保留网络地址，主机地址全部为255
+     e.g. 190.25.255.255 广播个190.25 网络中的所有主机
+    路由不一定支持^_^
+ +.
+     
+EE SYN Flood 攻击
+ 原理。。。。
+ 预防
+ |syncookies| SYN Cookie
+  一种预防SYN Flood 的方法 see .syncookie.readme
+   
+
+EE 网络内核参数 files
+  /proc/sys/net/core/somaxconn 已经完成链接还没有accept的socket队列大小
+        listen()的默认参数,挂起请求的最大数量.默认是128.对繁忙的服务器,增加该值有助于网络性能.
+        可通过/etc/sysctl.conf 中添加net.core.somaxconn = 2048 来修改
+        在执行 sysctl -p
+  /etc/sysctl.conf
+	# /etc/sysctl.conf - Configuration file for setting system variables
+	# See /etc/sysctl.d/ for additional system variables
+	# See sysctl.conf (5) for information.
+
+ /proc/sys/net/core/wmem_max
+   最大socket写buffer,可参考的优化值:873200
+ /proc/sys/net/core/rmem_max
+   最大socket读buffer,可参考的优化值:873200
+ /proc/sys/net/ipv4/tcp_wmem
+  TCP写buffer,可参考的优化值: 8192 436600 873200
+ /proc/sys/net/ipv4/tcp_rmem
+  TCP读buffer,可参考的优化值: 32768 436600 873200
+
+ /proc/sys/net/ipv4/tcp_mem
+	同样有3个值,意思是:
+	net.ipv4.tcp_mem[0]:低于此值,TCP没有内存压力.
+	net.ipv4.tcp_mem[1]:在此值下,进入内存压力阶段.
+	net.ipv4.tcp_mem[2]:高于此值,TCP拒绝分配socket.
+	上述内存单位是页,而不是字节.可参考的优化值是:786432 1048576 1572864
+
+ /proc/sys/net/core/netdev_max_backlog
+   进入包的最大设备队列.默认是300,对重负载服务器而言,该值太低,可调整到1000.
+ /proc/sys/net/core/optmem_max
+  socket buffer的最大初始化值,
+
+ /proc/sys/net/ipv4/tcp_max_syn_backlog
+   进入SYN包的最大请求队列.默认1024.对重负载服务器,增加该值显然有好处.可调整到2048.
+ /proc/sys/net/ipv4/tcp_retries2
+   TCP失败重传次数,默认值15,意味着重传15次才彻底放弃.可减少到5,以尽早释放内核资源.
+
+ /proc/sys/net/ipv4/tcp_keepalive_time
+ /proc/sys/net/ipv4/tcp_keepalive_intvl
+ /proc/sys/net/ipv4/tcp_keepalive_probes
+	这3个参数与TCP KeepAlive有关.默认值是:
+	tcp_keepalive_time = 7200 seconds (2 hours)
+	tcp_keepalive_probes = 9
+	tcp_keepalive_intvl = 75 seconds
+	意思是如果某个TCP连接在idle 2个小时后,内核才发起probe.如果probe 9次(每次75秒)不成功,
+                      内核才彻底放弃,认为该连接已失效.对服务器而言,显然上述值太大. 可调整到:
+	/proc/sys/net/ipv4/tcp_keepalive_time 1800
+	/proc/sys/net/ipv4/tcp_keepalive_intvl 30
+	/proc/sys/net/ipv4/tcp_keepalive_probes 3
+
+  /proc/sys/net/ipv4/ip_local_port_range
+  指定端口范围的一个配置,默认是32768 61000,已够大.
+
+  net.ipv4.tcp_syncookies = 1
+     表示开启SYN Cookies。当出现SYN等待队列溢出时，启用cookies来处理，可防范少量SYN攻击，默认为0，表示关闭；
+  net.ipv4.tcp_tw_reuse = 1
+     表示开启重用。允许将TIME-WAIT sockets重新用于新的TCP连接，默认为0，表示关闭；
+  net.ipv4.tcp_tw_recycle = 1
+     表示开启TCP连接中TIME-WAIT sockets的快速回收，默认为0，表示关闭。
+  net.ipv4.tcp_fin_timeout = 30
+     表示如果套接字由本端要求关闭，这个参数决定了它保持在FIN-WAIT-2状态的时间。
+  net.ipv4.tcp_keepalive_time = 1200
+     表示当keepalive起用的时候，TCP发送keepalive消息的频度。缺省是2小时，改为20分钟。
+  net.ipv4.ip_local_port_range = 1024 65000
+     表示用于向外连接的端口范围。缺省情况下很小：32768到61000，改为1024到65000。
+  net.ipv4.tcp_max_syn_backlog = 8192
+     表示SYN队列的长度，默认为1024，加大队列长度为8192，可以容纳更多等待连接的网络连接数。
+  net.ipv4.tcp_max_tw_buckets = 5000
+     表示系统同时保持TIME_WAIT套接字的最大数量，如果超过这个数字，TIME_WAIT套接字将立刻被清除并打印警告信息。默认为180000，改为 5000。对于Apache、Nginx等服务器，上几行的参数可以很好地减少TIME_WAIT套接字数量，但是对于Squid，效果却不大。此项参数可以控制TIME_WAIT套接字的最大数量，避免Squid服务器被大量的TIME_WAIT套接字拖死。
+  
 vim: ft=help
