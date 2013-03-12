@@ -29,13 +29,12 @@ long get_utf8_word_count(const unsigned char *str)
 
 //第一个版本使用右移操作 判断一个字的类型
 #if 1
-//10W 0.15 sec
+//10W 0.10 sec
 long get_utf8_word_count_n(const unsigned char *buf, size_t len)
 {
     size_t index = 0;
     long words = 0;
 
-    const unsigned char * = buf[index];
     while (index < len) {
         if (buf[index] >> 7 == 0x00) {//asiic _1B_WORD 
            //0xxx xxx
@@ -103,39 +102,37 @@ long get_next_utf8_word(const unsigned char *buf)
 }
 
 #else
+//10W 0.10 sec 和第一种算法效率相同
 // 第二种分词算法， 使用循环判断首字节1的个数
-//long get_utf8_word_count_n(const unsigned char *buf, size_t len)
-//{
-//    size_t index = 0;
-//    long words = 0;
-//    int bit=7;
-//
-//    while (index < len) {
-//        if (buf[index]  < 0xB0) {
-//            ++index;
-//        } else if (buf[
-//        if (buf[index] >> 7 == 0x00) {//asiic _1B_WORD 
-//           //0xxx xxx
-//        } else if (buf[index] >> 5 == 0x06) { //_2B_WORD
-//           //110x xxxx 10xx xxxx
-//            index += 2;
-//        } else if (buf[index] >> 4 == 0x0E) { // _3B_WORD
-//           //1110 xxxx 10xx xxxx
-//            index += 3;
-//        } else if (buf[index] >> 3 == 0x1E) { //_4B_WORD
-//           //1111 0xxx 10xx ...
-//            index += 4;
-//        } else if (buf[index] >> 2 == 0x3E) { //_5B_WORD
-//           //1111 10xx 10xx ...
-//            index += 5;
-//        } else if (buf[index] >> 1 == 0x7E) { //_6B_WORD
-//           //1111 110x 10xx ...
-//            index += 6;
-//        } else {
-//            printf("error unkonw:%u\n",buf[index]);
-//            return -1;
-//        }
-//        ++words;
+long get_utf8_word_count_n(const unsigned char *buf, size_t len)
+{
+    size_t index = 0;
+    long words = 0;
+
+    while (index < len) {
+        if (buf[index] <= 0x7F) {
+           //0xxx xxxx
+            ++index;
+        } else if (buf[index] <= 0xDF  ) { //_2B_WORD
+           //110x xxxx 10xx xxxx
+            index += 2;
+        } else if (buf[index] <= 0xEF) { // _3B_WORD
+           //1110 xxxx 10xx xxxx
+            index += 3;
+        } else if (buf[index] <= 0xF7) { //_4B_WORD
+           //1111 0xxx 10xx ...
+            index += 4;
+        } else if (buf[index] <= 0xFB) { //_5B_WORD
+           //1111 10xx 10xx ...
+            index += 5;
+        } else if (buf[index] <= 0xFD) { //_6B_WORD
+           //1111 110x 10xx ...
+            index += 6;
+        } else {
+            printf("error unkonw:%u\n",buf[index]);
+            return -1;
+        }
+        ++words;
     }
 
 //    printf("index:%lu len:%lu\n",index, len);
@@ -146,7 +143,6 @@ long get_next_utf8_word(const unsigned char *buf)
 
 
 
-#if 1
 int main() 
 {
     char str[] = 
@@ -160,12 +156,12 @@ UCS-2编码(16进制) 	UTF-8 字节流(二进制) \
 0080 - 07FF 	110xxxxx 10xxxxxx          B0 80 以B或B以上开头";
 
 //EE test get_utf8_word_count
-    int i=0;
+   int i=0;
     for (; i < 100000; ++i)
          get_utf8_word_count((unsigned char*) str);
-//    printf("%ld\n", get_utf8_word_count(str));
+//printf("%ld\n", get_utf8_word_count((unsigned char*)str));
 
-    //EE test get_next_utf8_word
+//    EE test get_next_utf8_word
 //    size_t index=0;
 //    size_t len = strlen(str);
 //    while (index < len) {
@@ -173,4 +169,3 @@ UCS-2编码(16进制) 	UTF-8 字节流(二进制) \
 //    }
     return 0;
 }
-#endif
