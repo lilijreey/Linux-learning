@@ -1,5 +1,7 @@
 SSL 
 
+MAC:
+
 SSL 链接过程
 0.建立TCP链接
 1.建立SSL握手，
@@ -15,11 +17,26 @@ Qus. ssl 发送数据的格式
      设置nonblock fd 对ssl的影响
      epoll 和 ssl的交互
      ssl 链接的结束
+
+SSL 包(记录)格式
+    SSL 的封包动作和TCP 的send动作一样，没有固定边界
+    SSL 只指定了每个SSL记录的最大长度(2^14)， 但没有指定如何生成记录
+    每一个SSL 记录，都有可能对应多次ssl_write 调用。
+    反过来1次ssl_write 也可能生成多个SSL 记录
+    总之生成的记录和ssl_write 没有任何关系
+    通常一个ssl_write 对应生成一个SSL pkg。 但是也不一定
      
 错误处理
 ssl的错误码由 ERR_get_error() 
 提供最近一次的错误吗
 而不是产生错误的函数的返回码
+
+EE client 认证
+  server 发送 CertificateRequest 消息来初始化
+  client 发送 Certificate + CertificateVerify 回应
+  
+
+
 
 使用ERR_reason_error_string(ERR_get_error())
 输出错误原因
