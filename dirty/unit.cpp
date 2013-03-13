@@ -141,8 +141,8 @@ void load_dirty_confg(const char *filename)
     }
 
     //## 删除每行的结束标记  unix  CR
-    if (line[len-1] == '\n')
-      line[len-1] = '\0';
+    if (line[read-1] == '\n')
+      line[read-1] = '\0';
 
     //printf("Retrieved line of length %zu :\n", read);
     //printf("%s", line);
@@ -397,15 +397,19 @@ void doBuildTalbe(nTree *ntree, const std::string &line)
 
   word = nullptr;
   index = get_next_utf8_word(line, &word);
-  if (index == len || word == nullptr) 
+  if (word == nullptr) 
     return;
 
   std::string stw = (char*)word;
-  printf("B:%s: |Str:%s",stw.c_str(), line.c_str());
+  printf("B:%s: |Str:%s\n",stw.c_str(), line.c_str());
   auto & child = (*ntree)[stw];
   if (child == nullptr) {
     child = new nTree();
   }
+
+  if (index == len) 
+    return;
+
   return doBuildTalbe(child, line.substr(index));
 }
 
