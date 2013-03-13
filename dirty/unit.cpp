@@ -3,12 +3,9 @@
  *
  *       Filename:  unit.c
  *
- *    Description:  
- *
+ *    Description:  *
  *        Created:  03/12/2013 10:15:25 AM
- *         Author:  YOUR NAME (), 
- *
- * =====================================================================================
+ *         Author:  YOUR NAME (), * * =====================================================================================
  */
 
 #include <stdio.h>
@@ -104,9 +101,19 @@ class nTree
     return _t.cend();
   }
 
+  //debug
+  void showTable(int level=1) const;
+
  private:
   std::unordered_map<std::string, nTree*> _t;
 };
+
+void nTree::showTable(int level) const
+{
+//  for (auto &pair : _t) {
+//
+//  }
+}
 
 /*first word hash value*/
 nTree g_BTable;
@@ -132,6 +139,10 @@ void load_dirty_confg(const char *filename)
     if (isspace(line[0])) {
       continue;
     }
+
+    //## 删除每行的结束标记  unix  CR
+    if (line[len-1] == '\n')
+      line[len-1] = '\0';
 
     //printf("Retrieved line of length %zu :\n", read);
     //printf("%s", line);
@@ -238,12 +249,14 @@ void test_ascii()
 //从一个字母开始只到空白字符
 //word 是存放下一个子的空间的指针， 如果为NULL 由get_next_utf8_word 提供buf
 //传给word 
+//buf: 必须是一个C 风格的str
+//如果word返回null说明没有有效字符
 //返回下一个有效word的index
 size_t
 get_next_utf8_word(const unsigned char *buf, unsigned char **word)
 {
   size_t index = 0;
-  static unsigned char _word[7] ;
+  static unsigned char _word[32] ;
   unsigned char *out = _word;
 
   if (*word == nullptr) 
@@ -251,11 +264,49 @@ get_next_utf8_word(const unsigned char *buf, unsigned char **word)
   else 
     out = *word;
 
+  if (buf[index] == '\0') {
+    assert(false && "buf is nul str");
+    *word = nullptr;
+    return index;
+  }
+
+check:
+  ///// ascii 码开头
   if (buf[index] >> 7 == 0x00) {  //asiic _1B_WORD 
     //0xxx xxx
+    //去掉开头都空白字符
+    while (isspace(buf[index])) {
+      ++index;
+      if (buf[index] == '\0') {
+        printf("没有有效字符 index=%lu |str:%s\n", index, buf);
+        *word = nullptr;
+        return index;
+      }
+    }
 
+    //不是英文字符
+    if (!is_ascii(buf[index]))
+        goto check;
+
+    //begin word的第一个有效字母
+    size_t begin = index;
+    //英文字符特殊对待： 以空格区分一个英文word，
     ++index;
-  } else if (buf[index] >> 5 == 0x06) { //_2B_WORD
+    while (buf[index] != '\0' &&
+           is_ascii(buf[index]) &&
+           !isspace(buf[index]))
+    {
+       ++index;
+    }
+
+    memcpy(out, buf+begin, index);
+    out[index-begin] = '\0';
+    return index;
+  } 
+
+
+  ////////// 非ascii 吗开头 utf8
+  if (buf[index] >> 5 == 0x06) { //_2B_WORD
     //110x xxxx 10xx xxxx
     index += 2;
   } else if (buf[index] >> 4 == 0x0E) { // _3B_WORD
@@ -297,8 +348,9 @@ long get_utf8_word_count_n(const unsigned char *buf, size_t len)
   long words = 0;
 
   while (index < len) {
-    if (buf[index] <= 0x7F) {
+    if (buf[index] <= 0x7F) { //A ascii
       //0xxx xxxx
+      //
       ++index;
     } else if (buf[index] <= 0xDF  ) { //_2B_WORD
       //110x xxxx 10xx xxxx
@@ -334,6 +386,7 @@ void showTempTable()
     printf("%s",str.c_str());
 }
 
+
 void doBuildTalbe(nTree *ntree, const std::string &line)
 {
   size_t len = line.length();
@@ -344,7 +397,7 @@ void doBuildTalbe(nTree *ntree, const std::string &line)
 
   word = nullptr;
   index = get_next_utf8_word(line, &word);
-  if (index == len) 
+  if (index == len || word == nullptr) 
     return;
 
   std::string stw = (char*)word;
@@ -364,14 +417,16 @@ void buildBTable()
   }
 }
 
-
+void showNtree()
+{
+  g_BTable.showTable();
+}
 
 int main() 
 {
   //test_ascii();
       load_dirty_confg("dirty_table.conf");
-  ////  showTempTable();
-  //
+   //showTempTable();
       buildBTable();
 
 
