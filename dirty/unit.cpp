@@ -104,15 +104,27 @@ class nTree
   //debug
   void showTable(int level=1) const;
 
+  size_t doFiltrateSensitiveWords(unsigned char *msg, size_t msg_len) const;
+  size_t doFiltrateSensitiveWord1(unsigned char *msg, size_t msg_len) const;
+  //过滤敏感词
+  //return 下一个开始过滤的词
+  void filtrateSensitiveWords(unsigned char *msg, size_t msg_len) const;
+  void filtrateSensitiveWords(char *msg) const
+  {
+    filtrateSensitiveWords((unsigned char*) msg, strlen(msg));
+  }
+
  private:
   std::unordered_map<std::string, nTree*> _t;
 };
 
+
+
 void nTree::showTable(int level) const
 {
-//  for (auto &pair : _t) {
-//
-//  }
+  for (auto &pair : _t) {
+    printf("key:%s\n", pair.first.c_str());
+  }
 }
 
 /*first word hash value*/
@@ -380,6 +392,7 @@ long get_utf8_word_count_n(const unsigned char *buf, size_t len)
 
 #endif
 
+
 void showTempTable()
 {
   for (const auto & str : g_tempDirtyTable)
@@ -401,14 +414,15 @@ void doBuildTalbe(nTree *ntree, const std::string &line)
     return;
 
   std::string stw = (char*)word;
-  printf("B:%s: |Str:%s\n",stw.c_str(), line.c_str());
+  //printf("B:%s: |Str:%s\n",stw.c_str(), line.c_str());
   auto & child = (*ntree)[stw];
+  if (index == len) 
+    return;
+
   if (child == nullptr) {
     child = new nTree();
   }
 
-  if (index == len) 
-    return;
 
   return doBuildTalbe(child, line.substr(index));
 }
@@ -426,13 +440,118 @@ void showNtree()
   g_BTable.showTable();
 }
 
+
+size_t nTree::doFiltrateSensitiveWord1(unsigned char *msg, size_t msg_len) const
+{
+  size_t index=0 ; //执行正在被扫描的B
+  unsigned char *word;
+
+  if (msg_len == 0) 
+    return 0;
+
+    word = nullptr;
+    //需要使用更加智能的分词算法
+    //TODO 代替get_next_utf8_word
+    index = get_next_utf8_word(msg+index, &word);
+    if (word == nullptr) 
+      return index;
+
+    std::string stw = (char*)word;
+    printf("check word:%s\n",word);
+
+    const auto it = find(stw);
+    if (it == end()) {
+      //没有在B表中 下一个字符
+      return index;
+    }
+
+    if (it->second == nullptr) {
+      printf("有屁配的\n");
+      return index;
+    }
+
+    //试着匹配下一个
+    return index + it->second->doFiltrateSensitiveWords(msg+index, msg_len-index);
+
+}
+void nTree::filtrateSensitiveWords(unsigned char *msg, size_t msg_len) const
+{
+  size_t index=0 ; //执行正在被扫描的B
+
+  if (msg_len == 0) 
+    return ;
+
+  while (index < msg_len) {
+//    word = nullptr;
+//    //需要使用更加智能的分词算法
+//    //TODO 代替get_next_utf8_word
+//    index += get_next_utf8_word(msg+index, &word);
+//    if (word == nullptr) 
+//      return 0;
+//
+//    std::string stw = (char*)word;
+//    printf("check word:%s\n",word);
+//
+//    const auto it = find(stw);
+//    if (it == end()) {
+//      //没有在B表中 下一个字符
+//      continue;
+//    }
+//
+//    if (it->second == nullptr) {
+//      printf("有屁配的\n");
+//      return true;
+//    }
+
+    //试着匹配下一个
+    index += doFiltrateSensitiveWord1(msg+index, msg_len - index);
+  }
+}
+
+
+size_t nTree::doFiltrateSensitiveWords(unsigned char *msg, size_t msg_len) const
+{
+  size_t index=0 ; //执行正在被扫描的B
+  unsigned char *word;
+
+  if (msg_len == 0) 
+    return 0;
+
+    word = nullptr;
+    //需要使用更加智能的分词算法
+    //TODO 代替get_next_utf8_word
+    index = get_next_utf8_word(msg+index, &word);
+    if (word == nullptr) 
+      return index;
+
+    std::string stw = (char*)word;
+    printf("check word:%s\n",word);
+
+    const auto it = find(stw);
+    if (it == end()) {
+      //没有在B表中 下一个字符
+      return 0;
+    }
+
+    if (it->second == nullptr) {
+      printf("有屁配的\n");
+      return index;
+    }
+
+    //试着匹配下一个
+    return index + it->second->doFiltrateSensitiveWords(msg+index, msg_len-index);
+}
+
 int main() 
 {
   //test_ascii();
       load_dirty_confg("dirty_table.conf");
    //showTempTable();
       buildBTable();
+      //g_BTable.showTable();
 
+      char msg[] = "hello日";
+      g_BTable.filtrateSensitiveWords(msg);
 
   return 0;
 
