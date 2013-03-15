@@ -12,6 +12,22 @@
 如果使用了<time.h>文件编译是需要链接 lrt库。是glib
 中支持reaytime。在原文件之后链接 e.g. file -lrt
 
+### 编程实践
+    注意在程序中不要大量使用取得系统时间的函数，有可能会导致大量的系统调用。
+    应该定时更新时间比10ms一次。 其他用到时间的都使用上次得到的时间缓存
+`    for (int i=0; i<=10000000; ++i) { // 1KW
+        //time 的调用代价非常小,没有系统调用
+        //real	0m0.041s
+        //user	0m0.040s
+        //sys	0m0.000s
+        time(NULL);
+        
+        // gettimeofday 的代价比time大很多,没有系统调用
+        //real	0m0.219s
+        //user	0m0.216s
+        //sys	0m0.000s
+        //gettimeofday(&val, NULL);
+
 
 ### Linux内核从三个角度来度量时间：
 > 1. 真实时间（生活中的表上的时间）

@@ -1,0 +1,18 @@
+几种流行的高效第三方malloc
+
++ jemalloc
+   radis 使用jemalloc
+
++ tcmalloc  : Thread-Caching malloc
+
++ nedmalloc
+
++ dlmalloc
+
+
+性能比较：
+  jemalloc 和 tcmalloc 比dlmalloc 好很多
+  jemalloc 和 tcmalloc 的性能差不多
+
+valgrind 检测不出tcmalloc 和 jemalloc的内存泄漏
+  tcmalloc 可以使用gprof
