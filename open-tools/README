@@ -1,3 +1,11 @@
 一些很强大的开源工具
 
 +. google-perftolls 
+      是一款针对 C/C++ 程序的性能分析工具包。
+      包括
+      +. tcmalloc
+      +. heap-checker
+      +. head-profiler
+      +. cpu-profiler
+      使用该工具可以对 CPU 时间片、内存等系统资源的分配和使用进行分析，
+    

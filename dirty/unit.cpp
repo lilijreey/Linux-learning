@@ -2,10 +2,7 @@
  * =====================================================================================
  *
  *       Filename:  unit.c
- *
- *    Description:  *
- *        Created:  03/12/2013 10:15:25 AM
- *         Author:  YOUR NAME (), * * =====================================================================================
+ * =====================================================================================
  */
 
 #include <stdio.h>
@@ -20,105 +17,8 @@
 #include <unordered_map>
 #include <unordered_set>
 
-std::list<std::string> g_tempDirtyTable;
-
-class nTree
-{
- public:
-  typedef std::unordered_map<std::string, nTree*>::iterator       iterator;
-  typedef std::unordered_map<std::string, nTree*>::const_iterator const_iterator;
-  typedef std::unordered_map<std::string, nTree*>::value_type     value_type;
-  typedef std::unordered_map<std::string, nTree*>::key_type       key_type;
-  typedef std::unordered_map<std::string, nTree*>::mapped_type    T;
-
-  ~nTree()
-  {
-    for (auto &pair : _t) {
-      if (pair.second != nullptr) {
-        delete pair.second;
-        pair.second = nullptr;
-      }
-    }
-    _t.clear();
-  }
-
-  std::pair<iterator, bool> insert(const key_type &key)
-  {
-    return _t.insert(std::make_pair(key, nullptr));
-  }
-
-  std::pair<iterator, bool> insert(const value_type &value)
-  {
-    return _t.insert(value);
-  }
-
-  iterator find(const key_type &key) {
-    return _t.find(key);
-  }
-
-  const_iterator find(const key_type &key) const {
-    return _t.find(key);
-  }
-
-  T& operator[](const key_type &key) {
-    return _t[key];
-  }
-
-  T& operator[](key_type &&key) {
-    return _t[key];
-  }
-
-  bool empty() const {
-    return _t.empty();
-  }
-
-  size_t size() const {
-    return _t.size();
-  }
-
-  iterator begin() {
-    return _t.begin();
-  }
-
-  const_iterator begin() const {
-    return _t.cbegin();
-  }
-
-  const_iterator cbegin() const {
-    return _t.cbegin();
-  }
-
-
-  iterator end() {
-    return _t.end();
-  }
-
-  const_iterator cend() const {
-    return _t.cend();
-  }
-
-  const_iterator end() const {
-    return _t.cend();
-  }
-
-  //debug
-  void showTable(int level=1) const;
-
-  size_t doFiltrateSensitiveWords(unsigned char *msg, size_t msg_len) const;
-  size_t doFiltrateSensitiveWord1(unsigned char *msg, size_t msg_len) const;
-  //过滤敏感词
-  //return 下一个开始过滤的词
-  void filtrateSensitiveWords(unsigned char *msg, size_t msg_len) const;
-  void filtrateSensitiveWords(char *msg) const
-  {
-    filtrateSensitiveWords((unsigned char*) msg, strlen(msg));
-  }
-
- private:
-  std::unordered_map<std::string, nTree*> _t;
-};
-
-
+//打印调试信息
+//#define DEBUG
 
 void nTree::showTable(int level) const
 {
@@ -169,12 +69,6 @@ void load_dirty_confg(const char *filename)
 //@brief: 得到一个以utf8编码的string中字符的个数
 long get_utf8_word_count_n(const unsigned char *buf, size_t len);
 
-//@brief: c风格的字符串
-inline
-long get_utf8_word_count(const unsigned char *str)
-{
-  return get_utf8_word_count_n(str, strlen((const char*)str));
-}
 
 //第一个版本使用右移操作 判断一个字的类型
 #if 1
@@ -235,26 +129,6 @@ inline bool is_ascii(const char *c)
   return is_ascii((const unsigned char*)c);
 }
 
-void test_ascii()
-{
-  char buf[]="12,3";
-  assert(is_ascii('a'));
-  assert(is_ascii(' '));
-  assert(is_ascii('b'));
-  assert(is_ascii(buf[1]));
-  assert(is_ascii(buf[2]));
-  assert(is_ascii(buf[3]));
-  assert(is_ascii(&buf[1]));
-  assert(is_ascii(&buf[2]));
-  assert(is_ascii(&buf[3]));
-
-
-  assert(!is_ascii("你"));
-  assert(!is_ascii("我"));
-  assert(!is_ascii("看"));
-
-}
-
 
 //中文和英文的处理方式不同
 //中文一个字是一个word
@@ -268,6 +142,7 @@ size_t
 get_next_utf8_word(const unsigned char *buf, unsigned char **word)
 {
   size_t index = 0;
+  size_t begin = 0;
   static unsigned char _word[32] ;
   unsigned char *out = _word;
 
@@ -289,6 +164,7 @@ check:
     //去掉开头都空白字符
     while (isspace(buf[index])) {
       ++index;
+      begin = index;
       if (buf[index] == '\0') {
         printf("没有有效字符 index=%lu |str:%s\n", index, buf);
         *word = nullptr;
@@ -301,7 +177,6 @@ check:
         goto check;
 
     //begin word的第一个有效字母
-    size_t begin = index;
     //英文字符特殊对待： 以空格区分一个英文word，
     ++index;
     while (buf[index] != '\0' &&
@@ -339,8 +214,8 @@ check:
     return -1;
   }
 
-  memcpy(out, buf, index);
-  out[index] = '\0';
+  memcpy(out, buf+begin, index-begin);
+  out[index-begin] = '\0';
   //    printf("%s\n", out);
   return index;
 }
@@ -414,7 +289,9 @@ void doBuildTalbe(nTree *ntree, const std::string &line)
     return;
 
   std::string stw = (char*)word;
-  //printf("B:%s: |Str:%s\n",stw.c_str(), line.c_str());
+#ifdef DEBUG
+  printf("B:%s: |Str:%s\n",stw.c_str(), line.c_str());
+#endif
   auto & child = (*ntree)[stw];
   if (index == len) 
     return;
@@ -474,36 +351,14 @@ size_t nTree::doFiltrateSensitiveWord1(unsigned char *msg, size_t msg_len) const
     return index + it->second->doFiltrateSensitiveWords(msg+index, msg_len-index);
 
 }
+
 void nTree::filtrateSensitiveWords(unsigned char *msg, size_t msg_len) const
 {
-  size_t index=0 ; //执行正在被扫描的B
-
   if (msg_len == 0) 
     return ;
 
+  size_t index=0 ; //执行正在被扫描的B
   while (index < msg_len) {
-//    word = nullptr;
-//    //需要使用更加智能的分词算法
-//    //TODO 代替get_next_utf8_word
-//    index += get_next_utf8_word(msg+index, &word);
-//    if (word == nullptr) 
-//      return 0;
-//
-//    std::string stw = (char*)word;
-//    printf("check word:%s\n",word);
-//
-//    const auto it = find(stw);
-//    if (it == end()) {
-//      //没有在B表中 下一个字符
-//      continue;
-//    }
-//
-//    if (it->second == nullptr) {
-//      printf("有屁配的\n");
-//      return true;
-//    }
-
-    //试着匹配下一个
     index += doFiltrateSensitiveWord1(msg+index, msg_len - index);
   }
 }
@@ -534,7 +389,7 @@ size_t nTree::doFiltrateSensitiveWords(unsigned char *msg, size_t msg_len) const
     }
 
     if (it->second == nullptr) {
-      printf("有屁配的\n");
+      printf("有屁配的 dirty\n");
       return index;
     }
 
@@ -542,48 +397,19 @@ size_t nTree::doFiltrateSensitiveWords(unsigned char *msg, size_t msg_len) const
     return index + it->second->doFiltrateSensitiveWords(msg+index, msg_len-index);
 }
 
-int main() 
-{
-  //test_ascii();
-      load_dirty_confg("dirty_table.conf");
-   //showTempTable();
-      buildBTable();
-      //g_BTable.showTable();
-
-      char msg[] = "hello日";
-      g_BTable.filtrateSensitiveWords(msg);
-
-  return 0;
-
-}
-
-
-#if 0
-int main() 
-{
-  char str[] = 
-      "wUTF = UCS transformation format UCS 转换格式 \
-      !@#$%^&*()！@#￥%……&*（）\
-      将Unicode编码和计算机实际编码对应起来的一个规则 \
-      UTF-8就是以8位为单元对UCS进行编码。从UCS-2到UTF-8的编码方式如下：\
-      对于UTF-8来说最重要的是 每个字节的前两位 \
-      UCS-2编码(16进制) 	UTF-8 字节流(二进制) \
-      0000 - 007F 	0xxxxxxx \
-      0080 - 07FF 	110xxxxx 10xxxxxx          B0 80 以B或B以上开头";
-
-  //EE test get_utf8_word_count
-  int i=0;
-  for (; i < 100000; ++i)
-    get_utf8_word_count((unsigned char*) str);
-  //printf("%ld\n", get_utf8_word_count((unsigned char*)str));
-
-  //    EE test get_next_utf8_word
-  //    size_t index=0;
-  //    size_t len = strlen(str);
-  //    while (index < len) {
-  //       index += get_next_utf8_word((unsigned char*)str+index);
-  //    }
-  return 0;
-}
-
-#endif
+//int main() 
+//{
+//  //test_ascii();
+//      load_dirty_confg("dirty_table.conf");
+//  //showTempTable();
+//      buildBTable();
+//  //g_BTable.showTable();
+//  
+//      char msg[] = "hello 肛交 伞熹捂着耳朵，笑盈盈的跑了出来。“您好！欢迎光临。”她轻轻的点了点头。那黑色的风衣一颤，慢慢的转过身来。天啊！"
+//      g_BTable.filtrateSensitiveWords(msg);
+//
+//
+//  return 0;
+//
+//}
+//
