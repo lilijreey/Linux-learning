@@ -20,12 +20,14 @@
 // listen + epoll + fork 
 // Qus. 1.fork 父子进程是指向同一个epoll 吗？ 
 //         Ans.
-//         是的，如果在子进程中删除fork前添加的fd，那parent可以受到子进程添加
-//         fd的事件， 
+//         是的，和open + fork 相同，父子都引用同一个epoll实例， epoll event list
+//         只和epoll实例关联， epoll在系统的open-file-table 中
+//         如果在子进程中删除fork前添加的fd，那parent可以受到子进程添加
+//         fd的事件. 
 //      2.有socket接入时会群惊吗？
 //      3.相同的fd可以被加入吗？ see 3
-//      4.parent加入的fd，有事件时，chlid会知道吗? 会，只用wait
-//
+//      4.parent加入的fd，有事件时，chlid wait_epoll 会返回parent 添加的fd
+//                               但是chlid不能操作(read, write, close)因为 chlid 没有对于的fd
 
 
 // 3. epoll + fork 后 child parent 添加相同的fd到epoll
@@ -48,20 +50,31 @@ int main()
         if (ofd == -1) err_exit("open error");
         printf("child start ofd:%d\n", ofd);
         // add new fd EPOLLET 边沿触发
-        struct epoll_event e = {EPOLLIN | EPOLLERR |EPOLLET, (epoll_data_t)ofd};
+        struct epoll_event e = {EPOLLIN | EPOLLERR, (epoll_data_t)ofd};
         //epoll 内部会复制一个e
         E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_ADD, e.data.fd, &e));
         sleep(5);
     }
     else {
         sleep(2);
-        int ofd = open("./epoll.c", O_RDONLY);
-        if (ofd == -1) err_exit("open error");
-        printf("parent start ofd:%d\n", ofd);
-        // add new fd EPOLLET 边沿触发
-        struct epoll_event e = {EPOLLIN | EPOLLERR |EPOLLET, (epoll_data_t)ofd};
+        //EE chlid 添加的fd可以wait到，但是不能操作因为 paren没有对于的fd
+        struct epoll_event evlist ;
+        E_TEST(-1, epoll_wait(epoll_fd, &evlist, 1, -1));
+        printf("wait 1 fd:%d\n", evlist.data.fd);
+
+        char buf[15];
+        E_TEST(-1, read(evlist.data.fd,buf,10));
+        printf("read:%s\n", buf);
+//        E_TEST(-1, close(evlist.data.fd));
+//        E_TEST(-1, epoll_wait(epoll_fd, &evlist, 1, -1));
+//        printf("wait 2 fd:%d\n", evlist.data.fd);
+//        int ofd = open("./epoll.c", O_RDONLY);
+//        if (ofd == -1) err_exit("open error");
+//        printf("parent start ofd:%d\n", ofd);
+//        // add new fd EPOLLET 边沿触发
+//        struct epoll_event e = {EPOLLIN | EPOLLERR |EPOLLET, (epoll_data_t)ofd};
         //epoll 内部会复制一个e
-        E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_ADD, e.data.fd, &e));
+//        E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_ADD, e.data.fd, &e));
     }
 
     //    close(ofd);// close 掉epoll 中添加的fd epoll会自动删除fd event, 不会触发任何的event
