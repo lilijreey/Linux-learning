@@ -1,5 +1,6 @@
 /*
  * =====================================================================================
+ *  set vim:foldmethod=marker
  *
  *       Filename:  c.c
  *
@@ -12,9 +13,12 @@
  */
 
 
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
-//EE getpwnam , getgrnam
-//  得到指定user的基本信息
+//EE `getpwnam' , `getgrnam'
+//  得到指定user的基本信息 {{{
 #if 0
 #include <pwd.h>
 #include <string.h>
@@ -37,3 +41,29 @@ int main() {
 
     return 0;
 }
+
+#endif 
+// }}}
+
+//EE `char* get_current_dir_name(void)';
+//    得到PWD 调用者要free get_current_dir_name malloc 的buf
+//    必须使用 _GNU_SOURCE 开能开启
+#define _GNU_SOURCE 
+#include <unistd.h> //in _GNU_SOURCE {{{
+#if 1
+int
+main(int argc, char *argv[])
+{
+    char *pwd = get_current_dir_name();
+    if (pwd == NULL) {
+        perror("get_current_dir_name faild");
+        exit(1);
+    }
+    printf("pwd:%s\n", pwd);
+
+    free(pwd); /* !!! 调用者要负责free buf */
+    return EXIT_SUCCESS;
+}				/* ----------  end of function main  ---------- */
+
+#endif // }}}
+
