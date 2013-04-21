@@ -27,5 +27,4 @@ int main() {
 //}}}
 
 
-
 //set vim: foldmethod=marker

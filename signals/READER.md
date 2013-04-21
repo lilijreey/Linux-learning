@@ -127,6 +127,8 @@ if (cnt == -1)
     +   SIG_SETMASK_ 重置signal mask
 
 ### pending signals
+    在设置了block的信号后，程序可能想知道实际被block的信号有没有
+    这是可以使用 sigpending 
     当kernel 产生一个block的signal，把这个signal添加到
     process‘s pending signal 集合,当解除block时会发送这些信号
 +   sigpending() 获得前的pending signal 集合 sigpending(out)
