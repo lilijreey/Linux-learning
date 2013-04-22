@@ -97,11 +97,20 @@ getpeerkname //通常server调用，得到client的
 
 |listen/2|
 做两件事
-1.把socket从主动接口，设置为别动接口. socket默认返回一个主动接口(调用connect)
+1.把fd从主动接口，设置为被动接口.监听状态 
+  当主机收到一个链接请求时，kernel就会查找监听socket列表
+  socket/3默认返回一个主动接口
   指示内核因该接受指向此接口的连接请求.
   TCP 状态从 CLOSED 到 LISTEN
 2.设置请求队列大小
- Qus. 当前的最大值为多少
+  The  behavior of the backlog argument on TCP sockets changed with Linux
+  2.2.  Now it specifies the  queue  length  for  completely  established
+  sockets	waiting  to  be  accepted, instead of the number of incomplete
+  connection requests.  The maximum length of the	queue  for  incomplete
+  sockets	can be set using /proc/sys/net/ipv4/tcp_max_syn_backlog.  When
+  syncookies are enabled there is no logical maximum length and this set‐
+  ting is ignored.  See tcp(7) for more information.
+  more see *listen(3)*
 
 3. backlog 参数的含义:
        从linux2.2 开始， backlog定义为:
@@ -232,6 +241,28 @@ EE 健壮SOCKET 程序需要注意的几点
                     }
   l_onoff = 0 等于没有设置,close 默认动作
   l_onoff != 0 ??? linux 
+
+|write|| |send/4| 
+send 和write的前3个参数相同，但是有一个flags 参数
+ send 只有在socket是链接状态下,才能调用
+ write(socket, buf, len) == send(socket, buf, len, 0)
+ flags:
+     MSG_OOB 外带数据
+
+|sendto|/6
+  一般用于UDP ,TCP也可以用
+  send(socket,buf,len,flags) = sendto(socket,buf,len,flags, NULL, 0)
+  if sendto用于面向链接的 socket, (SOCK_STREAM, SOCK_SEQPACKET)
+   后两个参数将被忽略, 这时后面两个参数必须为NULL，0，否则会返回
+   错误 EISCONN
+
+|recvfrom|
+  用于UDP 接受
+
+|inet_addr|
+   x.x.x. 转化为二进制地址
+  e.g. sockaddr_in addr.sin_addr.s_addr = inet_addr(x.x.x.)
+ e.g.
 
 brocdcase
  +. 有限广播地址
