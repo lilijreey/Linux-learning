@@ -9,6 +9,7 @@
 
 + dlmalloc
 
+malloc + fork 父子各自有自己的malloc
 
 性能比较：
   jemalloc 和 tcmalloc 比dlmalloc 好很多

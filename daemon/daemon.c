@@ -31,13 +31,18 @@
 int already_running(void)
 {
 #define LOCK_FILE "/var/run/mydamon.pid"
-#define LOCK_MODE (S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH)
+#define LOCK_MODE 0644
 
+    char pid[10];
     int fd = open(LOCK_FILE, O_RDWR | O_CREAT, LOCK_MODE);
     if (fd < 0) {
         //TODO syslog
         return -1;
     }
+
+    //write pid to file
+    snprintf(pid, "%d", get_pid());
+    write(fd,pid, strlen(pid));
 
     return 0;
 }

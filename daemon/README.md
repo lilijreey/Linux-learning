@@ -35,14 +35,18 @@ daemon  0 success
 目的:防止产生不需要的交互 让SESS=PGRP=PID，tty=? 
 1.  umask 设置为0(没有限制) 以防止从父进程那继承来的mask有限制
     目前为止，PID肯定不等于SESS, tty=!?
+
 2.  fork, 父进程exit. 
     +   如果是从shell执行的，这样可以使得shell认为命令已经执行完成,shell可以返回 
     +   确保子进程不知一个组长进程，为创建新的会话做准备
     目前为止，PID肯定不等于SESS,PGRP, tty=!?
+
 3.  setsid() 创建一个新会话, V系统要求再次fork, 父进程exit
     目前为止，PID=SESS=PGRP, tty==?
+
 4.  更改继承来的工作目录到根目录。有可能当前的dir是在一个挂载的文件系统上。
     这就导致这个挂载的文件卸载不掉
+
 5.  close所有打开的文件fd,把0,1,2,重定向到/dev/null. 
     +   daemon 调用一个使用I/O的库时，不会出错这样会隐藏所以的输出
 
