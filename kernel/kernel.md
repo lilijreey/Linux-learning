@@ -1,8 +1,9 @@
 linux kernel 学习
 ==============================
+set vim:foldmethod=marker
 
 ## 编译内核
-
+{{{
 1. 配置内核
 ---------------------
   arch/xxx/configs/ 下有各个平台的默认的配置文件;
@@ -42,9 +43,26 @@ make install`
 update-grub
 
 5. 重启 就好了
+}}}
+
+### 编译附加模块到内核
+{{{
+比如添加rtl8188cu(wifi 网卡) 驱动到linux
+1. 下载原码
+
+2. 把下载的原码加入内核树
+-----------------------------
+   cp rtl8192cu /kernel/drivers/net/wireless/
+   修改wireless/ 下 Makefile 和 Kconfig 文件
+     Makefile 文件中添加 obj-$(CONFIG_RTL8192CU) += rtl8192cu/
+     Kconfig  文件中添加 source "drivers/net/wireless/rtl8192cu/Kconfig"
 
 
-## /boot file详解 
+   
+
+}}}
+
+### /boot file详解 
 * vmlinuz-3.2.0-38-generic
           是可执行的压缩内核
 
@@ -59,7 +77,6 @@ update-grub
        是一个辅助工具
     使用 mkinitrd 工具创建 
 * abi-3.2.0-38-generic
-
 
 
 
