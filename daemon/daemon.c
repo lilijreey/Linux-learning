@@ -34,7 +34,7 @@ int already_running(void)
 #define LOCK_MODE 0644
 
     char pid[10];
-    int fd = open(LOCK_FILE, O_RDWR | O_CREAT, LOCK_MODE);
+    int fd = open(LOCK_FILE, O_RDWR | O_CREAT |O_EXCL, LOCK_MODE);
     if (fd < 0) {
         //TODO syslog
         return -1;
