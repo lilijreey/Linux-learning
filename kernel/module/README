@@ -1,0 +1,96 @@
+内核模块 
+=====================
+set vim:foldmethod=marker
+
+### mod命令 {{{
+* 加载模块
+   + insmod modfile
+   + modprobe 比insmod 命令更强大， 在加载某一模块时
+     会加载该模块所依赖的其他模块
+     modprobe -r 卸载模块 和他依赖的模块
+
+* 卸载模块
+   rmmod modfile
+
+* 显示所有以安装模块
+   lsmod 实际上察看 /proc/modules 文件
+   + /sys/module/  包含所有已经加载到内核的模块
+
+* 现实指定模块信息
+   modinfo modfile
+
+* dmesg
+  察看模块中使用printk 打印的消息
+}}}
+
+### 内核模块程序结构 {{{
+1. 模块加载函数
+2. 模块加载函数
+3. 模块许可声明(必须)
+4. 模块参数
+5. 模块导出符号
+6. 模块作者信息
+
+}}}
+
+
+###  加载模块 
+  初始化mod自己
+  `由 module_init(callbk_init_func) 回调模块提供的初始化函数.
+
+  int __init mode_init(void) 模块加载函数
+         使用 __init 来声明 该函数是加载函数 see S1
+  在Linux 中所有声明 __init 的函数在链接的时候都放在目标文件的 .init.text 段
+        在 .initcall.init 段中还保存了一个执行自己的函数指针，在初始化时内核会通过
+        .initcall.init 中的指针来调用这些函数，并在 初始化完成后释放 init 区段
+  return 0 初始化成功， 错误返回对应错误吗， 在linux中错误码是负数，
+             在<linux/errno.h> 中定义
+
+  * 加载内核其他模块
+  request_module(const char *fmt, ...)
+  `
+
+### 卸载模块
+  卸载mod自己 `
+  由 #module_exit(callbk_exit_func) 回调模块提供的卸载函数
+
+  void __exit mode_exit(void)
+  __exit 来声明 该函数是声明给函数是卸载函数
+
+ S1
+ __init 和 __exit 都是宏，作用都是声明把函数连接到指定的段中
+
+  define __init __attribute__ ((__section__ (".init.text")))
+  define __exit __attribute__ ((__section__ (".exit.text")))
+  `
+
+### 模块引用计数.
+ 从2.6开始 内核提供  `
+ @brief int  #try_module_get/1(struct module*) 
+ @brief void #module_put/1(struct module*)
+   来 inc, dec 模块引用
+
+`
+### 模块参数
+ ???
+
+### 导出符号到内核
+  因为内核模块需要在运行时动态重定位kernel 和其他模块的 接口函数，
+  所以需要导出自己的接口函数提供给其他模块
+
+  * /proc/kallsyms 文件对应内核符号表
+
+  * 模块使用 `EXPORT_SYMBOL(name);
+              EXPORT_SYMBOL_GPL(name); //只适用于包含GPL许可的模块
+        宏来导出指定符号到内核`
+
+    Qus. EXPORT_SYMBOL* 宏的实现技术？
+
+
+### 编译模块
+1. 把src 添加得到内核中编译
+2. 编译独立内核模块
+   使用 /lib/modules/xxx/build 中的 Makefile 文件编译模块 参数为 make modules
+    xxx 应为当前的kernl版本 = uname -r
+    see Makefile
+

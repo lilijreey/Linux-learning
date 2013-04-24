@@ -1,4 +1,4 @@
-linux kernel 学习
+linux kernel 编译
 ==============================
 set vim:foldmethod=marker
 
@@ -34,7 +34,9 @@ make modules 编译内核模块
 3. 安装内核
 ------------------------
 `make modules_install
-make install`
+make install
+make headers_install  (可选 安装kernel头文件)
+`
  
 安装编译的内核和模块到 /boot  /lib/modules/xxx
 
@@ -79,6 +81,10 @@ update-grub
 * abi-3.2.0-38-generic
 
 
+linux headers 
+------------------------------------
+默认情况下 把 /usr/src/linux-headers-3.2.0-35/include/linux/ 下的文件
+mv 到 /usr/include/linux/ 下
 
 make 选项
 -----------------------------
