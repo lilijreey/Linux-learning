@@ -1,7 +1,9 @@
 linux kernel 学习笔记
 
-
 boot.md linux 系统引导
+
+grub/  grub 笔记
+module/ kernl 模块 学习笔记
 
 Documentation/CodingStyle 表述的内核的编程风格
 scripts/checkpatch.pl 提供了一个检查代码风格的脚本;
