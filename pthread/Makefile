@@ -1,31 +1,26 @@
-all: create_thread
+all:
 
 CC := gcc
 LIB := -D_REENTRANT -lpthread
 OPTION := -Wall -std=gnu99
-
 # -O 优化
 O:=-O$(o) #immediately assigment
+
 
 define compile-and-run
 	$(CC) $(OPTION) $(O)  $< $(LIB)  -o $@
 endef
 
+OBJECTS = create_thread  rwlock
+
 create_thread: create_thread.c
 	$(compile-and-run)
 
-#for git command
-m ?= up ci
-COMMIT_MSG=$(m)
-RC := git
-commit:
-	$(RC) commit -a -m "$(COMMIT_MSG)"
+rwlock: rwlock.c
+	$(compile-and-run)
 
-push:
-	$(RC) push origin master
+clean:
+	@rm -rf *.o ${OBJECTS}
 
-st:
-	$(RC) status
-
-.PHONY: commit push all st
+.PHONY: all clean
 

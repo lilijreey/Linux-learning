@@ -1,17 +1,3 @@
-/*
- * =====================================================================================
- *
- *       Filename:  cond_static.c
- *
- *    Description:  contand variable
- *
- *        Created:  03/03/2012 11:45:37 AM
- *       Compiler:  gcc4.4
- *
- *         Author:  first name surname (), lilijreey@Gmail.com
- *
- * =====================================================================================
- */
 #include	<stdio.h>
 #include	<unistd.h>
 #include	<pthread.h>
@@ -20,7 +6,6 @@
 
 
 //pthread_cond_t static initaliztion and use pthread_cond_init
-
 
 struct node {
 	pthread_mutex_t mu;

@@ -1,4 +1,5 @@
 /*
+ *
  * =====================================================================================
  *
  *       Filename:  mutex.c
@@ -15,7 +16,6 @@
 #include	<stdio.h>
 #include	<unistd.h>
 #include	<pthread.h>
-//#include	<stdlib.h>
 #include	<string.h>
 #include	<zhao/tools.h>
 
@@ -78,6 +78,7 @@ main ( int argc, char *argv[] )
 	int err ;
 	pthread_t  th1;
 
+    PTHREAD_MUTEX_RECURSIVE
 	///thread refree a not get mutex is ok
 //	for (int i = 5; i > 0; --i) {
 //		PCHECK(pthread_mutex_unlock(&mut));
