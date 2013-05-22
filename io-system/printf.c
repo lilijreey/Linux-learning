@@ -10,11 +10,10 @@
  *
  * =====================================================================================
  */
-#include <stdlib.h>
 
 /*
  * printf 对typedef 的打印，
- * 1.pid_t thread_t 使用%tu
+ * 1.pid_t thread_t 使用%u
  *
  * 2.size_t ssize_t 使用%zu
  */

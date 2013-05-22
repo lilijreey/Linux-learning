@@ -1,14 +1,6 @@
 # 个人学习linux process pthread的笔记
 
 *   whyUsePthread.md "线程的好处和使用范围"
-*   pthrea.readme pthread 的学习笔记
+*   PTHREAD.md pthread 的学习笔记
 
 
-内存模型
-每个线程对于其他线程都有自己的视角，
-不同的线程所看到的世界不一定相同。
-
-如多个线程都读一个内存，线程都内存是
-原则的，但是有可能每次只读8bit， 而变量的
-大小是32bit， 这就造成的不是原则的读取，
-比如读取非对齐的内存，要多次读取

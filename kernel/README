@@ -5,5 +5,18 @@ boot.md linux 系统引导
 grub/  grub 笔记
 module/ kernl 模块 学习笔记
 
+内核基础工具
+--------------------------------
+* |list_head| <include/linux/list.h>
+    通用链表工具 <see> list.c
+
+* |hlist_head| |list_node| <include/linux/list.h>
+    通用hash表, 使用附加链表解决key冲突，
+    hlist_head 是hash表中的项（entry) 如果有冲突则
+    在hlist_head -> hlist_node. <see> hlist.c
+               
+
 Documentation/CodingStyle 表述的内核的编程风格
 scripts/checkpatch.pl 提供了一个检查代码风格的脚本;
+
+vim: ft=help

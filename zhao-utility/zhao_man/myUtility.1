@@ -1,0 +1,100 @@
+.\" This is zhao li manpage for itself myUility.h 
+void func(void)
+.\" myUility.h include some Macro are uesed to c/c++ function
+.\" it test the if success or failed that use you entry a error value
+.\" or success value comprae the reture value
+.\" writer zhao li . Xi'an 2011, 4, 4 lilijreey@gmail.com
+.\"
+.TH MYUTILITY 1 2011-04-04 "myUility" "myUility's Manual"
+.SH NAME
+EV_TEST, E_TEST, SV_TEST, STEST \- a utility sets of Macro
+.SH SYNOPSIS
+.B #include "myUtility.h"
+.sp
+.BI EV_TEST(
+.I err, 
+.I rev, 
+.I func
+.BI );
+.P
+.BI SV_TEST(
+.I success, 
+.I rev, 
+.I func
+.BI );
+.P
+.BI E_TEST(
+.I err, 
+.I func
+.BI );
+.P
+.BI S_TEST(
+.I success, 
+.I func
+.BI );
+.P
+.BI err_msg(
+.I ...
+.BI );
+.P
+.BI debug_msg(
+.I FILE* stream, ...
+.BI );
+.P
+.SH DESCRIPTION
+The
+.BR *_TEST 
+set must to be test that can be returned system error functions. 
+The 
+.BR EV_TEST 
+be used to test a function if called failed.
+The
+.BR SV_TEST
+as same as EV_TEST, but test to success value. 
+the
+.BR E_TEST 
+and 
+.BR S_TEST
+just test return value not assigment a variable.
+.P
+.BR err_exit
+exit the program after output the error message to stderr, the message include file lien and function of the message.
+.P 
+.BR debug_msg
+output the message to the sepcified steramr, the message include file lien and function of the message, not terminal the pragram.
+.P
+Areguments for 
+.I error
+is the return value when the called function failed. It is int value type or NULL.
+.I success
+is the return value when the called function success. It is int value type or NULL.
+.I rev
+is you want to assigment variable. 
+.I func 
+is called function expression. include arguments.
+.P
+.SH RETUREN VALUE
+On function was called success no return value, just ok. On error, the process well
+be terminaled by exit after perror this error.
+.p
+If you called 
+.BR EV_TEST
+.BR SV_TEST
+the 
+.I rev 
+well be assgiment the return value of function.
+.p
+.SH EXAMPLE
+If you want call fopen, you can do this.
+.sp
+.nf
+.if t \{\
+.in 1i
+.ft CW
+\}
+{
+	FILE *pf=NULL ;
+	EV_TEST(NULL, pf, fopen("file", "w+"));
+	S_TEST(0, fclose(pf));
+} 
+
