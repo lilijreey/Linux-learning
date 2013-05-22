@@ -5,6 +5,11 @@
  *
  *    Description:  
  *
+    if (blocking)
+        flags &= ~O_NONBLOCK;
+    else
+        flags |= O_NONBLOCK;
+
  *        Created:  12/26/2011 11:49:24 PM
  *       Compiler:  gcc4.4
  *
