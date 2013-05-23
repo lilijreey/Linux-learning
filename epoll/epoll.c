@@ -27,8 +27,8 @@
 //      2.有socket接入时会群惊吗？
 //      3.相同的fd可以被加入吗？ see 3
 //      4.parent加入的fd，有事件时，chlid wait_epoll 会返回parent 添加的fd
-//                               但是chlid不能操作(read, write, close)因为 chlid 没有对于的fd
-
+//                               但是chlid不能操作(read, write, close)因为 chlid 没有对应的fd
+/// 最佳实践， 在fork后咋epoll
 
 // 3. epoll + fork 后 child parent 添加相同的fd到epoll
 //     child parent 向epoll添加数值相同的fd，是可以的，
@@ -73,7 +73,7 @@ int main()
 //        printf("parent start ofd:%d\n", ofd);
 //        // add new fd EPOLLET 边沿触发
 //        struct epoll_event e = {EPOLLIN | EPOLLERR |EPOLLET, (epoll_data_t)ofd};
-        //epoll 内部会复制一个e
+//        epoll 内部会复制一个e
 //        E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_ADD, e.data.fd, &e));
     }
 

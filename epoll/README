@@ -88,14 +88,36 @@ epoll_ctl(int epfd, int op, int fd, struct epoll_event *event);
         我使用一个文本文件的fd 都OK 没有报错??? 为啥？？？
         每一个evnets都是对应与一个fd的，所以不同fd可以设置不同的边沿触发和水平触发
   *delete-fd*
+    只能对已经加入epoll的fd操作
     传入须要删除的fd
     	E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_DEL, e.data.fd, NULL/* ignore the arg */));
     close 一个在epoll中的fd会自动把fd从epoll中删除， 除非还有对同一文件的引用，
        
   *modify-fd*
+    只能对已经加入epoll的fd操作
     传入须要删除的fd,和新的epoll_event
 	    e.events |= EPOLLET;
 	    E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_MOD, e.data.fd, &e));
+
+对epoll模型的抽象操作
+--------------------------------
+0. add_even
+0. del_even
+1. add_readevent  给fd添加readEvent  
+2. del_readevent  删除fd的readEvent  
+3. add_writevent 给fd添加writeEvent
+4. del_writevent 删除fd的writeEvnet
+
+具体实现
+code >
+    add_readevent(epoll_event e) {
+        e.event |= EPOLLET;
+        epoll_ctl(epoll_fd, EPOLL_CTL_MOD, e.data.fd, &e));
+    }
+    del_readevent(epoll_event e) {
+        e.event &= ~EPOLLET;
+        epoll_ctl(epoll_fd, EPOLL_CTL_MOD, e.data.fd, &e));
+    }
 
 *poll-readly-fd*
 -------------------------------
