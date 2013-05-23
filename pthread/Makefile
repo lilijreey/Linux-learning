@@ -11,12 +11,15 @@ define compile-and-run
 	$(CC) $(OPTION) $(O)  $< $(LIB)  -o $@
 endef
 
-OBJECTS = create_thread  rwlock
+OBJECTS = create_thread  rwlock join
 
 create_thread: create_thread.c
 	$(compile-and-run)
 
 rwlock: rwlock.c
+	$(compile-and-run)
+
+join: join.c
 	$(compile-and-run)
 
 clean:

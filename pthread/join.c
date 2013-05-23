@@ -20,23 +20,17 @@
 #include	<zhao/tools.h>
 
 void* thread_routine(void *arg) {
-	(void)sleep(2) ;
+    printf("join self\n");
+    PCHECK(pthread_join(pthread_self(), NULL));
 	return arg ;
 }
 
 int main() {
 	pthread_t thread_id = 0 ;
 	void *thread_result = NULL;
-	int status = 0;
 
-	status = pthread_create(
-			&thread_id, NULL, thread_routine, NULL) ;
-	if (0 != status) 
-		errno_msg(status, "pthread_create error") ;
-
-	status = pthread_join(thread_id, &thread_result);
-	if (0 != status) 
-		errno_msg(status, "pthread_join error") ;
+	PCHECK(pthread_create(&thread_id, NULL, thread_routine, NULL));
+	PCHECK(pthread_join(thread_id, &thread_result));
 
 	if (thread_result == (void*)NULL) {
 		printf("thread return nULL\n") ;

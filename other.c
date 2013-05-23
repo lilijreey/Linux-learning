@@ -17,6 +17,32 @@
 #include <string.h>
 #include <stdlib.h>
 
+/// bit segment
+#if 1
+//Qus. 对一个bit段的溢出会影响其他bit段吗？
+//  不会，而且还会出现警告, 最终的值是去除溢出bit的值
+
+struct 
+{
+    unsigned char a:2;
+    unsigned char b:2;
+} ok;
+
+int main()
+{
+    ok.a=0;
+    ok.b=0;
+
+    printf("%d %d\n", ok.a, ok.b);
+    ok.a=5;
+    printf("%d %d\n", ok.a, ok.b);
+
+    return 0;
+}
+
+#endif
+
+
 //EE `getpwnam' , `getgrnam'
 //  得到指定user的基本信息 {{{
 #if 0
@@ -48,9 +74,9 @@ int main() {
 //EE `char* get_current_dir_name(void)';
 //    得到PWD 调用者要free get_current_dir_name malloc 的buf
 //    必须使用 _GNU_SOURCE 开能开启
+#if 0
 #define _GNU_SOURCE 
 #include <unistd.h> //in _GNU_SOURCE {{{
-#if 1
 int
 main(int argc, char *argv[])
 {

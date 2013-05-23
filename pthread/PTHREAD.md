@@ -43,6 +43,7 @@ POSIX 线程 API
 
 Qus.
 1. 主线程如何等待所有的子线程，而不是某一个(pthread-join) ??
+     join 每个线程
 
 2. 如果一个线程crash了会影响别的线程吗？
 
@@ -123,10 +124,13 @@ EE `pthread_equal` 判断两个线程是否相同
 
 EE `pthread_detach` 分离一个线程
 
-EE `pthread_join` 用来活动指定线程的退出码
+EE `pthread_join/2` 用来活动指定线程的退出码
+  前提： 这个线程必须是joinable 的
   调用者会被阻塞直到指定线程终止。指定的线程会自动分离
   当join返回时，指定的函数已经被分离。 类似于waitpid
   不能join 已经detach 的线程会返回错误
+
+  Qus. 自己能join自己吗？  不可以，会调用失败
 
 EE 线程的创建
    1.主线程随进程的创建而创建。
@@ -190,7 +194,10 @@ condition 条件变量
       
 * `pthread_cond_signal/1` 
      唤醒一个在指定cond上的wait的线程， 向等待线程发送信号时不需要持有mutex
-
+* `pthread_cond_brocast/1`
+     唤醒所有在cond上wait的现场。
+        如果这些现场都要争抢统一资源，则不建议使用brocast, 群惊的开销
+        比较大。使用signal更好一些
 
 线程属性
 ---------------------------------------------------
