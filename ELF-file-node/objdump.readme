@@ -1,0 +1,48 @@
+# about objdump tool use
+
+EE -h 
+  打印各段的基本信息
+
+a1.so:     file format elf32-i386
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+ 14 .ctors        00000008  00001f14  00001f14  00000f14  2**2
+                  CONTENTS, ALLOC, LOAD, DATA //属性
+ 20 .data         00000004  0000200c  0000200c  0000100c  2**2
+                  CONTENTS, ALLOC, LOAD, DATA
+ 21 .bss          00000008  00002010  00002010  00001010  2**2
+                  ALLOC
+ 22 .comment      0000002b  00000000  00000000  00001010  2**0 //注释段	
+                  CONTENTS, READONLY
+Size: 段的长度
+File off: 段开的其实位置
+VMA: virtual memory address
+LMA: load memory address
+
+段属性：
+ CONTENTS: 表示该段在文件中存在
+ ALLOC：？？？
+ LOAD： ？？？
+ DATA： ？？？
+
+以.开头的是系统段
+.text: 代码段
+.data: 数据段, 保存已经初始化的全局变量，和局部静态变量
+.bbs:  bbs段， 保存没有初始化的全局变量，和局部静态变量
+.redata: 只读数据段, 保存符号常量。e.g %s 与.data的区别？？？
+.debug: 调试信息
+.line: 调试的行表
+.plt:
+.got: 动态链接跳转表和全局入口
+.init: 初始代码段
+.fini: 终止代码段
+.rel :重定位段
+
+
+EE -s 
+   用十六进制打印各段内容
+
+EE -d 
+   显示包含指令的段的反汇编代码,不包含指令的段不会显示
+
+EE -t 输出所有符合表 Qus. 和nm的区别？

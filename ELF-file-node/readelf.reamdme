@@ -1,0 +1,146 @@
+#关于readelf tool 的使用
+EE -h
+   列出目标文件的头信息
+EE -s
+   显示符合表
+e.g
+// 编号   ？？？  大小  类型   ？？   ？？     ？？ 符号名称
+------------------------------------------------------------
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+-----------------------------------------------------------
+Symbol table '.dynsym' contains 10 entries: //每个符号表的条数
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 00000000     0 NOTYPE  WEAK   DEFAULT  UND __gmon_start__
+     2: 00000000     0 NOTYPE  WEAK   DEFAULT  UND _Jv_RegisterClasses
+     5: 00002018     0 NOTYPE  GLOBAL DEFAULT  ABS _end
+     6: 00002010     0 NOTYPE  GLOBAL DEFAULT  ABS _edata
+     8: 000002e4     0 FUNC    GLOBAL DEFAULT    9 _init
+     9: 00000488     0 FUNC    GLOBAL DEFAULT   12 _fini
+
+Symbol table '.symtab' contains 53 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND 
+     1: 000000f4     0 SECTION LOCAL  DEFAULT    1 
+...
+    22: 00002010     0 SECTION LOCAL  DEFAULT   22 
+    23: 00000000     0 SECTION LOCAL  DEFAULT   23 
+    28: 00000360     0 FUNC    LOCAL  DEFAULT   11 __do_global_dtors_aux
+    29: 00002010     1 OBJECT  LOCAL  DEFAULT   22 completed.7065
+    31: 000003e0     0 FUNC    LOCAL  DEFAULT   11 frame_dummy
+    32: 00000000     0 FILE    LOCAL  DEFAULT  ABS crtstuff.c
+    36: 00000450     0 FUNC    LOCAL  DEFAULT   11 __do_global_ctors_aux
+    37: 00000000     0 FILE    LOCAL  DEFAULT  ABS a1.c
+    38: 0000041c    38 FUNC    LOCAL  DEFAULT   11 a
+    41: 00001f20     0 OBJECT  LOCAL  DEFAULT   16 __DTOR_END__
+    42: 00000417     0 FUNC    LOCAL  DEFAULT   11 __i686.get_pc_thunk.bx
+    43: 00001f28     0 OBJECT  LOCAL  DEFAULT  ABS _DYNAMIC
+    44: 00000000     0 NOTYPE  WEAK   DEFAULT  UND __gmon_start__
+    45: 00000000     0 NOTYPE  WEAK   DEFAULT  UND _Jv_RegisterClasses
+    46: 00000488     0 FUNC    GLOBAL DEFAULT   12 _fini
+    47: 00002010     0 NOTYPE  GLOBAL DEFAULT  ABS __bss_start
+    48: 00002018     0 NOTYPE  GLOBAL DEFAULT  ABS _end
+    49: 00000000     0 FUNC    GLOBAL DEFAULT  UND puts@@GLIBC_2.0
+    50: 00002010     0 NOTYPE  GLOBAL DEFAULT  ABS _edata
+    51: 00000000     0 FUNC    WEAK   DEFAULT  UND __cxa_finalize@@GLIBC_2.1
+    52: 000002e4     0 FUNC    GLOBAL DEFAULT    9 _init
+
+Type: 符号类型
+    NOTYPE 没有类型
+    SECTION 段符号
+    FUNC    函数符号
+    FILE    文件符号
+    OBJECT  ？？？
+
+Size: ???
+
+EE 优化选项对这些符号的印象
+...
+
+EE -S 显示各section head table
+每个段都式一个Elf32_Shdr结构，整个段表是个数组。
+e.g
+There are 29 section headers, starting at offset 0x115c:
+Section Headers:
+Off:section offset 相对于二进制文件
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0 //无效段
+  [ 1] .interp           PROGBITS        08048134 000134 000013 00   A  0   0  1 //保存了解释器的文件名,ASCII string
+  [ 2] .note.ABI-tag     NOTE            08048148 000148 000020 00   A  0   0  4
+  [ 3] .note.gnu.build-i NOTE            08048168 000168 000024 00   A  0   0  4
+  [ 4] .gnu.hash         GNU_HASH        0804818c 00018c 000020 04   A  5   0  4
+  [ 5] .dynsym           DYNSYM          080481ac 0001ac 000050 10   A  6   1  4
+  [ 6] .dynstr           STRTAB          080481fc 0001fc 00004c 00   A  0   0  1
+  [ 7] .gnu.version      VERSYM          08048248 000248 00000a 02   A  5   0  2
+  [ 8] .gnu.version_r    VERNEED         08048254 000254 000020 00   A  6   1  4
+  [ 9] .rel.dyn          REL             08048274 000274 000008 08   A  5   0  4
+  [10] .rel.plt          REL             0804827c 00027c 000018 08   A  5  12  4
+  [11] .init             PROGBITS        08048294 000294 000030 00  AX  0   0  4
+  [12] .plt              PROGBITS        080482c4 0002c4 000040 04  AX  0   0  4
+  [13] .text             PROGBITS        08048310 000310 00019c 00  AX  0   0 16
+  [14] .fini             PROGBITS        080484ac 0004ac 00001c 00  AX  0   0  4
+  [15] .rodata           PROGBITS        080484c8 0004c8 000020 00   A  0   0  4
+  [16] .eh_frame         PROGBITS        080484e8 0004e8 000004 00   A  0   0  4
+  [17] .ctors            PROGBITS        08049f14 000f14 000008 00  WA  0   0  4
+  [18] .dtors            PROGBITS        08049f1c 000f1c 000008 00  WA  0   0  4
+  [19] .jcr              PROGBITS        08049f24 000f24 000004 00  WA  0   0  4
+  [20] .dynamic          DYNAMIC         08049f28 000f28 0000c8 08  WA  6   0  4
+  [21] .got              PROGBITS        08049ff0 000ff0 000004 04  WA  0   0  4
+  [22] .got.plt          PROGBITS        08049ff4 000ff4 000018 04  WA  0   0  4
+  [23] .data             PROGBITS        0804a00c 00100c 000008 00  WA  0   0  4
+  [24] .bss              NOBITS          0804a014 001014 000008 00  WA  0   0  4
+  [25] .comment          PROGBITS        00000000 001014 000058 01  MS  0   0  1
+  [26] .shstrtab         STRTAB          00000000 00106c 0000ee 00      0   0  1 //段表字符串表
+  [27] .symtab           SYMTAB          00000000 0015e4 000400 10     28  44  4
+  [28] .strtab           STRTAB          00000000 0019e4 0001fc 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings)
+  I (info), L (link order), G (group), T (TLS), E (exclude), x (unknown)
+  O (extra OS processing required) o (OS specific), p (processor specific)
+Type: 段类型
+   NULL: 无效段
+   NOTE：提示信息
+   PROGBITS： 程序段
+   SYMTAB： 符号段
+   STRTAB: 字符串段
+   RELA：重定位段
+   REL:  重定位段
+   DYNAMIC: 动态链接段
+   SHLIB： 保留
+   GNU_HASH: 符号表的hash表
+   VERSYM:  
+   VERNEED:    
+
+EE -h 显示elf文件头
+e.g
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              EXEC (Executable file)
+  Machine:                           Intel 80386
+  Version:                           0x1
+  Entry point address:               0x8048310
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          4444 (bytes into file)
+  Flags:                             0x0
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         8
+  Size of section headers:           40 (bytes)
+  Number of section headers:         29          //总共的段数
+  Section header string table index: 26          // .shstrtab 在段表中的index
+
+EE -d Displays the contents of the file's dynamic section, if it has one.
+  'TEXTREL' symbol that indicates the obj text segment contains
+            a reference that requires run-time relocation  
+   SONAME  symbol that is the read-shared-lib's soname name
+
+EE -r
+ 察看目标文件重定位信息
+ 重定位有两个基本类型
+1. 非符号重定位
+2. 符号重定位
+
