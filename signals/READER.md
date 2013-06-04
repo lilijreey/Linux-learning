@@ -37,6 +37,18 @@ in /usr/include/bit/signum.h
 4.  errno的处理
 5.  SIGABRT 采用默认行为，或者在hanler中exit assert可以终结process
 6.  SIGTERM 采用自己的handler，优雅的终结process。通常是kill
+7.  别用signal，用sigaction
+        可以通过signal或者sigaction函数来设置信号处理函数，但signal函数太过古老，
+        因此推荐使用sigaction。理由如下：
+    1. sigaction可以提供更多接收到信号的信息。
+    2. 调用完信号处理函数后重新设置处理函数不会对sigaction有影响，
+       因为sigaction默认是不会去重置处理函数的，同时在执行处理函数会屏蔽掉该信号，也不会有竞争。
+    3. signal函数在某些系统中会默认重启被中断的系统调用，而sigaction默认不会这样做。
+    4. signal函数在多线程环境中的行为是未定义的，必须使用sigaction函数。
+8.  正确处理被信号中断的系统调用
+    1. 在没有传输数据前就被中断，这时系统调用返回-1, erron==EINTR
+    2. 在传输数据途中被中断，这时不会返回错误，返回一个比期望小的值，
+     
 
 ###可靠信号 不可靠信号
 传统的信号都是不可靠的。（多个相同信号到达时时，只保留一个)
@@ -94,6 +106,23 @@ SIGABRT 有abort() 函数生成， 主要用来产生core file
 ### 信号的继承
 ???
 
+
+### 多线程和信号
+？？？
+
+### 同步化信号
+kernel 2.6.22 后提供了一个*signalfd* 系统调用
+来使用一个fd来接受信号，这样所有的信号接受操作都都是同步的，
+这样就可以同步地处理信号，也不需要设置处理函数。
+* 首先必须使用sigprocmask来屏蔽要使用signalfd来处理的信号
+* 然后调用signalfd创建一个fd用来读取到达的信号。
+  当被屏蔽的信号到达时，程序将不会被中断，
+  也不会有处理函数被调用。信号会在fd中排队。
+* signalfd创建的fd可以和其他fd一样：
+   可以放在select, poll, epoll中；可以设置为非阻塞;
+   可以为不同的信号创建不同的fd；
+
+
 ### 一个信号处理return后会发生什么
 通常一个syscall 会返回一个 EINTR 的错误
 要重新启动这个syscall 一般会这样写
@@ -105,6 +134,7 @@ if (cnt == -1)
 
 ### NSIG 最大的信号number
 64 包括实时信号 define in signal.h file
+
 
 ### 信号集(block set)
 对象是signals mask 本身

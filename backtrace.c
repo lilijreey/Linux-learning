@@ -1,8 +1,10 @@
 /**
  * @file     backtrace 相关的API.
  *           head file: <execinfo.h> libc 
- *           作用: 支持程序自己debug,打印调用栈
- *           需要使用 -rdynamic 编译, 才可以显示符号名
+ *           作用: 支持程序自己debug,打印调用栈.
+ *           使用 -rdynamic编译, 才可以显示符号名
+ *           -rdynamic 用来通知链接器将所有符号添加到动态符号表中
+ *              （目的是能够通过使用 dlopen 来实现向后跟踪）
  *           
  * @author   lili  <lilijreey@gmail.com>
  * @date     05/23/2013 03:09:51 PM
