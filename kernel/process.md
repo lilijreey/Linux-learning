@@ -1,4 +1,4 @@
-内核级别的process 
+##内核级别的process 
 
 * `task_struct 进程描述符结构<linux/sched.h>`
    kernel 使用 `task_struct`  来关于进程，这个结构包含了一个进程
@@ -27,4 +27,28 @@
    内核中对线程的表示， 定义是体系相关的
    `task_struck->stack 成员指向当前运行的线程 
      #define task_thread_info(task)	((struct thread_info *)(task)->stack)
+
+## 内核线程
+* 创建内核线程
+  kthread_create 必须由其他内核线程创建
+    新创建的线程不会主动运行，除非现世调用 wake_up_process()
+
+* kthread_stop 
+
+* 删除进程描述符 task_struct;
+  do_exit() 后线程状态为EXIT_ZOMBIE
+  线程终止后并不会清理内核堆栈 thread_info, task_struct 结构，会保留他们
+  以被父进程处理。 所以只有在父进程wait后或明确通知内核不关心后才会
+  删除task_struct. release_task()
+  
+## 进程调度
+* O1 算法 
+   在2.6.23 以前
+   分公平但是对交互式应用的支持不足
+
+* CFS 完全公平算法
+  RSDL Rotating Staircase Deadline scheduler
+  2.6.23 后代替了O1算法
+  Linux 使用CPU的使用比来调度进程, 比如有10个进程，每个进程应该使用%10
+   的CPU，但是实际中有的进程当前CPU使用率少于%10，他就会立即抢占，比他多的进程
 

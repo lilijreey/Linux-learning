@@ -183,3 +183,16 @@ static inline void hlist_move_list(struct hlist_head *old,
 		({ tpos = hlist_entry(pos, typeof(*tpos), member); 1;}); \
 	     pos = n)
 
+struct myDB
+{
+	int _i;
+	hlist_node *_next;
+
+};
+
+int main()
+{
+	//init link
+	
+
+}

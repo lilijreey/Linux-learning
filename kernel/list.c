@@ -1,8 +1,28 @@
 #include <linux/stddef.h>
-#include <linux/poison.h>
-#include <linux/prefetch.h>
-#include <asm/system.h>
+#include "poison.h"
+#include "prefetch.h"
+//#include <asm/system.h>
 
+#ifndef container_of
+/**
+ * container_of - cast a member of a structure out to the containing structure
+ *
+ * @ptr:        the pointer to the member.
+ * @type:       the type of the container struct this is embedded in.
+ * @member:     the name of the member within the struct.
+ *
+ */
+#define container_of(ptr, type, member) ({                      \
+        const typeof( ((type *)0)->member ) *__mptr = (ptr);    \
+        (type *)( (char *)__mptr - offsetof(type,member) );})
+
+#undef offsetof
+#ifdef __compiler_offsetof
+#define offsetof(TYPE,MEMBER) __compiler_offsetof(TYPE,MEMBER)
+#else
+#define offsetof(TYPE, MEMBER) ((size_t) &((TYPE *)0)->MEMBER)
+#endif
+#endif /* __KERNEL__ */
 /*
  * Simple doubly linked list implementation.
  *
@@ -540,3 +560,80 @@ static inline void list_splice_tail_init(struct list_head *list,
 		n = list_entry(pos->member.prev, typeof(*pos), member);	\
 	     &pos->member != (head); 					\
 	     pos = n, n = list_entry(n->member.prev, typeof(*n), member))
+
+typedef struct myDB_s
+{
+	//需要使用链表就包含 list_head 成员
+	int _i;
+	struct list_head _link;
+}myDB_t;
+
+void push_back(myDB_t *head, int num )
+{
+	myDB_t *new = malloc(sizeof (myDB_t));
+	new->_i = num;
+	INIT_LIST_HEAD(&new->_link);
+	
+	list_add_tail(&new->_link, &head->_link);
+}
+
+
+#if 1 
+
+#include <stdio.h>
+int main()
+{
+	myDB_t mm;
+	///INIT list_head 
+	INIT_LIST_HEAD(&mm._link);
+	mm._i = 1;
+
+	///insert to list
+	push_back(&mm, 2);
+	push_back(&mm, 3);
+	push_back(&mm, 4);
+	push_back(&mm, 5);
+
+	///for_each
+	struct list_head *pos;
+	myDB_t * entry;
+	//pos used to Iterator
+	//sec argm is the list node
+	printf("list_for_each + list_entry\n");
+	list_for_each(pos, &mm._link) {
+		///list_entry 从struct中的list_head 的到整个struct
+		//pos 这个struct 的 list_head ,
+		//2 struct 的类型
+		//3 list_head 在struct 中的名字
+		entry = list_entry(pos, myDB_t, _link);
+
+		printf("pos myDB->_i = %d\n", entry->_i);
+	}
+
+	printf("list_for_each_entry \n");
+	//== list_for_each + list_entry
+	///list_for_each_entry
+	//1 struct pointer
+	//2 a list_head
+	//3 list_head in struct name
+	list_for_each_entry(entry, &mm._link, _link)
+		printf("pos myDB->_i = %d\n", entry->_i);
+	
+	///list_del 
+	//从一个list中remove一个node
+	pos = mm._link.next;
+	printf("delete head\n");
+	list_del(&mm._link);
+	printf("mm._list._next=%p\n", mm._link.next);
+	list_for_each_entry(entry, pos, _link)
+		printf("pos myDB->_i = %d\n", entry->_i);
+
+	
+	///list_for_each_safe 
+	//当在loop中有删除操作时
+	
+
+	return 0;
+
+}
+#endif
