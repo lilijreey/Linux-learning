@@ -15,7 +15,7 @@ EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
         文件状态(block append ..）可是使用fcntl 获得。 
             
     3.  i/v节点(Linux/Unix)
-+   连个进程打开同一个file。 1. 2不同，3相同
++   两个进程打开同一个file。 1. 2不同，3相同
 +   ft的复制（dup），重定向. 1不同， 2.3 相同
 +   fork 后 父子进程同一个i  1不同(数值相同)， 2.3 相同
 
@@ -36,6 +36,14 @@ EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
               4. 在写操作被加入到内核写队列后返回, 操作后数据会被写入磁盘
 
        read   2 在读操作被加入内核都取队列后返回， 操作后返回新数据
+
+### Signal-Driven I/O
+  异步IO的一种
+  当设备可都写时kernel向process发送信号
+  具体编程方法see signalDrivenIO.c
+
+### POSIX AIO
+  TODO
 
 ### I node V node
 +   I节点：Linux 没有v Node 把 V 节点分为 I节点和目录项。I Node记录出文件名外，
