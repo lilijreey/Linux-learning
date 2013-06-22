@@ -17,8 +17,40 @@
  *       就是说如果fd可读写 内核知会发送一次signal。 应用层需要
  *       保证把fd读完，或写完， 就是直到返回 EAGAIN or EWOULDBLOCK
  *       
- * @note  O_ASYNC 在POSIX.1g 中有但是没有在 SUSv3 中
- *        其他的UNIX 中可能把FASYNC 代替O_ASYNC
+ * @note  1. O_ASYNC 在POSIX.1g 中有但是没有在 SUSv3 中
+ *           其他的UNIX 中可能把FASYNC 代替O_ASYNC
+ *
+ *        2. 必须在开启singla-drive 模式前必须设置 SIGIO 的handle
+ *           因为SIGIO 默认的操作是terminal process
+ *           
+ *        3. 对于不同类型的 fd 发送SIGIO 的情形不同
+ *           终端和伪终端：
+ *               不论是否有输入都发送 SIGIO
+ *           pipe, FIFO
+ *              read 
+ *              write
+ *               todo
+ *          socket
+ *             UDP 
+ *               TODO
+ *             TCP 
+ *               TODO
+ *
+ *   4 发挥signal-derive IO 的最大特性
+ *     1 使用F_SETSIG 设置一个实时signal来代替 SIGIO
+ *       因为SIGIO 是没有队列的，多个SIGIO可能会被求其掉从而溜掉了可以操作的fd
+ *            fcntl(fd, F_SETSIG, sig)
+ *            
+ *     2 指定 SA_SIGINFO flag when using sigaction
+ *      
+ *
+ *   
+ *        
+ * @Qus. 
+ *      1. 如何区分fd是可读还是可写？
+ *      2. 如何知道是哪个fd？
+ *        使用 siginfo_t 结构，从中得到相关内容
+ *
  * @author   lili  <lilijreey@gmail.com>
  * @date     06/22/2013 08:14:50 AM
  *
@@ -38,29 +70,29 @@
 static volatile sig_atomic_t sigioCont = 0;
 static void sigio_handle(int sig)
 {
-//    int ret;
-//    char c[100];
+    int ret;
+    char c[100];
     printf("SIGIO recived %d cnt:%d\n", sig, ++sigioCont);
 
-//    ///读完所有的数据
-//    while ((ret = read(STDIN_FILENO, &c, 100))) {
-//        if (ret == -1) {
-//            if (errno == EAGAIN || errno == EWOULDBLOCK) {
-//                printf("read over\n");
-//                break;
-//            } else {
-//                perror("read error");
-//                exit(1);
-//            }
-//        }
-//        c[ret] = '\0';
-//        printf("out:%s\n", c);
-//    }
-//    sleep(1);
+    ///读完所有的数据
+    ((ret = read(STDIN_FILENO, &c, 100))) ;
+    {
+        if (ret == -1) {
+            if (errno == EAGAIN || errno == EWOULDBLOCK) {
+                printf("read over\n");
+            } else {
+                perror("read error");
+                exit(1);
+            }
+        }
+        c[ret] = '\0';
+        printf("out:%s\n", c);
+    }
 }
 
 int main()
 {
+    // 终端会不断的发送SIGIO 不管有没有输入可读
     ///1 set signal handle
     struct sigaction sa;
     sigemptyset(&sa.sa_mask);
@@ -70,6 +102,8 @@ int main()
 
     ///2 set owner process
     E_TEST(-1, fcntl(STDIN_FILENO, F_SETOWN, getpid()));
+    // fcntl(fd, F_GETOWN) -> int 返回fd的pid 如果是正数就是pid，
+    //  如果是负数就是 process group id
 
     ///3,4 enable nonblock and singal-drive mode
     int flags = fcntl(STDIN_FILENO, F_GETFL);
@@ -78,31 +112,10 @@ int main()
     /// loop do other
     for (;;) {
         int j;
-        char c[100];
-        int ret;
         for (j=0; j < 10000000; j++)
             continue;  //do
 
-        if (sigioCont) {
-
-            ///读完所有的数据
-            while ((ret = read(STDIN_FILENO, &c, 100))) {
-                if (ret == -1) {
-                    if (errno == EAGAIN || errno == EWOULDBLOCK) {
-                        printf("read over\n");
-                        break;
-                    } else {
-                        perror("read error");
-                        exit(1);
-                    }
-                }
-                c[ret] = '\0';
-                printf("out:%s\n", c);
-            }
-            sigioCont = 0;
-        }
     sleep(1);
-//        printf("do other thins\n");
     }
 
 }

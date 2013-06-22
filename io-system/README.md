@@ -39,7 +39,7 @@ EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
 
 ### Signal-Driven I/O
   异步IO的一种
-  当设备可都写时kernel向process发送信号
+  当设备可能可以(Possible)读写时kernel向process发送信号
   具体编程方法see signalDrivenIO.c
 
 ### POSIX AIO
