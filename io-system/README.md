@@ -43,7 +43,35 @@ EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
   具体编程方法see signalDrivenIO.c
 
 ### POSIX AIO
-  TODO
+* Link with -lrt
+
+* aio-read(struct aiocb * aiocbp ) -> 提交read操作
+* aio-write 提交write操作
+* aio-error(struct aiocb * aiocbp ) -> int
+*   用来确定一个aiocb 的状态
+*     EINPROGRESS 说明请求尚未完成
+*     ECANCELLED  说明请求尚被取消
+*     -1  error occued
+
+* aio-return(struct aiocb * aiocbp ) -> ssize-t
+   的到提交动作的返回结果， 和read, write 的返回值相同
+   因为在异步IO中必须显示取得结果
+   **必须在 aio-error/1 返回请求已经完成后才能调用**
+
+* aio-suspend
+* aio-cancel
+* lio-listo
+
+* aiocb 
+  `c 
+    struct aiocb {
+        int aio_fildes; //file descripor
+        int aio_liio_opcdoe; //valid only for lio_listio
+        volatile void *aio_buf; //data buf
+        size_t aio_nbytes; data buf size ??
+        struct sigevent aio_sigevent; // notification structure
+    }
+  `
 
 ### I node V node
 +   I节点：Linux 没有v Node 把 V 节点分为 I节点和目录项。I Node记录出文件名外，
