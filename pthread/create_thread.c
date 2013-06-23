@@ -17,6 +17,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <signal.h> //for pthread_kill
 #include	<sys/types.h>
 #include	<pthread.h>
 #include	<stdio.h>
@@ -62,6 +63,13 @@ void* lock_add(void *arg)
     return 0;
 }
 
+void* detach_p(void *a  )
+{
+    printf("thread sleep\n");
+    sleep(5);
+    return 0;
+}
+
 int main(void)
 {
 	pthread_t ptid[4];
@@ -77,5 +85,11 @@ int main(void)
     printf("no_lock_sum:%d\n", no_lock_sum);
     printf("lock_sum:%d\n", lock_sum);
 
+
+//    PCHECK(pthread_create(&ptid[0], NULL, detach_p, NULL));
+//    PCHECK(pthread_detach(ptid[0]));
+//    PCHECK(pthread_kill(ptid[0], SIGKILL));
+
+    sleep(7);
     return EXIT_SUCCESS;
 }				/* ----------  end of function main  ---------- */

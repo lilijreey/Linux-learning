@@ -25,7 +25,7 @@ set vim:foldmethod=marker
 
 ### 内核模块程序结构 {{{
 1. 模块加载函数
-2. 模块加载函数
+2. 模块卸载函数
 3. 模块许可声明(必须)
 4. 模块参数
 5. 模块导出符号
@@ -33,10 +33,20 @@ set vim:foldmethod=marker
 
 }}}
 
+### struct module
+内核使用 module来代表一个内核模块，
+通过insmod (init_module) 把自己的模块插入内核时，
+这个模块便于一个module关联
+
+### /etc/modules
+  需要做boot 时加载的模块
 
 ###  加载模块 
   初始化mod自己
   `由 module_init(callbk_init_func) 回调模块提供的初始化函数.
+      底部调用init_module
+      include <linux/init.h>
+
 
   int __init mode_init(void) 模块加载函数
          使用 __init 来声明 该函数是加载函数 see S1
@@ -54,8 +64,9 @@ set vim:foldmethod=marker
   卸载mod自己 `
   由 #module_exit(callbk_exit_func) 回调模块提供的卸载函数
 
-  void __exit mode_exit(void)
+  void __exit moudle_exit(void) include <linux/init.h>
   __exit 来声明 该函数是声明给函数是卸载函数
+      底部调用cleanup_module
 
  S1
  __init 和 __exit 都是宏，作用都是声明把函数连接到指定的段中
@@ -65,14 +76,25 @@ set vim:foldmethod=marker
   `
 
 ### 模块引用计数.
- 从2.6开始 内核提供  `
+ 从2.6开始 内核提供 
  @brief int  #try_module_get/1(struct module*) 
  @brief void #module_put/1(struct module*)
    来 inc, dec 模块引用
 
-`
 ### 模块参数
- ???
+  给模块传递参数的机制
+  include moduleparam.h
+  * module_param(name, type, perm); 
+   e.g. module_param(param, int, S_IRUGO);
+  在 insmod 时传入参数 insmod module name1=value name2=valeu2
+  perm 是一个权限参数，应当使用 <linux/stat.h> 中定义的值
+  如果=0 则模块加载后不会出现在/sys/下， 否则是/sys/下对应
+  文件的权限
+  * 数组参数时 使用 module_aram_array(name, type, num, perm)
+	逗号分隔参数
+
+  MODULE_PARM_DESC(globalmem_major, "Deriver major number");
+  说明参数的用途
 
 ### 导出符号到内核
   因为内核模块需要在运行时动态重定位kernel 和其他模块的 接口函数，
@@ -93,4 +115,107 @@ set vim:foldmethod=marker
    使用 /lib/modules/xxx/build 中的 Makefile 文件编译模块 参数为 make modules
     xxx 应为当前的kernl版本 = uname -r
     see Makefile
+
+
+### Linux 字符设备驱动
+模块加载函数需要实现设备号的申请和cdev的注册
+模块卸载函数需要实现设备号的释放和cdev的注销
+* linux 使用 struct cdev 来描述一个字符设备
+  define in include/linux/cdev.h
+* 使用MAJOR(dev_t vde) get device majorID
+* 使用MINOR(dev_t vde) get device minorID
+* MKDEV(int majorID, int minorID) create a dev_t 
+* 分配和释放设备号
+    include linux/fs/char_dev.c
+   rgister_chrdev_region
+   alloc_chrdev_region
+
+* 加载模块，卸载模块
+  cdev_add
+  cdev_del 
+  不允许rmmod 一个正在被使用module
+
+  + register_chrdev / unregister_chrdev 
+    不需要自己创建cdev 会自动创建cdev
+
+*  include <linux/kernel/module.h>
+   try_module_get(THIS_MODLE)
+   try_module_put(THIS_MODULE)
+    inc, dec 模块的引用技术
+    module_refcount
+    remod 在hello_exit 之前检查refcount 如果不为1 则无法卸载掉模块
+
+* file_operations
+   nclude in linux/fs.h
+   字符设备的操作接口, 需要实现这些借口
+   由于在内核不能直接访问用户空间
+   所有可以使用 copy_from_user()
+	        copy_to_user()
+   均返回不能拷贝的字节数，所有返回0表示ok
+   如果没有像匹配的接口函数，对应指针要设置为NULL
+
+* file struct
+   每一个device 在内核中都表示为一个 file struct
+   include <linux/fs.h>
+
+
+/**
+ * register_chrdev_region() - register a range of device numbers
+ * @from: the first in the desired range of device numbers; must include
+ *        the major number.
+ * @count: the number of consecutive device numbers required
+ * @name: the name of the device or driver.
+ *
+ * Return value is zero on success, a negative error code on failure.
+ */
+ int register_chrdev_region(dev_t from, unsigned count, const char *name)
+     name appear in /proc/devices
+
+###
+THIS_MODLE
+extern struct module __this_module;
+define THIS_MODULE (&__this_module)
+
+### 察看模块信息
+1 当前所有设备的id cat /proc/devices
+2 /sys/module/name
+
+### 为模块创建设备
+mknod /dev/name type major minor
+  e.g. sudo mknod /dev/globalmem c 255 0
+不使用时 使用rm -f file
+
+### printk
+  类似与printf
+  printk(KERN_ALERT "module: name:%s\n", THIS_MODULE->name);
+  如果不写 KERN_ALERT  //include <linux/kernel.h>
+  默认为 DEFAULT_MESSAGE_LOGLEVEL
+  如果数值less than console_loglevel 会输出到终端上注意是tty,
+    不会输出到pts 上
+  如果syslogd, 或klogd 开启，打印的消息也会输出到/var/log/syslog 上
+
+
+### 支持阻塞IO module
+  需要在不可操作时，挂起调用进程，直到可以再次操作
+  不同设备的不可操作定义不同。
+  在read write时 需要检查  是否设置了 O_NONBLOCK 标识
+                while (如果不可以操作) {
+			if (filp->f_flags & O_NONBLOCK) {
+				ret = -EAGAIN;
+				goto out;
+			}
+			__set_current_state(TASK_INTERRUPTIBLE); //set task state
+			up(&dev->sem);
+
+			schedule();
+			if (signal_pending(current)) { /* 是否是因为信号唤醒 */
+				ret = - ERESTARTSYS;
+				goto out2;
+			}
+			down(&dev->sem);
+		}
+  * 使用等待队列来唤醒阻塞的进程
+
+### 等待队列
+* include<linux/wait.h>
 

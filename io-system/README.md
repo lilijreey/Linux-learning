@@ -39,7 +39,7 @@ EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
 
 ### Signal-Driven I/O
   异步IO的一种
-  当设备可都写时kernel向process发送信号
+  当设备可能可以(Possible)读写时kernel向process发送信号
   具体编程方法see signalDrivenIO.c
 
 ### POSIX AIO
@@ -99,6 +99,9 @@ EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
   改变已经打开的fd的属性
   dup fd
   为fd上锁
+
+* 使用O_NOATIME 来指示fd不更新atime
+  因为有时更新atime的消耗很大比如pipe, 但是pipe的atime对我们没有意义
 
 ### ioctl
     iotcl 是I/O操作的杂物箱 终端IO是ioctl最大的使用方面

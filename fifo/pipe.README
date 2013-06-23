@@ -36,9 +36,4 @@
           close(fd1[0]) //close int
        }
 
-       
-
-
-
-
 vim:ft=help

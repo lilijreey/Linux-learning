@@ -60,6 +60,9 @@ Socket API 注意是不是可重入的
 收到第二分解 peer SYN(ACK)包. 返回
 如果connect 失败则socket 不可再用。必须关闭. TCP
 因为connect failed 后 socket的状态为定义
+* 异步connect 过程
+   EINPROGRESS
+    
 
 返回失败的几种情况:
 1. 对方没有开机: 对方太忙，

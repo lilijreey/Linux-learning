@@ -6,3 +6,11 @@ SYN Cookie是对TCP服务器端的三次握手协议作一些修改
 在收到TCP ACK包时，TCP服务器在根据那个cookie值检查这个TCP ACK包的合法性
 。如果合法，再分配专门的数据区进行处理未来的TCP连接。 
 从上面的介绍可以看出，SYN Cookie的原理比较简单。到实际的应用中，它有多种不同的实现方式。
+
+SYN Flood 预防
+修改内核参数
+net.ipv4.tcp_syncookies = 1 //open syncookies
+net.ipv4.tcp_max_syn_backlog = 8192 //设置SYN队列最多长度
+net.ipv4.tcp_synack_retries = 2 //设置SYN ACK 报文重试次数
+分别为启用SYN
+Cookie、设置SYN最大队列长度以及设置SYN ACK最大重试次数。
