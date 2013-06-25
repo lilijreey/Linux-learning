@@ -219,3 +219,23 @@ mknod /dev/name type major minor
 ### 等待队列
 * include<linux/wait.h>
 
+
+### 支持 signal-drive IO模型
+1. 支持 F_SETOWN 命令
+   设置 filp->f_owner 
+
+2. 支持 F_SETFL 命令
+   每当 O_FASYNC 改变时 fasync() 函数会被执行， 被谁？？
+
+3. 支持 F_SETSIG 命令
+    可以设置发送的信号
+
+4. 在设备可用时调用  kill_fasync() 发送 signal通知
+    void kill_fasync(struct fasync_struct **fp, int sig, int band)
+	sig  :deliver which signal
+	band : POLL_IN , POLL_OUT, ....
+
+在 release 函数中需要把fd 删除
+
+### 支持 AIO IO 模型
+

@@ -43,7 +43,25 @@ EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
   具体编程方法see signalDrivenIO.c
 
 ### POSIX AIO
-  TODO
+* 两个版本的AIO 
+    glibc 使用多线程来模拟异步IO, 不推荐Glibc的AIO
+    kernel-vative 内核级别提供的异步通知 2.6.22+
+
+* 应用场景
+  同时发起多个io操作，
+
+* aiocb   AIO control block
+  linux 上的端口完成
+   每个IO操作的标示上下文
+   这个结构包含了有关传输的所有信息，包括为数据准备的用户缓冲区。
+   在产生 I/O （称为完成）通知时，aiocb 结构就被用来惟一标识所完成的 I/O 操作
+
+  aio-read 会理解返回，说明read请求已经成功发起
+  kernel会在后台完成read操作，当read完成时，会产生一个信号或者一个线程
+  来回调函数完成IO处理
+
+  
+
 
 ### I node V node
 +   I节点：Linux 没有v Node 把 V 节点分为 I节点和目录项。I Node记录出文件名外，
@@ -78,14 +96,14 @@ EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
 ### ioctl
     iotcl 是I/O操作的杂物箱 终端IO是ioctl最大的使用方面
 
-////////////////////////////
-	//得到页大小的三种方法
+
+### //得到页大小的三种方法
 	printf("system page size:%ld\n", sysconf(_SC_PAGESIZE)) ;
 	//linux provide
 	printf("system page size:%d\n", getpagesize()) ;
 //	PAGE_SIZE
 
-PIPE///////////////////////////////
+### PIPE
 pipe + fork
 在pipe，fork后, 父子进程都有一个pipe，
 即这个pipe从原来的连个口变成的4个口，父子都有write, read，口
