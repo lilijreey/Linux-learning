@@ -56,12 +56,34 @@ EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
    这个结构包含了有关传输的所有信息，包括为数据准备的用户缓冲区。
    在产生 I/O （称为完成）通知时，aiocb 结构就被用来惟一标识所完成的 I/O 操作
 
-  aio-read 会理解返回，说明read请求已经成功发起
-  kernel会在后台完成read操作，当read完成时，会产生一个信号或者一个线程
-  来回调函数完成IO处理
 
-  
+* aio-read(struct aiocb * aiocbp ) -> 提交read操作
+* aio-write 提交write操作
+* aio-error(struct aiocb * aiocbp ) -> int
+*   用来确定一个aiocb 的状态
+*     EINPROGRESS 说明请求尚未完成
+*     ECANCELLED  说明请求尚被取消
+*     -1  error occued
 
+* aio-return(struct aiocb * aiocbp ) -> ssize-t
+   的到提交动作的返回结果， 和read, write 的返回值相同
+   因为在异步IO中必须显示取得结果
+   **必须在 aio-error/1 返回请求已经完成后才能调用**
+
+* aio-suspend
+* aio-cancel
+* lio-listo
+
+* aiocb 
+  `c 
+    struct aiocb {
+        int aio_fildes; //file descripor
+        int aio_liio_opcdoe; //valid only for lio_listio
+        volatile void *aio_buf; //data buf
+        size_t aio_nbytes; data buf size ??
+        struct sigevent aio_sigevent; // notification structure
+    }
+  `
 
 ### I node V node
 +   I节点：Linux 没有v Node 把 V 节点分为 I节点和目录项。I Node记录出文件名外，
@@ -112,5 +134,22 @@ pipe + fork
 
 2.pipe的结尾。当pipe的write端关闭后，在读pipe，返回0
 3, 当read端关闭后，在调用write写则，1, 内核发送SIGPIPE，给process，2wreite返回EPIPE
+
+
+#### readv writev  preadv pwritev
+读写多个buffer到一个io流中
+比一般的read, write(线性I/O) 的优点
+    1. 效率高， 单个向量IO能替代多个线性IO
+    2. 性能好，减少了系统调用次数
+    3. 原子性
+
+*  include <sys/uio.h>
+* struct iovec {
+     void *iov_base; //指向buf
+     size_t iov_len; //iov_base 指向buf的长度， 在
+    }
+*  readv(int fd, const struct iovec iov[], int count) -> ssize_t
+    从fd中读取count 个iov 数据到iov 中
+    readv 会从iov[0] 一直到iov[conut-1]
 
 

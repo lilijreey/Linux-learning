@@ -1,4 +1,5 @@
 /**
+ * 
  * @file     globalfifo.c
  *
  * @brief   FIFO 虚拟设备实现

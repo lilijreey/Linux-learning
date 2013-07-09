@@ -18,6 +18,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/epoll.h>
+#include <fcntl.h>
 
 #define	E_TEST(err, call) \
     do{                        \
@@ -45,24 +46,10 @@ void child_run()
     //  int sendfd = recv_pipe[1];
     int recvfd = send_pipe[0];
 
-    char buf[256];
-    int len;
-    //    while ((len = read(recvfd, buf, 256))) {
-    //        buf[len]='\0';
-    //        printf("child read [len:%d] [%s]\n", len, buf);
-    //    }
-    //    if (len == -1) {
-    //        perror("child read error");
-    //        exit(1);
-    //    }
-    //    if (len == 0) {
-    //        sleep(1);
-    //        printf("praent close peer\n");
-    //    }
 
 
     int epoll_fd = epoll_create1(0);
-    struct epoll_event e = {EPOLLOUT | EPOLLIN | EPOLLRDHUP,  (epoll_data_t)recvfd};
+    struct epoll_event e = {EPOLLOUT | EPOLLIN | EPOLLET | EPOLLRDHUP,  (epoll_data_t)recvfd};
     E_TEST(-1, epoll_ctl(epoll_fd, EPOLL_CTL_ADD, e.data.fd, &e));
 
     for (; ;) 
@@ -93,19 +80,21 @@ void child_run()
 
         if (e.events & EPOLLIN) { //pipe 对方close一段不会触发EPOLLIN
             printf("EPOLLIN\n");
-            len = read(e.data.fd, buf,256);
-            if (len == -1) {
-                perror("reand -1");
-                exit(1);
-            }
-            if (len == 0) {
-                sleep(1);
-                printf("praent close peer\n");
-                E_TEST(-1, close(recvfd)); //epoll will auto remove closed fd
-                break;
-            }
-            buf[len] = '\0';
-            printf("child read[len;%u] %s\n", len, buf);
+//            char buf[256];
+//            int len;
+//            len = read(e.data.fd, buf,256);
+//            if (len == -1) {
+//                perror("reand -1");
+//                exit(1);
+//            }
+//            if (len == 0) {
+//                sleep(1);
+//                printf("praent close peer\n");
+//                E_TEST(-1, close(recvfd)); //epoll will auto remove closed fd
+//                break;
+//            }
+//            buf[len] = '\0';
+//            printf("child read[len;%u] %s\n", len, buf);
         }
 
     }
@@ -142,11 +131,24 @@ void parent_run()
     E_TEST(-1, wait(NULL));
 }
 
+void set_nonblock(int fd)
+{
+    // set nonblock
+    int var = fcntl(fd, F_GETFL, 0);
+    var |= O_NONBLOCK;
+    fcntl(fd, F_SETFL, var);
+}
+
 int main(int argc, char *argv[])
 {
     //通过pipe 链接
     init_pipe(send_pipe);
     init_pipe(recv_pipe);
+
+    set_nonblock(send_pipe[0]);
+    set_nonblock(send_pipe[1]);
+    set_nonblock(recv_pipe[0]);
+    set_nonblock(recv_pipe[1]);
 
     pid_t chlid_pid;
     chlid_pid = fork();

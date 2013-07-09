@@ -126,6 +126,21 @@ getpeerkname //通常server调用，得到client的
 
 |accept|
 Qus. 返回的socket的源地址和目的地址于listen的有何不同
+     2. accept 返回一个新连接时完成3此握手了吗
+     epoll listen fd 返回 EPOIN 时 TCP3此握手完成了吗
+返回-1 时的errno
+  EINTR
+   accept被打断，可以再次调用accept
+  EAGAIN 非阻塞listen fd 没有等待的连接
+
+  Client                         Server
+----------------------------------------------------
+
+connect /1   --> --> SYN C --> -->      Accept/1 blocking
+                                       /
+   |    <--  SYN K, ACK C+1      <---
+connect return  \  -----> ACK K+1 -->   -->  | accept returen
+
 
 
 EPIPE:
