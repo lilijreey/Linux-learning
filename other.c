@@ -13,15 +13,15 @@
  */
 
 
+
+/// bit segment
+#if 0
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-
-/// bit segment
-#if 1
 //Qus. 对一个bit段的溢出会影响其他bit段吗？
 //  不会，而且还会出现警告, 最终的值是去除溢出bit的值
-
+//{{{
 struct 
 {
     unsigned char a:2;
@@ -40,7 +40,7 @@ int main()
     return 0;
 }
 
-#endif
+#endif //}}}
 
 
 //EE `getpwnam' , `getgrnam'
@@ -93,3 +93,61 @@ main(int argc, char *argv[])
 
 #endif // }}}
 
+#if 1
+///EE @c crypt/2 @c crypt_r
+//linux 上密码加密算法 link with -lcrypt
+//*EDS算法 默认方法。
+//  被加密的key不能超过8个字节(如果超过8个实际情况和使用前8个最为key的值相同)
+//  算法使用每个字符的第7个bit 创建一个56bit的密钥，用这个密钥加密,
+//  最终的加密key长度为13B,最前面. 两个字符是调用crypt是传入的salt本身
+//  
+//原始的crypt使用EDS算法，glibc2 提供其他算法 
+//  通过在第二个参数传递特殊string来选择其他算法,
+//   第二个参数由两个部分组成ID, Salt,
+//  Salt 的字符必须是  set [a–zA–Z0–9./]
+//  $ID$Salt
+//	  + ID  | 现在支持的其他算法 ID 
+//	      1   | MD5
+//	      2a  | Blowfish (not in mainline glibc; added in some Linux distributions)
+//	      5   | SHA-256 (since glibc 2.7)
+//	      6   | SHA-512 (since glibc 2.7)
+//	  + Salt 是最长16B 的字符
+//	加密后的string格式为$ID$Salt$Encrypted
+//	 Encrypted 部分就是加密过后的key，长度是固定的
+//       MD5     | 22 characters
+//       SHA-256 | 43 characters
+//       SHA-512 | 86 characters
+//*MD5
+//  $1$
+// {{{
+
+#define _XOPEN_SOURCE	   /* 需要_XOPEN_SOURCE */
+#include <unistd.h>
+#include <stdio.h>
+#include <string.h>
+int main()
+{
+    //使用默认的EDS算法 key的长度不能超过8B
+    char key[] = "12345678";
+    //第二个参数是从[a-zA-Z0-9]中选两个字符共有 4096种组合
+    //返回一个加密后的key string, return NULL for error
+    char *encryptKey = crypt(key, "PS");
+    if (encryptKey == NULL)
+        perror("crypt failed");
+    printf("EDS encryptKey:%s length:%lu\n", encryptKey, strlen(encryptKey));
+
+
+    //MD5
+    encryptKey = crypt(key, "$1$yyy$");
+    if (encryptKey == NULL)
+        perror("crypt failed");
+    printf("MD5 encryptKey:%s length:%lu\n", encryptKey, strlen(encryptKey));
+
+    //SHA-256
+    encryptKey = crypt(key, "$5$yyy$");
+    if (encryptKey == NULL)
+        perror("crypt failed");
+    printf("SHA-256 encryptKey:%s length:%lu\n", encryptKey, strlen(encryptKey));
+    return 0;
+}
+#endif //}}}
