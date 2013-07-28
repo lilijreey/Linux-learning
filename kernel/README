@@ -111,3 +111,44 @@ scripts/checkpatch.pl 提供了一个检查代码风格的脚本;
 Kernel Debug
 -----------------------------------------------
 *几个调试选项 在kernel hacking 菜单中
+=======
+
+内核延迟
+-----------------------------------------------
+* 短延迟
+void ndelay(nsecs)
+void udelay(usecs)
+void mdelay(msecs)
+	本质上的让CPU忙等待
+
+void msleep(msecs) 睡眠
+void ssleep(msecs) 睡眠 不能被打断
+   msleep_interruptible 可以被打断
+
+* 长延迟
+  schedule_timeout
+  long schedule_timeout(signed long timeout);
+  long schedule_timeout_interruptible(signed long timeout);
+  long schedule_timeout_killable(signed long timeout);
+  long schedule_timeout_uninterruptible(signed long timeout);
+
+Linux memory 管理
+--------------------------------
+* 内核空间
+  被划分为多个区域
+  +  保留区域FIXADDR_TOP 开始到4GB
+  +  专用区域  FIXADDR_STAET ~ FIXADDR_TOP
+  +  高端区域  PKMAP_BASE ~ FIXADDR_STAET
+  +  vmalloc 分配区域 VMALLOC_START ~ VMALLOC_END
+  +  物理映射区
+
+* 内核空间动态内存申请 
+  kmalloc/2, __get_free_pages,
+     申请的内存在物理内存上连续，和物理地址的转换关系简单
+     GFP_KERNE
+     GFP_ATOMIC
+  kfree/1
+   
+  vmalloc 子啊 vmalloc中分配，物理地址不一定连续, 和物理地址
+       的转化关系比较负责
+  

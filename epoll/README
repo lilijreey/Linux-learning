@@ -39,7 +39,13 @@ RST ?
 
 *events*
 ---------------------
-*ET* 边沿触发 (需要使用EPOLLET 设置) //必须使用非阻塞fd
+*ET* 边沿触发 (需要使用EPOLLET 设置) //必须使用非阻塞fd,
+   因为需要检测fd的数据是否读完， return -1 errno = EAGIN
+   在一个ET 的fd EPOLLIN 通知后需要把 fd中的数据读完，
+   直到 read 返回-1 ,errno = EAGIN. 一般在while 中都取
+   要不然，没有读完的数据，epoll不会再次提醒，
+   !! 但是对于下一个包，即使 当前df中的数据没有读完，fd还是有EPOLLIN 发出
+   
 *LT* 水平触发 (默认的) 支持非阻塞和阻塞fd
 
 //see *epoll_ctl*

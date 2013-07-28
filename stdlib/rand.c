@@ -1,9 +1,11 @@
 /**
  * @file     rand.c
  *           伪随机数的实现原理和
- *           C stander lib 随即数的实现.
+ *           C stander lib 随即数的实现
+ *           stdlib 提供的其他随即数实现.
  *           
  *  数学原理：
+ *          为随机数生成是一个复杂的主题。 主要和数论统计有关
  *           为了产生统计特征良好的为随机数，数学上一般采用递推公式
  *              X(n+1) = F(Xn, X(n-1), X(n-2), ..., X(n-k)))
  *           在给定了初始值X(0), X(-1), X(-2), ..., X(-k) 后可以
@@ -135,6 +137,12 @@ int __drand48_iterate(unsigned short xsubi[3],
 //+ mrand48/0 -> long int 返回的区间在[-2^31, 2^32]]
 //....
  
+/// random 一个非LCG算法的生成实现， 比LCG能生成更好的为随即数
+// + initstate(unsigned int seed, char *state, size n)
+//    用来设置srandom 的返回值
+// + srandmo(unsigned int seed) 类似与srand 设置种子
+// +  random/0 -> long
+
 ///IOS C std lib rand 实现
 //返回[0, RNAD_MAX]
 int rand_r (unsigned int *seed)

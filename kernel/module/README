@@ -70,7 +70,13 @@ set vim:foldmethod=marker
 
  S1
  __init 和 __exit 都是宏，作用都是声明把函数连接到指定的段中
+    用于说明函数的属性
 
+ __init , __initdata 申明些函数只在模块初始化的时候使用，
+    在模块被装载之后，模块装载器就会把这些函数扔掉，节约内存
+ __exit 申明函数只用于模块卸载，这些函数只能在模块卸载或关系系统时
+    调用，任何其他的调用都是错的
+        
   define __init __attribute__ ((__section__ (".init.text")))
   define __exit __attribute__ ((__section__ (".exit.text")))
   `
@@ -103,7 +109,7 @@ set vim:foldmethod=marker
   * /proc/kallsyms 文件对应内核符号表
 
   * 模块使用 `EXPORT_SYMBOL(name);
-              EXPORT_SYMBOL_GPL(name); //只适用于包含GPL许可的模块
+              EXPORT_SYMBOL_GPL(name); //只能被包含GPL许可的模块使用
         宏来导出指定符号到内核`
 
     Qus. EXPORT_SYMBOL* 宏的实现技术？
@@ -159,17 +165,27 @@ set vim:foldmethod=marker
    include <linux/fs.h>
 
 
-/**
+## 分配设备编号
+ 在建立设备前，我们需要想内核申请1个或多个设备编号
+  include <linux/fs.h>
  * register_chrdev_region() - register a range of device numbers
  * @from: the first in the desired range of device numbers; must include
  *        the major number.
  * @count: the number of consecutive device numbers required
  * @name: the name of the device or driver.
  *
- * Return value is zero on success, a negative error code on failure.
- */
+ * Return value is 0 on success, a negative error code on failure.
+ 
  int register_chrdev_region(dev_t from, unsigned count, const char *name)
-     name appear in /proc/devices
+     name appear in /proc/devices 和 sysfs
+     from 是起始编号，通常minor 为0， count 需要多少个连续的编号
+
+* 当事先不知道要分配的设备号时，使用 alloc_chrdev_region
+   内核会分配适当设备号. 建议使用alloc 
+
+## 释放设备编号
+  unregister_chrdev_region(dev_t first, unsigned int count)
+
 
 ###
 THIS_MODLE
@@ -218,4 +234,24 @@ mknod /dev/name type major minor
 
 ### 等待队列
 * include<linux/wait.h>
+
+
+### 支持 signal-drive IO模型
+1. 支持 F_SETOWN 命令
+   设置 filp->f_owner 
+
+2. 支持 F_SETFL 命令
+   每当 O_FASYNC 改变时 fasync() 函数会被执行， 被谁？？
+
+3. 支持 F_SETSIG 命令
+    可以设置发送的信号
+
+4. 在设备可用时调用  kill_fasync() 发送 signal通知
+    void kill_fasync(struct fasync_struct **fp, int sig, int band)
+	sig  :deliver which signal
+	band : POLL_IN , POLL_OUT, ....
+
+在 release 函数中需要把fd 删除
+
+### 支持 AIO IO 模型
 

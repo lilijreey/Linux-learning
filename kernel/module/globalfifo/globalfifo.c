@@ -1,4 +1,5 @@
 /**
+ * 
  * @file     globalfifo.c
  *
  * @brief   FIFO 虚拟设备实现
@@ -50,6 +51,9 @@ struct globalfifo_dev
 	struct semaphore sem; 
 	wait_queue_head_t r_wait;/* read interupt list */ 
 	wait_queue_head_t w_wait;/* wirte interupt list */ 
+
+	//支持 signal-drive IO
+	struct fasync_struct * async_queue; 
 };
 
 //instance
@@ -166,6 +170,10 @@ static ssize_t globalfifo_write(struct file * filp, const char __user *buf,
 				dev->current_len);
 
 		wake_up_interruptible(&dev->r_wait);
+
+		if (dev->async_queue) // 发送 POLL_IN 可读
+			kill_fasync(&dev->async_queue, SIGIO, POLL_IN);
+
 		ret = count;
 	}
 
@@ -177,6 +185,11 @@ out2:
 	return ret;
 }
 
+static int globalfifo_fasync(int fd, struct file *filp, int mode)
+{
+	struct globalfifo_dev *dev = filp->private_data;
+	return fasync_helper(fd, filp, mode, &dev->async_queue);
+}
 
 
 ///Qus. 没有设置的回调调用会怎样？

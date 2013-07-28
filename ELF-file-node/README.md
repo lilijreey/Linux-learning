@@ -1,8 +1,10 @@
 # Persenol leanning elf object construction symbol link and load, and GNU binutils
 
 ## 链接脚本
-1.  ld在出处理各种目标文件时，总是根据一系列规则产生输出.这些规则被称作链接脚本.  
-脚本一般安装在*/usr/lib/ldscripts/*
+1.  ld在出处理各种目标文件时，总是根据一系列规则产生输出.
+     这些规则被称作链接脚本.  脚本一般安装在*/usr/lib/ldscripts/*
+2.  ld -T file.script 制定链接脚本
+3.  使用链接脚本可以控制输出文件中的段，加载地址等等属性
 
 ## ldd
 
