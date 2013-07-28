@@ -1,4 +1,4 @@
-### 个人学习linux sys call 的笔记
+### 个人学习linux sys call + C stander lib 的笔记
 
 #include <signal.h>
 ###几种代码规范

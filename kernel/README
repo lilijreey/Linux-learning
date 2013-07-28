@@ -108,3 +108,6 @@ scripts/checkpatch.pl 提供了一个检查代码风格的脚本;
   test_bit(bit, void *addr)
   test_and_op_bit
 
+Kernel Debug
+-----------------------------------------------
+*几个调试选项 在kernel hacking 菜单中
