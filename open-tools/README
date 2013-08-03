@@ -13,3 +13,6 @@ libeio
    异步io
 
 libev
+
+* libconfig
+ 一个C/C++配置文件读取实现

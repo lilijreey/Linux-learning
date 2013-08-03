@@ -202,10 +202,51 @@ EE 健壮SOCKET 程序需要注意的几点
 
 
 |setsockopt| more see *tcp(7)*
-几种常见的选项
-1. SO_KEEPALIVE 
-  保活心跳
+ level 设置影响的范围
+  1. SOL_SOCKET socket 级别
 
+几种常见的选项
+1. SO_KEEPALIVE 保活心跳
+   用来防止链接的另一端异常终止（即没有发生fin包）导致socket链接一直存在而占用资源
+
+ Qus. 1 keepalive 是自动开启还是需要手动开启
+          Ans. 需要手动开启, TCP 默认不开启 keepalive
+      2. 每个socket的 keepalive 都可以单独设置,还是统一的
+         Ans.   都是单独的 从setsockeopt 可参数就可以看出，
+             第一个参数就是需要设置的socketfd
+      3. 只有一端开启keepalive 会如何
+         Ans. 哪一端想开启keepalive 开启就可以使用， 如果另一端没有开启也不会有问题，
+                 仍然会对keepalive 包进行相应。 这是TCP规定的和有没有开启keepalive  无关
+      4. sysctl 中的keepalive 选项影响那些
+          如果socket开启 keepalive 时的默认值
+
+   默认的设置参数太慢了，所以要自己设定
+  * 程序中开启KeepAlive 功能 使用 setsockeopt
+      int enable = 1;
+    setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &enable, sizeof(enable))
+
+  * 设置 始首次KeepAlive探测前的TCP空闭时间
+      int keepidle =5;
+    setsockopt(sockfd, SOL_TCP, TCP_KEEPIDLE, &keepidle, sizeof(keepidle))
+
+  * 两次KeepAlive探测间的时间间隔
+    int keepInterval = 5;
+    setsockopt(sockfd, SOL_TCP, TCP_KEEPINTVL, &keepInterval, sizeof(keepInterval))
+
+  * 判定断开前的KeepAlive探测次数 
+    int keepCount = 3;
+    setsockopt(sockfd, SOL_TCP, TCP_KEEPCNT, &keepCount, sizeof(keepCount))
+
+ sysctl 中的设定
+        如果socket开启 keepalive 时的默认值
+	tcp_keepalive_time = 7200 seconds (2 hours)
+	tcp_keepalive_probes = 9
+	tcp_keepalive_intvl = 75 seconds
+	意思是如果某个TCP连接在idle 2个小时后,内核才发起probe.如果probe 9次(每次75秒)不成功,
+                      内核才彻底放弃,认为该连接已失效.对服务器而言,显然上述值太大. 可调整到:
+	/proc/sys/net/ipv4/tcp_keepalive_time 1800
+	/proc/sys/net/ipv4/tcp_keepalive_intvl 30
+	/proc/sys/net/ipv4/tcp_keepalive_probes 3
 2. SO_RCVBUF, SO_SNDBUF
   接收发送缓存大小，tcp窗口的小
   必须在connect bind前调用
@@ -336,18 +377,6 @@ EE 网络内核参数 files
  /proc/sys/net/ipv4/tcp_retries2
    TCP失败重传次数,默认值15,意味着重传15次才彻底放弃.可减少到5,以尽早释放内核资源.
 
- /proc/sys/net/ipv4/tcp_keepalive_time
- /proc/sys/net/ipv4/tcp_keepalive_intvl
- /proc/sys/net/ipv4/tcp_keepalive_probes
-	这3个参数与TCP KeepAlive有关.默认值是:
-	tcp_keepalive_time = 7200 seconds (2 hours)
-	tcp_keepalive_probes = 9
-	tcp_keepalive_intvl = 75 seconds
-	意思是如果某个TCP连接在idle 2个小时后,内核才发起probe.如果probe 9次(每次75秒)不成功,
-                      内核才彻底放弃,认为该连接已失效.对服务器而言,显然上述值太大. 可调整到:
-	/proc/sys/net/ipv4/tcp_keepalive_time 1800
-	/proc/sys/net/ipv4/tcp_keepalive_intvl 30
-	/proc/sys/net/ipv4/tcp_keepalive_probes 3
 
   /proc/sys/net/ipv4/ip_local_port_range
   指定端口范围的一个配置,默认是32768 61000,已够大.
