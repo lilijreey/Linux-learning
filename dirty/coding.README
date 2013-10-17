@@ -11,10 +11,8 @@ utf8 utf16 有何不同
 
 函数工具
 
-
 c++std string 不能发现中文字符
 e.g. str="ni日" str[2] 不对
-
 
 UCS 通用字符集
 是所有其他字符集的一个超集，他保证于其他
@@ -24,7 +22,6 @@ UCS 现在由两种格式
 UCS-2 两个字节编码
 UCS-4 四个字节编码 (031)
 
-
 Unicode 
 每个字符在Unicde中的对应一个编号
 每个编号都是两字节的。
@@ -32,7 +29,6 @@ Unicode
 
 Unicde 的内码是 UCS-2
 UTF-8 是UCS-2 的实现方式
-
 
 UCS 和 Unicde的关系
 UCS 是ISO 制定的标准
@@ -52,7 +48,6 @@ UCS-2编码(16进制) 	UTF-8 字节流(二进制)
 0800 - FFFF 	1110xxxx 10xxxxxx 10xxxxxx E0 80 以E或B以上开头  
 ......
                 1111110x
-
 
 
 按照UTF-8标准，

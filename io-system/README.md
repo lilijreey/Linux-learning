@@ -2,6 +2,49 @@
 ### Qus.
 EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
 	会  more see seek.c
+ 调用一个write 写数据到文件，会收到flush 的影响吗， flush 的默认刷新时间
+ 是30sec，这个到底控制哪些数据的回写
+
+### 系统IO内核参数 
+ linux kernel 使用 内存缓存磁盘的数据， 
+ page cache kernel 会把会缓存读取磁盘的内容，直到用完内存，然后在把不需要的
+ page cache释放掉
+ kernel 的 flusher线程 把数据从dirty_buf 写入磁盘, 当达到回写的门槛是flusher
+ 线程就会被唤醒，直到
+ ，下面的一些参数控制内存cache如何回写到内存
++  /proc/sys/vm/nr_pdflush_threads
+    查看 pdflush 进程的数量，只读，
++  /proc/sys/vm/dirty_ratio
+     这个参数控制文件系统的文件系统写缓冲区的大小,
+     单位是百分比,表示系统内存的百分比,
+     表示当写缓冲使用到系统内存多少的时候,
+     开始向磁盘写出数 据.增大之会使用更多系统内存
+     用于磁盘写缓冲,也可以极大提高系统的写性能.但是,
+     当你需要持续、恒定的写入场合时,应该降低其数值,
+     一般启动上缺省是 10.下面是增大的方法： 
+     echo ’40′> /proc/sys/vm/dirty_ratio
+
+
++   /proc/sys/vm/dirty_writeback_centisecs
+    这个参数控制内核的脏数据刷新进程pdflush的运行间隔.单位是 1/100秒.
+    缺省数值是500,也就是 5 秒.如果你的系统是持续地写入动作,那么实际上还是
+    降低这个数值比较好,这样可以把尖峰的写操作削平成多次写操作.设置方法如下： 
+    echo ’200′ > /proc/sys/vm/dirty_writeback_centisecs 
+    如果你的系统是短期地尖峰式的写操作,并且写入数据不大（几十M/次）
+    且内存有比较多富裕,那么应该增大此数值： 
+
++   /proc/sys/vm/dirty_expire_centisecs
+   这个参数声明Linux内核写缓冲区里面的数据多“旧”了之后,
+   pdflush进程就开始考虑写到磁盘中去.单位是 1/100秒.
+   缺省是 30000,也就是 30 秒的数据就算旧了,将会刷新磁盘.
+   对于特别重载的写操作来说,这个值适当缩小也是好的,
+   但也不能缩小太多,因为缩小太多也会导致IO提高太快.
+   建议设置为 1500,也就是15秒算旧.
+
+
+### 绕过IO cache
+可以在open的时候 
+传入 O_DIRECT 来不使用io cacahe,直接把数据写入硬盘, 这个是linux特有的
 
 ### 进程打开文件 文件共享
 +   内核使用3个结构记录一个打开的文件
@@ -125,6 +168,7 @@ EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
 	printf("system page size:%d\n", getpagesize()) ;
 //	PAGE_SIZE
 
+
 ### PIPE
 pipe + fork
 在pipe，fork后, 父子进程都有一个pipe，
@@ -152,4 +196,42 @@ pipe + fork
     从fd中读取count 个iov 数据到iov 中
     readv 会从iov[0] 一直到iov[conut-1]
 
+
+### read 
+read 相当与其他操作是一个很慢的操作，可有可能导致进程挂起(???)
+   所有在read执行期间有可能收到一个信号，打断read,
+
+   一个读取全部数据的操作
+   ```c
+   ssize_t ret;
+   while (len !=0 && (ret = read(fd, buf, len)) !=0) {
+       if (ret == -1) {
+           if(errno == EINTR) continue;
+           perror("read");
+       }
+       len -= ret;
+       buf += buf;
+   }
+   ```
+
+   nonblocking reads
+   如果是读取一个设置了nonblocking fd 则除了EINTR
+   ,在没有数据是还会返回-1和 EAGAIN,
+   ```c
+   char buf[BUFSIZE];
+   ssize_t nr;
+   start:
+   nr = read(fd, buf, BUFSIZE);
+   if (nr == -1) {
+       if(errno == EINTR)
+           goto start;
+        if(errno == EAGAIN) //or EWOULDBLOCK
+            /* resubmit later */
+        else
+            /* error */
+   }
+   ```
+## close/1
+   关闭一个文件，并不会影响这个文件的数据写入物理磁盘。也就是说，
+   关闭一个文件，OS并不会把这个文件回写物理磁盘，
 

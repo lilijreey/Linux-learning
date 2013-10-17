@@ -1,4 +1,15 @@
 
+num  0cc55700
+
+Big endian 低有效字节在最大地址开始向小地址
+Address: 00	01	03	04
+data:    00	0c     c5	57
+
+little endian 低有效字节在最小地址开始向大地址
+Address: 00	01	03	04
+data:    57	c5	0c	00
+
+
 TCP {{{
 ===================================
 Qus. TCP 何时通知应用层有数据到了??
@@ -303,13 +314,17 @@ EE 健壮SOCKET 程序需要注意的几点
 
 |write|| |send/4| 
 send 和write的前3个参数相同，但是有一个flags 参数
+比write 提供更多的控制
  send 只有在socket是链接状态下,才能调用
  write(socket, buf, len) == send(socket, buf, len, 0)
  flags:
      MSG_OOB 外带数据
+     MSG_NOSIGNAL 方要发生SIGPIPE 时不发生
+          当时会返回-1 erron 会设为 EPIPE
 
 |sendto|/6
-  一般用于UDP ,TCP也可以用
+  一般用于UDP ,TCP也可以用, 
+
   send(socket,buf,len,flags) = sendto(socket,buf,len,flags, NULL, 0)
   if sendto用于面向链接的 socket, (SOCK_STREAM, SOCK_SEQPACKET)
    后两个参数将被忽略, 这时后面两个参数必须为NULL，0，否则会返回
@@ -414,6 +429,22 @@ UDP
 *     如果UDP包大于MTU则会被分解为多个包，传输，如果传输过程
 *     中有任意一个包丢失，则整个数据包就会被抛弃,如果所有分组
 *     都被成功传输到接收端则OS会负责重组数据包
+
+Funcs
+=====================================
+* 大小端转换
+      hton{s,l}
+      ntoh{s,l}
+  BSD 提供64为的转换
+      htole64
+      htobe64
+
+* IP 地址转换
+    inet_aton()   convert dot-ip to network-ordered binary
+    inet_ntoa() 
+   DNS gethostname/ human to IP address
+   Server Port /etc/services
+     getservbyname
 
 
 vim: ft=help foldmethod=marker

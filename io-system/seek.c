@@ -23,6 +23,11 @@
 
 // EE 打开文件是除非是指定 O_APPEN, 文件偏移量都为0
 
+// EE linux 提供两个函数可以用来代替lseek + read/ lseek+write
+//   `pread' `pwrite'
+//   这两个函数提供Positional Reads and Writes
+//   并且不改变file的position,
+//   还能避免position races.
 int main()
 {
     int ft = open("./orgfile", O_RDWR);
