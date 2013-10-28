@@ -279,3 +279,15 @@ C99 保证原子的操作的一个整数类型
 
 ### More See
 provide background on the implementation of signals in Linux.
+
+#### SIGCHLD
+每当有进程终结时，系统就会给他的parent进程发送 SIGCHLD 信号
+   此信号默认的机制是忽略,
+注意child的终结和发送给parnet进程SIGCHLD的是异步的
+
+waitpid 是SysV BSD 有自己的对应函数 wait3, wait4 
+ 3,4 的意思是他们的参数个数
+ wait3(status, optins, NULL) == waitpid(-1, status, optins) for any child 
+ wait4(pid, status, optins, NULL) == waitpid(pid, status, optins) for specific child
+
+
