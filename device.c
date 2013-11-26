@@ -21,6 +21,12 @@
  *      /proc/devices 列出所有已经载入内核的主设备号和驱动
  * Minor device number 用来区分同一主设备号的不同设备，
  *      从设备号的含有和具体的驱动有关
+ *      
+ *  几个工具 1/proc/interrupts 查看终端号
+ *            /proc/pci/
+ *            
+ *          2 lspci -v
+ *      
  *
  *  几个特殊设备
  *  /dev/null 主要有两种作用
@@ -53,6 +59,8 @@
  *  /dev/sda SCSI 的第一个设备
  *  /dev/disk 存放连的到主机上的硬盘信息，按照不同的方式共用户查询
  *  /dev/tty 用户当前正在使用的tty
+ *  /dev/ttyS0 COM1
+ *     可以使用 stty -F /dev/ttyS0 来查看串行端口的通信参数
  *  /dev/console 系统终端接口
  *  /dev/input 输入设备
  *            /mice 鼠标设备
