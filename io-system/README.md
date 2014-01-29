@@ -1,4 +1,5 @@
 
+`
 ### Qus.
 EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
 	会  more see seek.c
@@ -162,7 +163,7 @@ EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
 ### fcntl
   获得已经打开的fd的属性
   改变已经打开的fd的属性
-  dup fd
+  dup fd 
   为fd上锁
 
 * 使用O_NOATIME 来指示fd不更新atime
@@ -176,7 +177,7 @@ EE 在一个已有内容文件的开头写入数据会覆盖原来的数据吗?
 	printf("system page size:%ld\n", sysconf(_SC_PAGESIZE)) ;
 	//linux provide
 	printf("system page size:%d\n", getpagesize()) ;
-//	PAGE_SIZE
+    //	PAGE_SIZE
 
 
 ### PIPE
@@ -255,3 +256,20 @@ readahead(2) linux specifiy
 
 + 设置磁盘的最大预读写大小
 blockdev -setra 1024 /dev/sda 
+
+dup 通过dup产生的新fd并不继承原fd的属性，如 close-onexec , non-blocking
+
+
+## sendfile 
+` sence kernel 2.2 
+   <sys/sendfile.h>
+sendfile 在两个fd之间直接拷贝数据，完全在内核中，从而避免了，内核buf和用户buf
+  之间的数据copy, 成为零拷贝
+  ssize_t sendifel(int out_fd, int in_fd, off_t *offset, size_t count);
+  in_fd 必须指向一个真实的文件，而out_fd 一般是一个socket, kernel2.6.33 以前
+    必须是一个socke , 所以
+  sendfile 几乎是为网络程序设计的, 主要用来把一个文件发送给socket
+
+## splice
+## tee 
+ TODO
