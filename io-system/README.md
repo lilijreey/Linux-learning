@@ -273,3 +273,6 @@ sendfile 在两个fd之间直接拷贝数据，完全在内核中，从而避免
 ## splice
 ## tee 
  TODO
+
+##/dev/loop
+
