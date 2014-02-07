@@ -1,0 +1,36 @@
+ 
+ XDR 一种IDL 主要用于RPC实现， Sun开发的.
+ 使用rpcgen tools 来把xdr文件翻译成C文件,
+ XDR 通常以.x 结尾
+
+ @tutorial  http://people.redhat.com/~rjones/xdr_tests/
+
+encode
+------------------------------------
+  使用rpcgen 工具生成的文件中就有打包函数，名字为xdr_<struct-name>
+  把你需要打包的变量传递进出就ok了，返回是是否打包成功
+   .e.g
+   XDR xdr;
+   int fp=xxxx // fp 是把得到的encode对象写入到文件
+   xdrstdio_creae(&xdr, fp, XDR_ENCODE);
+   person p1={"name", 2};
+   if (!xdr_person(&xdr, p1))
+        encode_error...
+   xdr_destroy(&xdr); //fflush fp
+   close(fp)
+
+decode
+---------------------------------------------
+e.g.
+   XDR xdr;
+   int fp=.. // 得到encode的数据
+   person p1;
+   xdrstdio_create(&xdr, fp, XDR_DECODE);
+   if (!xdr_person(&xdr, &p1)) // 写入p1
+        encode_error...
+
+
+xdrstdio_creae(&xdr, fp, XDR_ENCODE);
+xdrstdio_creae(&xdr, fp, XDR_DECODE);
+ 
+
