@@ -26,7 +26,7 @@
 
 
 
-*   whyUsePthread.md "线程的好处和使用范围"
+*   WhyUsePthread.md "线程的好处和使用范围"
 *   PTHREAD.md pthread 的学习笔记
 
 
