@@ -25,5 +25,8 @@ join: join.c
 clean:
 	@rm -rf *.o ${OBJECTS}
 
+sig: sigwait_t.c
+	$(compile-and-run)
+
 .PHONY: all clean
 

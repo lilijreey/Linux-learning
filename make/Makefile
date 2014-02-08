@@ -210,6 +210,13 @@ endef
 #	@$(compiler-and-run)
 #如果在宏的引用前加上@则宏的命令将不会显示
 
+#宏的参数, ??? 可以传参数不？
+# 不是 $1 ,,, 
+define bb
+echo arg is "$1" ; 
+endef
+
+
 ## EE 工作目标专属变量,需要特殊处理某一目标，但由于其他
 #目标命令行保持一致
 #只会印象某一工作目标，对用一些特殊的工作目标来需要用到
@@ -320,5 +327,9 @@ sub:
 #make 中要让变量等于一个shell命令的结果可以
 #1. var = `cmd`
 #2. var =$(shell cmd)
-  #对于shell 中的 $(cmd) make 无法得到cmd的结果
+#对于shell 中的 $(cmd) make 无法得到cmd的结果
 
+ldlibs:
+	echo $(LDLIBS) #nil
+	echo $(LEXT) #nil
+	echo $(OBJEXT) #nil
