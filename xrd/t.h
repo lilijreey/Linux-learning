@@ -33,6 +33,13 @@ extern bool_t xdr_stringentry ();
 extern bool_t xdr_stringlist ();
 
 #endif /* K&R C */
+struct rpcgen_table {
+	char	*(*proc)();
+	xdrproc_t	xdr_arg;
+	unsigned	len_arg;
+	xdrproc_t	xdr_res;
+	unsigned	len_res;
+};
 
 #ifdef __cplusplus
 }

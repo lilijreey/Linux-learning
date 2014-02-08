@@ -1,5 +1,5 @@
 struct stringentry {
-	string item<1024>;
+	string item<>;
         stringentry *next;
 };
 
