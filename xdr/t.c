@@ -8,9 +8,8 @@
 bool_t
 xdr_stringentry (XDR *xdrs, stringentry *objp)
 {
-	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, &objp->item, ~0))
+	 if (!xdr_string (xdrs, &objp->item, 1024))
 		 return FALSE;
 	 if (!xdr_pointer (xdrs, (char **)&objp->next, sizeof (stringentry), (xdrproc_t) xdr_stringentry))
 		 return FALSE;
@@ -20,9 +19,17 @@ xdr_stringentry (XDR *xdrs, stringentry *objp)
 bool_t
 xdr_stringlist (XDR *xdrs, stringlist *objp)
 {
-	register int32_t *buf;
 
 	 if (!xdr_pointer (xdrs, (char **)objp, sizeof (stringentry), (xdrproc_t) xdr_stringentry))
 		 return FALSE;
 	return TRUE;
+}
+
+int main() {
+    int i;
+    xdr_destroy((XDR *)NULL);
+    i=2;
+    i=0;
+    return i;
+
 }

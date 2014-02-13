@@ -10,12 +10,13 @@ xdr_stringentry (XDR *xdrs, stringentry *objp)
 {
 	register int32_t *buf;
 
-	 if (!xdr_string (xdrs, &objp->item, 1024))
+	 if (!xdr_string (xdrs, &objp->item, ~0))
 		 return FALSE;
 	 if (!xdr_pointer (xdrs, (char **)&objp->next, sizeof (stringentry), (xdrproc_t) xdr_stringentry))
 		 return FALSE;
 	return TRUE;
 }
+
 
 bool_t
 xdr_stringlist (XDR *xdrs, stringlist *objp)

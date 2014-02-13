@@ -22,6 +22,10 @@
 
 #define	TIMEOUT 2			/*  */
 #define	BUF_LEN 1024		/*  */
+//see man select_tut(2)
+//
+//1. select 每次loop都要重新设置fd，也就是本次设置的set 在select返回后就没有了
+//2. select 返回后并不知道那写fd是set了，必须轮训所有的set中的fd FD_JISSET(
 int main() {
 
 	struct timeval tv ;

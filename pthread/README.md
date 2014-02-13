@@ -61,6 +61,7 @@ Qus. 多线程共享信号的什么？
      see sigwait_t.c 3
 
 注意事项
+1. 在多线程环境中不能使用sigprocmask, 没有定义行为，必须使用pthread_sigmask
 
 在基于 Linux 的多线程应用中，对于因为程序逻辑需要而产生的信号，
 可考虑使用同步模型进行处理；而对会导致程序运行终止的信号如 SIGSEGV 等，

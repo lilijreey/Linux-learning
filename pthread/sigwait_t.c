@@ -6,16 +6,16 @@
  * @date     02/08/2014 03:23:19 PM
  *
  */
+#include <unistd.h>
 #include <stdio.h>
 #include <signal.h>
 #include <errno.h>
 #include <pthread.h>
 #include <string.h>
-#include <unistd.h>
 #include <sys/types.h>
 
 
-#if 1 //给一个进程发送信号，线程会如何
+#if 0 //给一个进程发送信号，线程会如何
 // 所有线程设置的handle都共享，
 // 给一个进程发送信号时，只有一个线程处理signal, 随即的线程,不固定
 
@@ -152,7 +152,7 @@ int main()
 #endif
 
 
-#if 0 //333
+#if 1 //333
 void sig_handler(int signum)
 {
     static int j = 0;
@@ -161,12 +161,12 @@ void sig_handler(int signum)
     // used to show which thread the signal is handled in.
    
     if (signum == SIGUSR1) {
-        printf("thread %d, receive SIGUSR1 No. %d\n", sig_ppid, j);
+        printf("thread %ld, receive SIGUSR1 No. %d\n", (long)sig_ppid, j);
         j++;
     //SIGRTMIN should not be considered constants from userland, 
     //there is compile error when use switch case
     } else if (signum == SIGRTMIN) {
-        printf("thread %d, receive SIGRTMIN No. %d\n", sig_ppid, k);
+        printf("thread %ld, receive SIGRTMIN No. %d\n", (long)sig_ppid, k);
         k++;
     }
 }
@@ -176,14 +176,14 @@ void* worker_thread()
     pthread_t  ppid = pthread_self();
     pthread_detach(ppid);
     while (1) {
-        printf("I'm thread %d, I'm alive\n", ppid);
+        printf("I'm thread %ld, I'm alive\n", (long)ppid);
         sleep(10);
     }
 }
 
 void* sigmgr_thread()
 {
-    sigset_t   waitset, oset;
+    sigset_t   waitset; 
     siginfo_t  info;
     int        rc;
     pthread_t  ppid = pthread_self();
@@ -212,6 +212,7 @@ int main()
     int             i;
     pid_t           pid = getpid();
     pthread_t       ppid;
+    siginfo_t xx;
     
 
     // Block SIGRTMIN and SIGUSR1 which will be handled in 
@@ -241,7 +242,7 @@ int main()
         printf("main thread, send SIGRTMIN No. %d\n", i);
         sleep(10);
     }
-    exit (0);
+    return 0;
 }
 
 #endif
