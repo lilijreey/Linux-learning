@@ -1,0 +1,12 @@
+国际化和本地化
+
+国际化: i18n
+本地化: li0n
+
+NLS Native language support -lnls
+解决个文件系统多语言文件
+
+# 当前系统可用的locale
+locale -a
+
+gettext ?

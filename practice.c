@@ -129,7 +129,11 @@ printf("a=%d\n", a) ;
 int main()
 {
 	uid_t uid ;
-	uid = getuid() ;
+    %% getuid 返回的是process的uid,而不是可执行文件whoner 的uid,
+        euid 一般和uid相同,除非手动设置,或者可执行文件是
+            设置了 set-user-id 表示, chmod +s
+            这时euid就是可执行文件的whoner uid
+            getuid() ;
 	char *login_name = getlogin() ; 
 	printf("The exection user log is:%s\n", login_name) ;
 	printf("UDI:%ud\n", getuid()) ;		
