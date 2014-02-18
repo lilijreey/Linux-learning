@@ -561,9 +561,12 @@ static inline void list_splice_tail_init(struct list_head *list,
 	     &pos->member != (head); 					\
 	     pos = n, n = list_entry(n->member.prev, typeof(*n), member))
 
+
+#if 1 
+
 typedef struct myDB_s
 {
-	//需要使用链表就包含 list_head 成员
+	//EE 需要使用链表就包含 list_head 成员
 	int _i;
 	struct list_head _link;
 }myDB_t;
@@ -578,7 +581,6 @@ void push_back(myDB_t *head, int num )
 }
 
 
-#if 1 
 
 #include <stdio.h>
 int main()

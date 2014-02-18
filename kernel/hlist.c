@@ -1,7 +1,8 @@
 /**
  * @file     hlist.c
  *           
- *
+ *   hash table 中的每个blute 的list, 哈希链表 
+ *   每个头节点是 hlist_head -> hlist_node -> hlist_node ....
  * @author   lili  <lilijreey@gmail.com>
  * @date     05/07/2013 11:44:16 AM
  *

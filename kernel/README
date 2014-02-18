@@ -41,6 +41,7 @@ module/ kernl 模块 学习笔记
     通用hash表, 使用附加链表解决key冲突，
     hlist_head 是hash表中的项（entry) 如果有冲突则
     在hlist_head -> hlist_node. <see> hlist.c
+    hash 是否会扩大
                
 
 Documentation/CodingStyle 表述的内核的编程风格

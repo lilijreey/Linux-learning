@@ -18,12 +18,14 @@ main(int argc, char *argv[])
     //把编码后的数据输出到stdout, 由于编码后是不可见字符，所以使用
     // ./w | hexdump 输出
     xdrstdio_create(&xdr, stdout, XDR_ENCODE);
+        printf("pos:%u \n", xdr_getpos(&xdr));
     for (long i =0; i < 8; ++i)
     {
         if ( !xdr_long(&xdr, &i) ) {
             fprintf(stderr, "failed");
             exit(1);
         }
+//        printf("pos:%u \n", xdr_getpos(&xdr));
 
     }
 

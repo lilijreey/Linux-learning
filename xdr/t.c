@@ -16,10 +16,86 @@ xdr_stringentry (XDR *xdrs, stringentry *objp)
 	return TRUE;
 }
 
+struct msg {
+    int item_num;
+    items a;
+
+};
+
+
+struct item {
+    string name;
+    void *value;
+};
+
+struct re1
+{
+    int value
+};
+
+struct person
+{
+    int age;
+    char name[23];
+};
+
+struct item_h
+{
+    int id;
+    int type;
+    int len;
+    char *_data[0];
+};
+
+
+void unpack(void *buf) 
+{
+    item *m =(struct item_h *)(buf); 
+    switch (m->type)
+    {
+    case 1: //int-8
+        do_int_8(item)
+
+    }
+
+
+}
+
+unpack_person(item data, &person)
+{
+    person->age = item_get(data, name);
+    strdup(person->name, item_get(data, name));
+}
+
+struct person1
+{
+    int age;
+    char name[23];
+    char addr[50];
+
+};
+
+
+xx()
+{
+    Msg *m = unpack_msg(data);
+    if (m == NULL)
+        return;
+    g_msg_ck[m.op](m);
+
+
+}
+
+bool get_info(const Msg *msg)
+{
+
+
+}
+
+
 bool_t
 xdr_stringlist (XDR *xdrs, stringlist *objp)
 {
-
 	 if (!xdr_pointer (xdrs, (char **)objp, sizeof (stringentry), (xdrproc_t) xdr_stringentry))
 		 return FALSE;
 	return TRUE;

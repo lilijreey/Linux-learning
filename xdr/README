@@ -37,4 +37,6 @@ xdrmem_create(&xdr, buf, buf_len, XDR_ENCODE); // en/decode from/to a buffer
  
 xdr_destroy() 参数不能是NULL, 会segmentation failed core dump
  
-xdr_char
+
+xdr_getpot/1
+xdr_setpot/1
