@@ -249,3 +249,15 @@ Mutex 属性
 * `pthread_mutexattr_settype/2`
 
 
+* 线程专有数据， 每个线程都有自己的一个
+` 变量类型 pthread_key_t
+  使用 pthread_key_create/2 来创建该变量
+
+  如果使用 pthread_key_t 要设置线程专有数据通过
+    pthread_key_setspecific/2
+    pthread_key_getspecific/2
+    来，不能直接设置
+
+    pthread_key_delete
+  
+  GNU _thread

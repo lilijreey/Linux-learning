@@ -174,3 +174,6 @@ POSIX 的timespec 可达到纳秒，如果一个机器的HZ为100，可以准时
        decrementing in a distinct time domain.	When any timer expires, a signal is sent to the process, and the timer (potentially) restarts.
 see alarm.c
 +   `timer_create, timer_settime'. posix func 最高级控制最强的定时器
+
+### date
+ strftime 格式化time_t 为时间
