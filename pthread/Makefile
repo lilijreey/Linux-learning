@@ -22,6 +22,9 @@ rwlock: rwlock.c
 join: join.c
 	$(compile-and-run)
 
+buf: buf.c
+	$(compile-and-run)
+
 clean:
 	@rm -rf *.o ${OBJECTS}
 

@@ -146,13 +146,23 @@ EE 线程终止
   1. 线程通常从启动函数返中返回来终止自己
   2.`ptherad_exit`
   3.`ptherad_cancel` 调用`ptherad_canceld`返回码总是`PTHREAD_CANCELLED`
+   调用的cancel 并不意味着thread就可以终止，thread必须运行到一个cancel point才能终止
+   如果没有，那thread不会终止
+
   如果线程已经分离则会立即进入回收状态,否则就会出现僵尸线程.(注意线程和进程的相似性,linux下线程其实就是进程)
+
+void pthread_cleanup_push 用来在ppush 和pop 直接执行时遇到在自己被cancel/ exit 
+时执行push 中的handle
+void pthread_cleanup_pop(execute)
+ execute参数表示执行到pthread_cleanup_pop()时是否在弹出清理函数的同时执行该函数，
+ 为0表示不执行， 非0为执行；这个参数并不影响异常终止时清理函数的执行。
+ 这两个函数必须成对出现
 
 EE 系统资源（malloc,mmap) _可以在任何时候由任何线程释放_. 
    信号量，互斥量,条件变量,信号灯可以由任何线程销毁. 前提没被解锁或现成等待. _但是有只有互斥量的主人才能释放解锁,所以线程终止时一定要解锁_
 
 
-EE pthread-once(once-vaulable, once-routine)
+EE pthread_once(once-vaulable, once-routine)
    用于希望只被执行1次的代码段
    参数是一个标记变量 和一段执行过程
 
@@ -185,6 +195,7 @@ condition 条件变量
      条件变量提供了使多个线程以无竞争的方式等待特定条件发生
 
 * 条件变量本身需要由meutx保护，进程在改变条件变量前必须先lock mutex
+* cond 只是一个标记代表对应的谓词,但并不是谓词
 
 * `pthread_cond_t`
 * `pthread_cond_init/2 | PTHREAD_COND_INITIALIZER`
@@ -202,6 +213,7 @@ condition 条件变量
      唤醒所有在cond上wait的现场。
         如果这些现场都要争抢统一资源，则不建议使用brocast, 群惊的开销
         比较大。使用signal更好一些
+        如果是多个生产者一个消费者，则消费者必须使用brocast 否则使有些worker一直wait
 
 线程属性
 ---------------------------------------------------
