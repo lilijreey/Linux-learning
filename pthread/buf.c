@@ -30,7 +30,6 @@ typedef struct car_s{
 
 } car;
 
-static car *xx;
 
 typedef struct event_s
 {
@@ -288,15 +287,16 @@ void write_log(car *c, const char* msg, size_t len)
 
 void* work(void *arg)
 {
+    car *c = (car*)arg;
     char buf[64];
     printf("work %lu start\n", pthread_self());
 
-    for (int i=0; i< 50; ++i) {
+    for (int i=0; i< 500000; ++i) {
         int len = snprintf(buf, 64, "thread %lu write a log\n", (unsigned long)pthread_self());
         assert(len < 64);
         buf[len++] = '\0';
 
-        write_log(xx, buf, len);
+        write_log(c, buf, len);
     }
 
     return NULL;
@@ -314,18 +314,18 @@ main(int argc, char *argv[])
 	pthread_t ptid[2];
 	pthread_t logtid;
 
-    xx = new_buf("./log");
+    car *xx = new_buf("./log");
+    car *yy = new_buf("./nn");
     assert(xx);
 
     (pthread_create(&logtid, NULL, log_back, NULL));
-    (pthread_create(&ptid[0], NULL, work, NULL));
-    (pthread_create(&ptid[1], NULL, work, NULL));
+    (pthread_create(&ptid[0], NULL, work, xx));
+    (pthread_create(&ptid[1], NULL, work, yy));
 
     for (int i=0; i<2; ++i)
         pthread_join(ptid[i], NULL/*not care thread return code */);
 
     printf("work over\n");
-    sleep(100);
 
     //close log
     pthread_cancel(logtid);

@@ -77,6 +77,7 @@ int main()
 
 // 多线程程序同步处理信号模型
 // 1. 主线程设置希望处理的sigmaks， 并屏蔽他们
+//   而且必须是没有创建过任何一个线程的情况下，先屏蔽
 // 2. 这种这些sigmask的handle
 // 3. 创建一个线程专门来处理signal
 // 4. 创建其他工作线程
@@ -193,6 +194,7 @@ void* sigmgr_thread()
     sigemptyset(&waitset);
     sigaddset(&waitset, SIGRTMIN);
     sigaddset(&waitset, SIGUSR1);
+    sigaddset(&waitset, SIGALRM);
 
     while (1)  {
         rc = sigwaitinfo(&waitset, &info);
@@ -220,6 +222,7 @@ int main()
     // Newly created threads will inherit the pthread mask from its creator 
     sigemptyset(&bset);
     sigaddset(&bset, SIGRTMIN);
+    sigaddset(&bset, SIGALRM);
     sigaddset(&bset, SIGUSR1);
     if (pthread_sigmask(SIG_BLOCK, &bset, &oset) != 0)
         printf("!! Set pthread mask failed\n");
