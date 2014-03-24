@@ -94,3 +94,20 @@ C C++ ObjectiveC Fortran Erlang
         创建一个复杂的Makefile.in file from Makefile.am 
     +   aclocal
             扫描 configure.ac 生成 aclocal.m4
+
+## configuer.ac
+ 执行的命令后生产一个 confing.log 的文件记录所有configuer.ac 的输出
+
+
+## config.staus
+ 用来重新生产产生的文件
+  e.g.
+  ./config.status --file=src/config.h
+
+## config.log
+  记录执行./configuer 后所有的输出和生成的宏
+
+make mostlyclean
+make clean
+make distclean
+make maintainer-clean
