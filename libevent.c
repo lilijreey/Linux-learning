@@ -23,8 +23,8 @@
  *     event_add
  *     
  * event_free
- * event_del
+ * event_del 只是把fd从poll模型中删除，但是并不close fd
  *                    
- * event_add
+ * event_add 
  * 
  */

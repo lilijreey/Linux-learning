@@ -177,3 +177,21 @@ see alarm.c
 
 ### date
  strftime 格式化time_t 为时间
+
+
+/* Return pointer to a static char[] buffer in which zero-terminated
+   string-representation of TM (in form hh:mm:ss) is printed.
+   If TM is NULL, the current time will be used.  */
+
+char *
+time_str (time_t t)
+{
+  return fmttime(t, "%H:%M:%S");
+}
+
+/* Like the above, but include the date: YYYY-MM-DD hh:mm:ss.  */
+char *
+datetime_str (time_t t)
+{
+  return fmttime(t, "%Y-%m-%d %H:%M:%S");
+}

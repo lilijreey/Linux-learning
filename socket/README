@@ -362,6 +362,28 @@ EE 健壮SOCKET 程序需要注意的几点
      2. 直到收到所有上次发出去的pkg的ack，或者已经累计的足够的数据包
      3. 重复2
 
+   TCP_CORK
+   和TCP_NODELAY 相反，他是告诉kernel即使app write数据到kernel，也不要发送
+   一般是在sendfile时使用，因为每个file都需要前写入一些头,在写入后要sendfile
+   使用TCP_CORK 就可以让kernel都到sendfile完成后，一起发送（取消TCP_CORK)
+   在BSD上面TCP_CORK 有形象的叫做塞子，和拔塞子 NOPUSH, PUSH
+
+#define ngx_tcp_nopush_n   "setsockopt(TCP_CORK)"
+#define ngx_tcp_push_n     "setsockopt(!TCP_CORK)"
+   
+
+int
+ngx_tcp_nopush(ngx_socket_t s)
+{
+    int  tcp_nopush;
+
+    tcp_nopush = 1;
+
+    return setsockopt(s, IPPROTO_TCP, TCP_NOPUSH,
+                      (const void *) &tcp_nopush, sizeof(int));
+}
+
+
 为什么TCP_QUICKACK需要在每次recv后重新设置？
       因为TCP_QUICKACK不是永久的，所以在每次recv数据后，应该重新设置。
 
