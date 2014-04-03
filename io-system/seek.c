@@ -14,7 +14,7 @@
 //#include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <zhao/tools.h>
+#include <stdio.h>
 
 // 使用无缓冲I/O
 //Qus. 打开一个有内容的file，把文件偏移量移动的开始，写入的数据会覆盖原来的
@@ -30,15 +30,21 @@
 //   还能避免position races.
 int main()
 {
-    int ft = open("./orgfile", O_RDWR);
-    E_TEST(-1, ft);
-    off_t offset = lseek(ft, 0, SEEK_SET); // set offset to begin file opsition 
-    E_TEST((off_t) -1, offset);
-    printf("offset is:%ld\n", offset);
+//    int ft = open("./orgfile", O_RDWR);
+//    E_TEST(-1, ft);
+//    off_t offset = lseek(ft, 0, SEEK_SET); // set offset to begin file opsition 
+//    E_TEST((off_t) -1, offset);
+//    printf("offset is:%ld\n", offset);
+//
+//    char buf[] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; // '\0' is last charater
+//    write(ft, buf, sizeof(buf));
+//    E_TEST(-1, close(ft));
 
-    char buf[] = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; // '\0' is last charater
-    write(ft, buf, sizeof(buf));
-    E_TEST(-1, close(ft));
+    fpos_t pos;
+    FILE *f = fopen("./dup1.c", "r");
+    fgetpos(f, &pos);
+    printf("pos :%lu\n", pos);
+
 
     return 0;
 }

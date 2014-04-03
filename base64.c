@@ -15,7 +15,8 @@
  *   常用于信息的交互
  * 因为2**6=64, 所以每6bit就可以对应一个字符表中的字符，
  *    由于3个原始数据字节可以用4个base64字符表示 3*8 = 4*6 = 24
- *
+ *    
+ * coreutils 中有base64的代码
 EE 标准base64 字符集
 static const unsigned char base64_alphabet[64] =
 {

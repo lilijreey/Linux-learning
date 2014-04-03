@@ -135,7 +135,14 @@ IP: 统配地址 ipv4 INADDR_ANY, 内核指定, 何时指定？
 通配符不同的原因:
     INADDR_ANY 通常是0.可以使用一个数字表示
     ipV6 地址是个结构，不能使用0来表示 port： 0, 内核指定 目的IP 和 到达接口
+    INADDR_LOOPBACK
+
+INADDR_ANY是ANY，是绑定地址0.0.0.0上的监听, 能收到任意一块网卡的连接；
+INADDR_LOOPBACK, 也就是绑定地址LOOPBAC, 往往是127.0.0.1, 只能收到127.0.0.1上面的连接请求 
+
+INADDR_NONE 是32位均为1的值（即255.255.255.255，它是Internet的有限广播地址）
 如何一个主机有多个IP地址。情况是什么?
+
 
 得到connect后内核分配的地址
 getsockname  //通常client调用，得到自己的
