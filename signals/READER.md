@@ -294,4 +294,8 @@ waitpid 是SysV BSD 有自己的对应函数 wait3, wait4
  wait3(status, optins, NULL) == waitpid(-1, status, optins) for any child 
  wait4(pid, status, optins, NULL) == waitpid(pid, status, optins) for specific child
 
+## SIGXCPU
+  当程序的cpu使用时间大于 ulimit cpu time 的soft限制时，会给程序每秒
+     发送一个SIGXCPU,默认行为的终止，程序可以捕获，当到到hard 限制时
+     直接发送SIGKILL
 
