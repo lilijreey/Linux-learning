@@ -278,3 +278,9 @@ sendfile 在两个fd之间直接拷贝数据，完全在内核中，从而避免
 
 stat 可以用来检测文件是否已经别rm 
 log 系统需要
+
+## get file size
+    fd = open(file, O_RDONLY)
+    off_t file_size = lseek(fd, 0, SEEK_END)
+
+  或者可以通过 stat， st_size 来得到
