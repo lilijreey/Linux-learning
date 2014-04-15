@@ -287,3 +287,11 @@ log 系统需要
     off_t file_size = lseek(fd, 0, SEEK_END)
 
   或者可以通过 stat， st_size 来得到
+
+#
+st_atim last-access time of data   read ls -u
+st_mtic last-modification of file data write ls
+st_ctim last-chage time of i-node satus chmod, chown ls -c
+
+change time
+futimens, utimensat, utimes
