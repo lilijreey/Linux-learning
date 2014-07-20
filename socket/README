@@ -560,6 +560,17 @@ UDP
 *     中有任意一个包丢失，则整个数据包就会被抛弃,如果所有分组
 *     都被成功传输到接收端则OS会负责重组数据包
 
+proc man upd
+* /proc/sys/net/ipv4/udp_mem
+   和tcp_mem 一样,配置系统为所有udp socket分配的内存
+* /proc/sys/net/ipv4/udp_rmem_min
+    系统给每个udp socket 至少分配的read buffer, 即时这时所有的udp使用的内存
+        已经超出 udp_mem中的最大值
+* /proc/sys/net/ipv4/udp_wmem_min
+    系统给每个udp socket 至少分配的write buffer, 即时这时所有的udp使用的内存
+        已经超出 udp_mem中的最大值
+  
+
 Funcs
 =====================================
 * 大小端转换

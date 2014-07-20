@@ -1,23 +1,5 @@
-/*
- * =====================================================================================
- *
- *       Filename:  test.c
- *
- *    Description:  
- *
- *        Version:  1.0
- *        Created:  10/05/2011 10:30:17 PM
- *       Revision:  none
- *       Compiler:  gcc
- *
- *         Author:  lilijreey (), lilijreey@Gmail.com
- *        Company:  
- *
- * =====================================================================================
- */
-
-
 #include	<stdio.h>
+#include	<unistd.h>
 #include	<stdlib.h>
 
 /* thses functions use to atexit register */
@@ -48,35 +30,17 @@ int main () {
  * if you want to list environ-list use envirson variable
  * getenv(), setenv() ;
  */
-extern char **environ ;
-int main() {
-char **en = NULL ; 
-	for (en = environ; *en != NULL; *en++) {
-		printf("%s\n", *en) ;
-	}
+//extern char **environ ;
+//int main() {
+//char **en = NULL ; 
+//	for (en = environ; *en != NULL; *en++) {
+//		printf("%s\n", *en) ;
+//	}
+//
+//	return 0 ;
+//}
+//
 
-	return 0 ;
-}
-
-
-/*
- * =====================================================================================
- *
- *       Filename:  environ.c
- *
- *    Description:  环境对程序的作用？
- *    环境的相关函数，环境是如何传递给程序的？
- *
- *        Created:  01/03/2012 10:04:34 AM
- *       Compiler:  gcc4.4
- *
- *         Author:  first name surname (), lilijreey@Gmail.com
- *
- * =====================================================================================
- */
-#include	<stdio.h>
-#include	<unistd.h>
-#include	<stdlib.h>
 //#include	<string.h>
 //#include	<zhao/tools.h>
 //
@@ -85,11 +49,11 @@ char **en = NULL ;
 extern char **environ ;
 
 int main() {
-	int i;
-	for (i = 0; environ[i]; ++i) {
-		printf("%s\n", environ[i]) ;
-	}
+    int i;
+    for (i = 0; environ[i]; ++i) {
+        printf("%s\n", environ[i]) ;
+    }
 
-	return 0 ;
+    return 0 ;
 }
 

@@ -46,5 +46,7 @@ main(int argc, char *argv[])
     xx("%s", "01234567890");
     xx("%d|012345", 24);
 
+    printf("%zd\n", 323);
+
     return 0;
 }				/* ----------  end of function main  ---------- */

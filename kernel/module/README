@@ -255,3 +255,12 @@ mknod /dev/name type major minor
 
 ### 支持 AIO IO 模型
 
+
+### 输入设备
+#/dev/input
+#　分层架构，　驱动层，　核心层 ,　事件层
+# /linux/input.h
+#
+# 显示的是已经在内涵注册过的设备
+# 与event 对应的设备信息
+# 　/proc/bus/input/devices

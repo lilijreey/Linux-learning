@@ -13,6 +13,9 @@
  */
 
 
+/// Assert 
+//不想要的时候定义为
+//(void) 1
 
 /// bit segment
 #if 0
@@ -45,13 +48,13 @@ int main()
 
 //EE `getpwnam' , `getgrnam'
 //  得到指定user的基本信息 {{{
-#if 0
+#if 1
 #include <pwd.h>
 #include <string.h>
 #include <stdio.h>
 int main() {
     struct passwd * pw;
-    char *username = "zhaoli";
+    char *username = "one";
     pw = getpwnam(username);
     if (!pw) {
         printf("%s is not exist\n", username);
@@ -93,7 +96,7 @@ main(int argc, char *argv[])
 
 #endif // }}}
 
-#if 1
+#if 0
 ///EE @c crypt/2 @c crypt_r
 //linux 上密码加密算法 link with -lcrypt
 //*EDS算法 默认方法。
