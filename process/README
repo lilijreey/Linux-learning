@@ -1,0 +1,57 @@
+Process Control
+--------------------------
+
+getpid
+getppid
+getuid
+geteuid
+getgid
+getegid
+
+不同 UNIX 版本的fork，不太相t
+
+fork
+------------
+
+fd
+
+一个process有
+
+
+vfork
+--------------------
+父进程挂起直到子进程调用exec或者 exit
+父子共享内存
+
+exit
+------------------
+调用atexit 注册的函数
+对于标准输出，
+exit会把所有在buffer中的数据写入文件
+在关闭fd
+
+_exit/_Exit
+-------------------------
+不调用 atexit注册的函数
+不会刷标准IObuffer中的数据到文件
+
+
+exec
+有p的就是会在环境变量 PATH 中查找
+没有的不会在PATH中查找，
+
+int fexecve(int fd, char *const argv[], char *const envp[]);
+
+argv 就是argv[0] . [1] 出入程序
+
+       char *getlogin(void);
+----------------------------------
+得到是谁登陆并且运行了这个程序
+
+Process Times
++ times
+get User/time System/time
+
+Terminal Login
+---------------------------------------
+man login
