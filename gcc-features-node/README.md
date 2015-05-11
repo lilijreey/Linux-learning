@@ -13,6 +13,9 @@
      -ggdb3
      -g3 可以包含宏信息 在gdb中使用 info macro <name> 察看
 
++ 关闭某些警告
+   -Wno-<XXXX>
+
 + -funroll-loops
    完全展开循环结果 可以用来抵制反汇编
 
