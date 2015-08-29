@@ -228,6 +228,9 @@ port<->service-name
 通过 /etc/service 文件查询
 
 
+|getifaddrs|
+ 返回本机所有的网络接口
+
 |getprotobynumber|
 
 EE 健壮SOCKET 程序需要注意的几点
@@ -580,9 +583,19 @@ Funcs
       htole64
       htobe64
 
+* IP
+  不管ipV4， V6 都使用struct sockaddr  做表示
+    但是在处理中 V4 使用 struct sockaddr_in
+     v6 使用 struct sockaddr_in6
+   强转就像
+
+
+
 * IP 地址转换
     inet_aton()   convert dot-ip to network-ordered binary
     inet_ntoa() 
+        已经不建议使用了，使用 inet_pton/ inet_ntop
+
    DNS gethostname/ human to IP address
    Server Port /etc/services
      getservbyname

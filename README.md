@@ -24,3 +24,6 @@
 +  liunx 通过 int 80 cpu 指令来陷入内核，
    所有的系统调用都通过一个数字来表示，通过eax,制定
    调用参数通过ebx,ecx,edx,esi,edi,来传递前5的参数，如果还有通过stack传递
+
+## marco.c
+   宏的作用域

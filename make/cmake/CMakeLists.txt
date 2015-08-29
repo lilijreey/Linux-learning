@@ -3,6 +3,14 @@ cmake_minimum_required(VERSION 2.8)
 project (all_three)
 ## 一个项目可以有多个可执行文件
 
+
+if (UNIX)
+	message("is LINUX")
+	add_definitions(-DLINUX)
+else()
+	message("not is LINUX")
+endif()
+
 ## if(0) is false
 if(0)
 	message("if (0) is true")
@@ -86,10 +94,11 @@ include_directories(third_libs)
 #link_directories(third_libs/other1/libs)
 
 
+## FIND_LIBRARY
 # 编译可执行文件 dd the 3 executable file
 add_executable(test_1 ${TEST_1_SRC} )
 ## 赋给OTHER_LIB 这个变量了
-find_library(OTHER_LIB other_lib third_libs/other1/libs)
+find_library(OTHER_LIB other_lib third_libs/other1)
 message("OTHER LIB" ${OTHER_LIB})
 ## find_library(TCL_LIB
 ##              NAMES tcl tcl84 tcl83
@@ -128,18 +137,31 @@ add_library(lib1 SHARED ${LIB_1_SRC})
 ##　择可以　ADD_SUBDIRECTORY(dir)
 ## dir 下必须有CMakeLists.txt 文件
 
-##EE 对于第三方库
-# 使用　INCLUDE_DIRECTORIES 制定搜索路径　
-## FIND_LIBRARY
 
 ## 寻找已经安装的包
 ## FIND_PACKAGE
+## 所有的find pkg 要么是cmake 自带的，要么要通过cmake_module_path 寻找
+## 可以自己写 Find<XX>.cmake
+#find_package(GLEW REQUIRED)
+#if (GLEW_FOUND)
+	#message("find_packge(GLEW) is found include is ${GLEW_INCLUDE_DIRS} libs is: ${GLEW_LIBRARIES}")
+#else()
+	#message("find_packge(GLEW) not found")
+#endif()
+
+
+find_package(FONTCONFIG)
+if (FONTCONFIG_FOUND)
+	message("find_packge(FONTCONFIG) is found include is ${FONTCONFIG_INCLUDE_DIRS} libs is: ${FONTCONFIG_LIBRARIES}")
+else()
+	message("find_packge(FONTCONFIG) not found")
+endif()
 
 ##EE 平台检测
 ## check_type_size(
 ## check_big_endian(
 
 ## 设置版本号
-set_target_properties(<Target> PROPERTIES VERSION 1.2)
+#set_target_properties(<Target> PROPERTIES VERSION 1.2)
 
 ## EE 定义自己的finder

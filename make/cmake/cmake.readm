@@ -46,6 +46,11 @@ target_link_libraries(myapp
     )
 target_link_libraries(hello -Wl -lm)
 
+EE debug/ release 如何使用cmake 分别制定
+设置 CMAKE_BUILD_TYPE  可选值 [Debug | Release RelWithDebinfo | MinSizeRel]
+ 当值为Debug 时 cmake 会用变量 CMAKE_CXX_FLAGS_DEBUG 来生成makefile
+ 对应的为 CMAKE_CXX_FLAGS_RELEASE
+
 编译器选择
     SET (CMAKE_C_COMPILER             "/usr/bin/clang")
     SET (CMAKE_C_FLAGS                "-Wall -std=c99")
@@ -96,8 +101,11 @@ link_directories(
 )
 
 EE 
-怎样添加编译宏定义
+怎样添加编译宏定义, cmake 定义一个宏给cpp
+
 使用add_definitions命令，见命令部分说明 
+add_definitions(-DOPENCV_VERSION=${OpenCV_VERSION})
+    add_definitions(-DWITH_OPENCV2)
 
 
 EE
@@ -165,3 +173,32 @@ find_path(GLWF_INCLUDE_DIR FW/glfw3.h /usr/local/include /usr/include)
 ## 如果有GLWF_INCLUDE_DIR 就是对应的路径
 ## if (GLWF_INCLUDE_DIR) ## 判断
    set(GLWF_FOND "YES")
+
+## find_package(Var version REQUIRED COMPONENTS xxx)
+## 有很多变量，see man
+		Var_FOUND	       - True if headers and requested libraries were found
+		Var_INCLUDE_DIRS     - Boost include directories
+		Var_LIBRARY_DIRS     - Link directories for Boost libraries
+		Var_LIBRARIES        - Boost component libraries to be linked
+		Var_<C>_FOUND        - True if component <C> was found (<C> is upper-case)
+		Var_<C>_LIBRARY      - Libraries to link for component <C> (may include
+# REQUIRED 表示如果没有找的包cmake就停止
+find_packge(Boost COMPONENTS
+ date_time 
+ thread
+ REQUIRED)
+if (Boost_FOUND)
+ include_directories(${Boost_INCLUDE_DIRS})
+ target_link_libraries(app ${Boost_LIBRARIES})
+endif()
+
+cmake -E 命令模式
+为了移植性，还有一个${CMAKE_COMMAND} 的变量，　是当前cmake 程序的全路径
+
+COMMAND ${CMAKE_COMMAND} -E
+e.g. create a symlink
+   COMMAND ${CMAKE_COMMAND} -E create_symlink src des
+
+要看支持什么命令可以 输出 cmake -E <CR>
+
+
