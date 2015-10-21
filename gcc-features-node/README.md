@@ -29,6 +29,16 @@
 
 + -Wabi
 
++ -fdump-class-hierarchy
+  会输出所有class 的成员sizeof, 偏移, 以及成员函数, 和类的继承关系
+  到一个文件中, 对学习C++ class 很有帮助
+
++ -fdump-tree-cfg
+  会输出在编译器添加辅助代码后的程序
+  到一个文件中, 对学习C++ class 很有帮助
+
+
+   -fdump 指令??
 
 ##  <compiler.h> or /usr/lib/syslinux/com32/include/klibc/compiler.h
     定义了许多特性的宏
