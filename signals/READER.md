@@ -67,6 +67,7 @@ SysV 用 SIGPOLL BSD 用 SIGIO
 
 
 ###可重入(Reentrant)
+```
 1：什么是可重入：
 当程序正在调用一个系统apiA, 还没返回，这是被一个signal中断，
 程序跳动signal的处理函数在，但是该signal_handler_中又有对systemAPI A的调用，
@@ -75,7 +76,7 @@ SysV 用 SIGPOLL BSD 用 SIGIO
 
 
 fork 后 子process继承父process的信号处理方式。 
-这个可能是exec后子进程被父进程捕获的sig都将回复默认值
+子进程exec 后子进程重置被进程捕获的sig为默认动作
 
 
 可以通过发送信号0来检测一个进程是否存在： 如果不存在，kill返回错误errno位ESRCH

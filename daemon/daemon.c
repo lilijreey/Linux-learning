@@ -86,6 +86,7 @@ void daemonize(void)
 	/* get maximum number of file descriptors */
 	E_TEST(-1, getrlimit(RLIMIT_NOFILE, &r1)) ;
 
+
 	if (r1.rlim_max == RLIM_INFINITY)
 		r1.rlim_max = 1024 ;
 	for (i=0; i<r1.rlim_max; ++i)

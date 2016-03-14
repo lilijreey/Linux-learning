@@ -1,15 +1,19 @@
 # 学习 GCC COMILPER 特性的笔记
 
 
+-S 生成汇编代码
+
+## 生成源代码汇编注释版本
+gcc -c -g -Wa,-adlhn ee.c > outfile
+
+或者是生成 -g 的程序后
+使用 objdump -d -S xx.o
+
 
 ## builitins.c 
 > GCC __builitin系列函数笔记
 
-## GCC 选项
-+  EE: 优化掉空的func调用
-     ANS: pure,const not-invoke-nullfunc 或者-O1，or -fipa-pure-const
 
-+  支持宏调试
      -ggdb3
      -g3 可以包含宏信息 在gdb中使用 info macro <name> 察看
 
@@ -103,5 +107,4 @@
    +. 查看指定函数的名字-地址映射
       grep func file.map
 
->>>>>>> dd2782411994065c844d99ccde3ac3ccbde5e47e
 
