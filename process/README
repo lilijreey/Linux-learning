@@ -54,4 +54,7 @@ get User/time System/time
 
 Terminal Login
 ---------------------------------------
-man login
+
+堆栈大小
+可以使用pthread_getstackaddr
+可以使用pthread_getstacksize 来获得

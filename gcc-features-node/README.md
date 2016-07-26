@@ -74,7 +74,9 @@ gcc -c -g -Wa,-adlhn ee.c > outfile
 +  GCC 支持对void和函数指针的算术操作
    对上面两种指针加1的语意是增加1字节.
 
-+  switch case 1..13
++  switch 
+    case 1 ... 3:
+    必须有空格
 
 +  零元素数组 int [0]
 

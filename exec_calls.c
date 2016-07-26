@@ -26,15 +26,21 @@ static char *const ps_argv[] = {"ps", "ax", 0} ;
 
 static char *const ps_envp[] = {"PATH=/bin:/usr/bin", "TERM=console", 0} ;
 
-/*
- * execl("/bin/ps", "ps", "ax", 0)
- * execp("ps", "ps", "ax", 0) //the second ps is what
- * execle("/bin/ps", "ps", "ax", 0, ps_envp)
- * 
- * execv("bin/ps", ps_argv)
- * execvp("ps", ps_argv)
- * execve("bin/ps", ps_argv, ps_envp)
- */
+ps aux
+char *argv[] = {
+    NULL
+};
+char *env[] ={
+    "PATH=/usr/bin",
+    NULL
+}
+ execl("/bin/ps", "ps", "ax", 0)
+ execp("ps", "ps", "ax", 0) //the second ps is what
+ execle("/bin/ps", "ps", "ax", 0, ps_envp)
+ 
+ execv("bin/ps", ps_argv)
+ execvp("ps", ps_argv)
+ execve("bin/ps", ps_argv, ps_envp)
 
 void execlp_call(void)
 {
@@ -64,6 +70,11 @@ void fork_call(void)
 	}				/* -----  end switch  ----- */
 }
 
+int main(int argc, char *argv[])
+{
+    
+    return 0;
+}
 int main()
 {
 	fork_call()  ;

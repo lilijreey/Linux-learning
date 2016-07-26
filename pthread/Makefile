@@ -3,6 +3,7 @@ all:
 CC := gcc
 LIB := -D_REENTRANT -lpthread
 OPTION := -Wall -std=gnu99
+OPTIONXX := -Wall -std=c++11
 # -O 优化
 O:=-O$(o) #immediately assigment
 
@@ -10,6 +11,9 @@ O:=-O$(o) #immediately assigment
 define compile-and-run
 	$(CC) $(OPTION) $(O)  $< $(LIB)  -o $@
 endef
+
+pipe: pipeline.cpp
+	$(CXX) $(OPTIONXX) $(O)  $< $(LIB)  -o $@
 
 OBJECTS = create_thread  rwlock join
 

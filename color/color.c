@@ -29,6 +29,8 @@
  * 4:下划线
  * 5:闪烁
  * 7:翻转
+ *
+ * 
  * 30:黑色
  * 31:红色
  * 32:绿色
@@ -42,9 +44,17 @@
  * 41：红色背景
  * 42：绿色背景
  * 4x.:对应3x颜色背景
+ * Final color will be 30 + value for foreground and 40 + value for background
+ * 原始的色彩只有8个颜色
+ *
+ * 如果要使用RGB 设置，需要以38;2;<r>;<g>;<b>m 开始
+ *
+ * 在256-color 模式下需要使用 38;5;<code>;m
+ *   code 的计算方程为??
  */
 
 /* Bash 使用时要把颜色字符用\[ANSI-CODE\] 括主*/
+//彩虹色 lolcat
 
 /*
 static const char* log_color[] = {
