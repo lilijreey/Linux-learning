@@ -1,0 +1,404 @@
+00000000000i[     ] Bochs x86 Emulator 2.4.6
+00000000000i[     ]   Build from CVS snapshot, on February 22, 2011
+00000000000i[     ] Compiled at Jun  8 2013, 05:16:04
+00000000000i[     ] System configuration
+00000000000i[     ]   processors: 1 (cores=1, HT threads=1)
+00000000000i[     ]   A20 line support: yes
+00000000000i[     ] CPU configuration
+00000000000i[     ]   level: 6
+00000000000i[     ]   SMP support: no
+00000000000i[     ]   APIC support: yes
+00000000000i[     ]   FPU support: yes
+00000000000i[     ]   MMX support: yes
+00000000000i[     ]   3dnow! support: no
+00000000000i[     ]   SEP support: yes
+00000000000i[     ]   SSE support: sse2
+00000000000i[     ]   XSAVE support: no
+00000000000i[     ]   AES support: no
+00000000000i[     ]   MOVBE support: no
+00000000000i[     ]   x86-64 support: yes
+00000000000i[     ]   1G paging support: no
+00000000000i[     ]   VMX support: no
+00000000000i[     ] Optimization configuration
+00000000000i[     ]   RepeatSpeedups support: yes
+00000000000i[     ]   Trace cache support: yes
+00000000000i[     ]   Fast function calls: yes
+00000000000i[     ] Devices configuration
+00000000000i[     ]   ACPI support: yes
+00000000000i[     ]   NE2000 support: yes
+00000000000i[     ]   PCI support: yes, enabled=yes
+00000000000i[     ]   SB16 support: yes
+00000000000i[     ]   USB support: yes
+00000000000i[     ]   VGA extension support: vbe 
+00000000000i[MEM0 ] allocated memory at 0x7f6f7356c010. after alignment, vector=0x7f6f7356d000
+00000000000i[MEM0 ] 32.00MB
+00000000000i[MEM0 ] mem block size = 0x00100000, blocks=32
+00000000000i[MEM0 ] rom at 0xfffe0000/131072 ('/usr/share/bochs/BIOS-bochs-latest')
+00000000000i[MEM0 ] rom at 0xc0000/41472 ('/usr/share/vgabios/vgabios.bin')
+00000000000i[     ] lt_dlhandle is 0x2cf6920
+00000000000i[PLGIN] loaded plugin libbx_cmos.so
+00000000000i[     ] lt_dlhandle is 0x2cf7340
+00000000000i[PLGIN] loaded plugin libbx_dma.so
+00000000000i[     ] lt_dlhandle is 0x2cf7da0
+00000000000i[PLGIN] loaded plugin libbx_pic.so
+00000000000i[     ] lt_dlhandle is 0x2cf85e0
+00000000000i[PLGIN] loaded plugin libbx_pit.so
+00000000000i[     ] lt_dlhandle is 0x2cf8f50
+00000000000i[PLGIN] loaded plugin libbx_vga.so
+00000000000i[     ] lt_dlhandle is 0x2cf96b0
+00000000000i[PLGIN] loaded plugin libbx_hdimage.so
+00000000000i[     ] lt_dlhandle is 0x2cf9fb0
+00000000000i[PLGIN] loaded plugin libbx_floppy.so
+00000000000i[     ] lt_dlhandle is 0x2cfab70
+00000000000i[PLGIN] loaded plugin libbx_soundmod.so
+00000000000i[     ] lt_dlhandle is 0x2cfb420
+00000000000i[PLGIN] loaded plugin libbx_pci.so
+00000000000i[     ] lt_dlhandle is 0x2cfbfe0
+00000000000i[PLGIN] loaded plugin libbx_pci2isa.so
+00000000000i[     ] lt_dlhandle is 0x2cfc920
+00000000000i[PLGIN] loaded plugin libbx_usb_common.so
+00000000000i[     ] lt_dlhandle is 0x2cfd1c0
+00000000000i[PLGIN] loaded plugin libbx_unmapped.so
+00000000000i[     ] lt_dlhandle is 0x2cfda40
+00000000000i[PLGIN] loaded plugin libbx_biosdev.so
+00000000000i[     ] lt_dlhandle is 0x2cfe410
+00000000000i[PLGIN] loaded plugin libbx_speaker.so
+00000000000i[     ] lt_dlhandle is 0x2cfeba0
+00000000000i[PLGIN] loaded plugin libbx_extfpuirq.so
+00000000000i[     ] lt_dlhandle is 0x2cff420
+00000000000i[PLGIN] loaded plugin libbx_gameport.so
+00000000000i[     ] lt_dlhandle is 0x2cffdb0
+00000000000i[PLGIN] loaded plugin libbx_pci_ide.so
+00000000000i[     ] lt_dlhandle is 0x2d00790
+00000000000i[PLGIN] loaded plugin libbx_acpi.so
+00000000000i[     ] lt_dlhandle is 0x2d010d0
+00000000000i[PLGIN] loaded plugin libbx_ioapic.so
+00000000000i[     ] lt_dlhandle is 0x2d01a80
+00000000000i[PLGIN] loaded plugin libbx_keyboard.so
+00000000000i[     ] lt_dlhandle is 0x2d02290
+00000000000i[PLGIN] loaded plugin libbx_harddrv.so
+00000000000i[     ] lt_dlhandle is 0x2d14370
+00000000000i[PLGIN] loaded plugin libbx_serial.so
+00000000000i[     ] lt_dlhandle is 0x2d151f0
+00000000000i[PLGIN] loaded plugin libbx_parallel.so
+00000000000i[CMOS ] Using local time for initial clock
+00000000000i[CMOS ] Setting initial clock to: Fri May  6 11:08:54 2016 (time0=1462504134)
+00000000000i[DMA  ] channel 4 used by cascade
+00000000000i[DMA  ] channel 2 used by Floppy Drive
+00000000000i[FDD  ] fd0: 'a.img' ro=0, h=2,t=80,spt=18
+00000000000i[PCI  ] 440FX Host bridge present at device 0, function 0
+00000000000i[PCI  ] PIIX3 PCI-to-ISA bridge present at device 1, function 0
+00000000000i[VGA  ] interval=50000
+00000000000i[MEM0 ] Register memory access handlers: 0x00000000000a0000 - 0x00000000000bffff
+00000000000i[KMAP ] Loading keymap from '/usr/share/bochs/keymaps/x11-pc-us.map'
+00000000000p[KMAP ] >>PANIC<< line 38: unknown host key name 'XK_0' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 39: unknown host key name 'XK_parenright' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 40: unknown host key name 'XK_1' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 41: unknown host key name 'XK_exclam' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 42: unknown host key name 'XK_2' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 43: unknown host key name 'XK_at' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 44: unknown host key name 'XK_3' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 45: unknown host key name 'XK_numbersign' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 46: unknown host key name 'XK_4' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 47: unknown host key name 'XK_dollar' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 48: unknown host key name 'XK_5' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 49: unknown host key name 'XK_percent' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 50: unknown host key name 'XK_6' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 51: unknown host key name 'XK_asciicircum' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 52: unknown host key name 'XK_7' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 53: unknown host key name 'XK_ampersand' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 54: unknown host key name 'XK_8' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 55: unknown host key name 'XK_asterisk' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 56: unknown host key name 'XK_9' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 57: unknown host key name 'XK_parenleft' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 58: unknown host key name 'XK_A' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 59: unknown host key name 'XK_a' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 60: unknown host key name 'XK_B' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 61: unknown host key name 'XK_b' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 62: unknown host key name 'XK_C' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 63: unknown host key name 'XK_c' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 64: unknown host key name 'XK_D' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 65: unknown host key name 'XK_d' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 66: unknown host key name 'XK_E' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 67: unknown host key name 'XK_e' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 68: unknown host key name 'XK_F' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 69: unknown host key name 'XK_f' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 70: unknown host key name 'XK_G' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 71: unknown host key name 'XK_g' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 72: unknown host key name 'XK_H' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 73: unknown host key name 'XK_h' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 74: unknown host key name 'XK_I' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 75: unknown host key name 'XK_i' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 76: unknown host key name 'XK_J' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 77: unknown host key name 'XK_j' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 78: unknown host key name 'XK_K' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 79: unknown host key name 'XK_k' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 80: unknown host key name 'XK_L' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 81: unknown host key name 'XK_l' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 82: unknown host key name 'XK_M' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 83: unknown host key name 'XK_m' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 84: unknown host key name 'XK_N' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 85: unknown host key name 'XK_n' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 86: unknown host key name 'XK_O' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 87: unknown host key name 'XK_o' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 88: unknown host key name 'XK_P' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 89: unknown host key name 'XK_p' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 90: unknown host key name 'XK_Q' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 91: unknown host key name 'XK_q' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 92: unknown host key name 'XK_R' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 93: unknown host key name 'XK_r' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 94: unknown host key name 'XK_S' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 95: unknown host key name 'XK_s' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 96: unknown host key name 'XK_T' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 97: unknown host key name 'XK_t' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 98: unknown host key name 'XK_U' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 99: unknown host key name 'XK_u' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 100: unknown host key name 'XK_V' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 101: unknown host key name 'XK_v' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 102: unknown host key name 'XK_W' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 103: unknown host key name 'XK_w' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 104: unknown host key name 'XK_X' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 105: unknown host key name 'XK_x' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 106: unknown host key name 'XK_Y' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 107: unknown host key name 'XK_y' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 108: unknown host key name 'XK_Z' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 109: unknown host key name 'XK_z' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 110: unknown host key name 'XK_F1' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 111: unknown host key name 'XK_F2' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 112: unknown host key name 'XK_F3' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 113: unknown host key name 'XK_F4' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 114: unknown host key name 'XK_F5' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 115: unknown host key name 'XK_F6' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 116: unknown host key name 'XK_F7' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 117: unknown host key name 'XK_F8' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 118: unknown host key name 'XK_F9' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 119: unknown host key name 'XK_F10' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 120: unknown host key name 'XK_F11' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 121: unknown host key name 'XK_F12' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 122: unknown host key name 'XK_Alt_L' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 123: unknown host key name 'XK_Meta_L' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 124: unknown host key name 'XK_Alt_R' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 125: unknown host key name 'XK_Mode_switch' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 126: unknown host key name 'XK_Multi_key' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 127: unknown host key name 'XK_backslash' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 128: unknown host key name 'XK_bar' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 129: unknown host key name 'XK_BackSpace' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 130: unknown host key name 'XK_Caps_Lock' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 131: unknown host key name 'XK_comma' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 132: unknown host key name 'XK_less' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 133: unknown host key name 'XK_Control_L' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 134: unknown host key name 'XK_Control_R' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 135: unknown host key name 'XK_Delete' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 136: unknown host key name 'XK_Down' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 137: unknown host key name 'XK_End' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 138: unknown host key name 'XK_Return' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 139: unknown host key name 'XK_equal' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 140: unknown host key name 'XK_plus' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 141: unknown host key name 'XK_Escape' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 142: unknown host key name 'XK_asciitilde' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 143: unknown host key name 'XK_grave' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 144: unknown host key name 'XK_Home' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 145: unknown host key name 'XK_Insert' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 146: unknown host key name 'XK_KP_5' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 147: unknown host key name 'XK_KP_Begin' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 148: unknown host key name 'XK_KP_Add' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 149: unknown host key name 'XK_KP_Decimal' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 150: unknown host key name 'XK_KP_Delete' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 151: unknown host key name 'XK_KP_Divide' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 152: unknown host key name 'XK_KP_2' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 153: unknown host key name 'XK_KP_Down' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 154: unknown host key name 'XK_KP_1' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 155: unknown host key name 'XK_KP_End' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 156: unknown host key name 'XK_KP_Enter' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 157: unknown host key name 'XK_KP_7' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 158: unknown host key name 'XK_KP_Home' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 159: unknown host key name 'XK_KP_0' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 160: unknown host key name 'XK_KP_Insert' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 161: unknown host key name 'XK_KP_4' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 162: unknown host key name 'XK_KP_Left' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 163: unknown host key name 'XK_KP_Multiply' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 164: unknown host key name 'XK_KP_3' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 165: unknown host key name 'XK_KP_Page_Down' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 166: unknown host key name 'XK_KP_9' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 167: unknown host key name 'XK_KP_Page_Up' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 168: unknown host key name 'XK_KP_6' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 169: unknown host key name 'XK_KP_Right' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 170: unknown host key name 'XK_KP_Subtract' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 171: unknown host key name 'XK_KP_8' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 172: unknown host key name 'XK_KP_Up' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 173: unknown host key name 'XK_Left' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 174: unknown host key name 'XK_braceleft' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 175: unknown host key name 'XK_bracketleft' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 176: unknown host key name 'XK_Menu' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 177: unknown host key name 'XK_minus' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 178: unknown host key name 'XK_underscore' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 179: unknown host key name 'XK_Num_Lock' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 180: unknown host key name 'XK_Page_Down' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 181: unknown host key name 'XK_Page_Up' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 182: unknown host key name 'XK_Break' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 183: unknown host key name 'XK_Pause' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 184: unknown host key name 'XK_greater' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 185: unknown host key name 'XK_period' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 186: unknown host key name 'XK_Print' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 187: unknown host key name 'XK_Sys_Req' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 188: unknown host key name 'XK_Right' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 189: unknown host key name 'XK_braceright' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 190: unknown host key name 'XK_bracketright' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 191: unknown host key name 'XK_Scroll_Lock' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 192: unknown host key name 'XK_colon' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 193: unknown host key name 'XK_semicolon' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 194: unknown host key name 'XK_Shift_L' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 195: unknown host key name 'XK_Shift_R' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 196: unknown host key name 'XK_apostrophe' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 197: unknown host key name 'XK_quotedbl' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 198: unknown host key name 'XK_question' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 199: unknown host key name 'XK_slash' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 200: unknown host key name 'XK_space' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 201: unknown host key name 'XK_ISO_Left_Tab' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 202: unknown host key name 'XK_Tab' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 203: unknown host key name 'XK_Up' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 204: unknown host key name 'XK_Super_L' (wrong keymap ?)
+00000000000p[KMAP ] >>PANIC<< line 205: unknown host key name 'XK_Super_R' (wrong keymap ?)
+00000000000i[KMAP ] Loaded 0 symbols
+00000000000i[MEM0 ] Register memory access handlers: 0x00000000e0000000 - 0x00000000e0ffffff
+00000000000i[VGA  ] VBE Bochs Display Extension Enabled
+00000000000i[PLGIN] init_dev of 'unmapped' plugin device by virtual method
+00000000000i[PLGIN] init_dev of 'biosdev' plugin device by virtual method
+00000000000i[PLGIN] init_dev of 'speaker' plugin device by virtual method
+00000000000i[SPEAK] Failed to open /dev/console: Resource temporarily unavailable
+00000000000i[SPEAK] Deactivating beep on console
+00000000000i[PLGIN] init_dev of 'extfpuirq' plugin device by virtual method
+00000000000i[PLGIN] init_dev of 'gameport' plugin device by virtual method
+00000000000i[PLGIN] init_dev of 'pci_ide' plugin device by virtual method
+00000000000i[PCI  ] PIIX3 PCI IDE controller present at device 1, function 1
+00000000000i[PLGIN] init_dev of 'acpi' plugin device by virtual method
+00000000000i[PCI  ] ACPI Controller present at device 1, function 3
+00000000000i[PLGIN] init_dev of 'ioapic' plugin device by virtual method
+00000000000i[IOAP ] initializing I/O APIC
+00000000000i[MEM0 ] Register memory access handlers: 0x00000000fec00000 - 0x00000000fec00fff
+00000000000i[PLGIN] init_dev of 'keyboard' plugin device by virtual method
+00000000000i[KBD  ] will paste characters every 1000 keyboard ticks
+00000000000i[PLGIN] init_dev of 'harddrv' plugin device by virtual method
+00000000000i[HD   ] Using boot sequence floppy, none, none
+00000000000i[HD   ] Floppy boot signature check is enabled
+00000000000i[PLGIN] init_dev of 'serial' plugin device by virtual method
+00000000000i[SER  ] com1 at 0x03f8 irq 4
+00000000000i[PLGIN] init_dev of 'parallel' plugin device by virtual method
+00000000000i[PAR  ] parallel port 1 at 0x0378 irq 7
+00000000000i[PLGIN] register state of 'unmapped' plugin device by virtual method
+00000000000i[PLGIN] register state of 'biosdev' plugin device by virtual method
+00000000000i[PLGIN] register state of 'speaker' plugin device by virtual method
+00000000000i[PLGIN] register state of 'extfpuirq' plugin device by virtual method
+00000000000i[PLGIN] register state of 'gameport' plugin device by virtual method
+00000000000i[PLGIN] register state of 'pci_ide' plugin device by virtual method
+00000000000i[PLGIN] register state of 'acpi' plugin device by virtual method
+00000000000i[PLGIN] register state of 'ioapic' plugin device by virtual method
+00000000000i[PLGIN] register state of 'keyboard' plugin device by virtual method
+00000000000i[PLGIN] register state of 'harddrv' plugin device by virtual method
+00000000000i[PLGIN] register state of 'serial' plugin device by virtual method
+00000000000i[PLGIN] register state of 'parallel' plugin device by virtual method
+00000000000i[SYS  ] bx_pc_system_c::Reset(HARDWARE) called
+00000000000i[CPU0 ] cpu hardware reset
+00000000000i[APIC0] allocate APIC id=0 (MMIO enabled) to 0x00000000fee00000
+00000000000i[CPU0 ] CPUID[0x00000000]: 00000003 756e6547 6c65746e 49656e69
+00000000000i[CPU0 ] CPUID[0x00000001]: 00000f23 00000800 00002000 07cbfbff
+00000000000i[CPU0 ] CPUID[0x00000002]: 00410601 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x00000003]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x00000004]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x00000007]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x80000000]: 80000008 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x80000001]: 00000000 00000000 00000001 2a100800
+00000000000i[CPU0 ] CPUID[0x80000002]: 20202020 20202020 20202020 6e492020
+00000000000i[CPU0 ] CPUID[0x80000003]: 286c6574 50202952 69746e65 52286d75
+00000000000i[CPU0 ] CPUID[0x80000004]: 20342029 20555043 20202020 00202020
+00000000000i[CPU0 ] CPUID[0x80000006]: 00000000 42004200 02008140 00000000
+00000000000i[CPU0 ] CPUID[0x80000007]: 00000000 00000000 00000000 00000000
+00000000000i[CPU0 ] CPUID[0x80000008]: 00003028 00000000 00000000 00000000
+00000000000i[PLGIN] reset of 'unmapped' plugin device by virtual method
+00000000000i[PLGIN] reset of 'biosdev' plugin device by virtual method
+00000000000i[PLGIN] reset of 'speaker' plugin device by virtual method
+00000000000i[PLGIN] reset of 'extfpuirq' plugin device by virtual method
+00000000000i[PLGIN] reset of 'gameport' plugin device by virtual method
+00000000000i[PLGIN] reset of 'pci_ide' plugin device by virtual method
+00000000000i[PLGIN] reset of 'acpi' plugin device by virtual method
+00000000000i[PLGIN] reset of 'ioapic' plugin device by virtual method
+00000000000i[PLGIN] reset of 'keyboard' plugin device by virtual method
+00000000000i[PLGIN] reset of 'harddrv' plugin device by virtual method
+00000000000i[PLGIN] reset of 'serial' plugin device by virtual method
+00000000000i[PLGIN] reset of 'parallel' plugin device by virtual method
+00000003305i[BIOS ] $Revision: 1.257 $ $Date: 2011/01/26 09:52:02 $
+00000004000e[SDL  ] host key 13 (0xd) not mapped!
+00000318042i[KBD  ] reset-disable command received
+00000447872i[VBIOS] VGABios $Id: vgabios.c,v 1.75 2011/10/15 14:07:21 vruppert Exp $
+00000447943i[VGA  ] VBE known Display Interface b0c0
+00000447975i[VGA  ] VBE known Display Interface b0c5
+00000450900i[VBIOS] VBE Bios $Id: vbe.c,v 1.64 2011/07/19 18:25:05 vruppert Exp $
+00000771016i[BIOS ] Starting rombios32
+00000771454i[BIOS ] Shutdown flag 0
+00000772038i[BIOS ] ram_size=0x02000000
+00000772459i[BIOS ] ram_end=32MB
+00000813018i[BIOS ] Found 1 cpu(s)
+00000828866i[BIOS ] bios_table_addr: 0x000fb928 end=0x000fcc00
+00000828960i[PCI  ] 440FX PMC write to PAM register 59 (TLB Flush)
+00001156657i[PCI  ] 440FX PMC write to PAM register 59 (TLB Flush)
+00001484585i[P2I  ] PCI IRQ routing: PIRQA# set to 0x0b
+00001484604i[P2I  ] PCI IRQ routing: PIRQB# set to 0x09
+00001484623i[P2I  ] PCI IRQ routing: PIRQC# set to 0x0b
+00001484642i[P2I  ] PCI IRQ routing: PIRQD# set to 0x09
+00001484652i[P2I  ] write: ELCR2 = 0x0a
+00001485423i[BIOS ] PIIX3/PIIX4 init: elcr=00 0a
+00001493095i[BIOS ] PCI: bus=0 devfn=0x00: vendor_id=0x8086 device_id=0x1237 class=0x0600
+00001495370i[BIOS ] PCI: bus=0 devfn=0x08: vendor_id=0x8086 device_id=0x7000 class=0x0601
+00001497484i[BIOS ] PCI: bus=0 devfn=0x09: vendor_id=0x8086 device_id=0x7010 class=0x0101
+00001497708i[PIDE ] new BM-DMA address: 0xc000
+00001498323i[BIOS ] region 4: 0x0000c000
+00001500350i[BIOS ] PCI: bus=0 devfn=0x0b: vendor_id=0x8086 device_id=0x7113 class=0x0680
+00001500579i[ACPI ] new irq line = 11
+00001500591i[ACPI ] new irq line = 9
+00001500616i[ACPI ] new PM base address: 0xb000
+00001500630i[ACPI ] new SM base address: 0xb100
+00001500658i[PCI  ] setting SMRAM control register to 0x4a
+00001664751i[CPU0 ] Enter to System Management Mode
+00001664761i[CPU0 ] RSM: Resuming from System Management Mode
+00001828782i[PCI  ] setting SMRAM control register to 0x0a
+00001837532i[BIOS ] MP table addr=0x000fba00 MPC table addr=0x000fb930 size=0xd0
+00001839346i[BIOS ] SMBIOS table addr=0x000fba10
+00001842501i[BIOS ] Firmware waking vector 0x1ff00cc
+00001847425i[BIOS ] ACPI tables: RSDP addr=0x000fbb30 ACPI DATA addr=0x01ff0000 size=0x1f18
+00001847461i[PCI  ] 440FX PMC write to PAM register 59 (TLB Flush)
+00001848185i[BIOS ] bios_table_cur_addr: 0x000fbb54
+00014041548i[BIOS ] Booting from 0000:7c00
+00058824000e[SDL  ] host key 9 (0x9) not mapped!
+00606672000e[SDL  ] host key 111 (0x6f) not mapped!
+00622196000e[SDL  ] host key 111 (0x6f) not mapped!
+01809668000p[SDL  ] >>PANIC<< User requested shutdown.
+01809668000i[CPU0 ] CPU is in real mode (active)
+01809668000i[CPU0 ] CS.d_b = 16 bit
+01809668000i[CPU0 ] SS.d_b = 16 bit
+01809668000i[CPU0 ] EFER   = 0x00000000
+01809668000i[CPU0 ] | RAX=0000000000001301  RBX=000000000000000c
+01809668000i[CPU0 ] | RCX=0000000000090010  RDX=0000000000000000
+01809668000i[CPU0 ] | RSP=000000000000ffd6  RBP=0000000000007c1e
+01809668000i[CPU0 ] | RSI=00000000000e46dc  RDI=000000000000ffac
+01809668000i[CPU0 ] |  R8=0000000000000000   R9=0000000000000000
+01809668000i[CPU0 ] | R10=0000000000000000  R11=0000000000000000
+01809668000i[CPU0 ] | R12=0000000000000000  R13=0000000000000000
+01809668000i[CPU0 ] | R14=0000000000000000  R15=0000000000000000
+01809668000i[CPU0 ] | IOPL=0 id vip vif ac vm rf nt of df if tf SF zf af pf cf
+01809668000i[CPU0 ] | SEG selector     base    limit G D
+01809668000i[CPU0 ] | SEG sltr(index|ti|rpl)     base    limit G D
+01809668000i[CPU0 ] |  CS:0000( 0004| 0|  0) 00000000 0000ffff 0 0
+01809668000i[CPU0 ] |  DS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+01809668000i[CPU0 ] |  SS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+01809668000i[CPU0 ] |  ES:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+01809668000i[CPU0 ] |  FS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+01809668000i[CPU0 ] |  GS:0000( 0005| 0|  0) 00000000 0000ffff 0 0
+01809668000i[CPU0 ] |  MSR_FS_BASE:0000000000000000
+01809668000i[CPU0 ] |  MSR_GS_BASE:0000000000000000
+01809668000i[CPU0 ] | RIP=0000000000007c09 (0000000000007c09)
+01809668000i[CPU0 ] | CR0=0x60000010 CR2=0x0000000000000000
+01809668000i[CPU0 ] | CR3=0x00000000 CR4=0x00000000
+01809668000i[CPU0 ] 0x0000000000007c09>> jmp .-2 (0x00007c09) : EBFE
+01809668000i[CMOS ] Last time is 1462504586 (Fri May  6 11:16:26 2016)
+01809668000i[     ] restoring default signal behavior
+01809668000i[CTRL ] quit_sim called with exit code 1

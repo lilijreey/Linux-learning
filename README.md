@@ -1,5 +1,9 @@
 ### 个人学习linux sys call + C stander lib 的笔记
 
+### 目录
+* assembly
+  关于汇编/C/X86 指令集/C
+
 #include <signal.h>
 ###几种代码规范
 在代码的最开始定义

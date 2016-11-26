@@ -16,8 +16,9 @@
 
 /*
  * ANSI 格式
- * 转义字符[1个或多个数字用";"分割以m结束
- * 转义字符可以是\e or \033(\e)的八进制值
+ * ASNI 包含很多控制符,颜色格式化只是其中一种特性. 叫做SGR(Select Graphic rendition parameters)
+ * man control_chars 查看所有的控制字符
+ *
  * e.g. \033[x;x;xm ==\e[x;x;xm
  * 可以把多个属性合起来，也可以分开
  * e.g. \e[x;y;zm == \e[xm\e[ym\e[zm
@@ -48,9 +49,10 @@
  * 原始的色彩只有8个颜色
  *
  * 如果要使用RGB 设置，需要以38;2;<r>;<g>;<b>m 开始
+   RGB='\e[38;2;0;0;0m' #0;0;0=R;G;B
  *
  * 在256-color 模式下需要使用 38;5;<code>;m
- *   code 的计算方程为??
+ * Index='\e[38;5;0m'
  */
 
 /* Bash 使用时要把颜色字符用\[ANSI-CODE\] 括主*/
