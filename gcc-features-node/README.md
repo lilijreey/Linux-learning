@@ -9,6 +9,10 @@ gcc -c -g -Wa,-adlhn ee.c > outfile
 或者是生成 -g 的程序后
 使用 objdump -d -S xx.o
 
+-I dir 添加头文件搜索路径
+-isystem  添加系统文件搜索路径
+  e.g.
+	g++ -Wall -isystem . -std=c++14 -o tt test.cpp 
 
 ## builitins.c 
 > GCC __builitin系列函数笔记

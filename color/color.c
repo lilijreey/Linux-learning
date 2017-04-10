@@ -71,9 +71,6 @@ static const char* color_end = "\e[m";
 
 int main() {
     //EE已经设置，所有的输出都会被改变，如果要关闭效果要使用/e[0m
-    printf("\e[1m\e[30m\n");
-    printf("hello\n");
-    printf("\e[0m\n");
     printf("hello\n");
 
     return 0;

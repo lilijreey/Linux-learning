@@ -1,5 +1,7 @@
 #for git command
 
+CXX_FLAGS=$(shell pkg-config --libs opencv)
+## 执行shell 命令
 COMMIT_MSG=$(m)
 commit:
 	git commit -a -m "$(COMMIT_MSG)"
