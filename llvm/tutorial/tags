@@ -1,0 +1,98 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Args	ast.hpp	/^  std::vector<std::string> Args;$/;"	m	language:C++	class:PrototypeAST	access:private
+Args	ast.hpp	/^  std::vector<std::unique_ptr<ExprAST>> Args;$/;"	m	language:C++	class:CallExprAST	access:private
+BinaryExprAST	ast.hpp	/^  BinaryExprAST(char Op, std::unique_ptr<ExprAST> LHS,$/;"	f	language:C++	class:BinaryExprAST	access:public	signature:(char Op, std::unique_ptr<ExprAST> LHS, std::unique_ptr<ExprAST> RHS)
+BinaryExprAST	ast.hpp	/^class BinaryExprAST : public ExprAST {$/;"	c	language:C++	inherits:ExprAST
+BinaryExprAST::BinaryExprAST	ast.hpp	/^  BinaryExprAST(char Op, std::unique_ptr<ExprAST> LHS,$/;"	f	language:C++	class:BinaryExprAST	access:public	signature:(char Op, std::unique_ptr<ExprAST> LHS, std::unique_ptr<ExprAST> RHS)
+BinaryExprAST::LHS	ast.hpp	/^  std::unique_ptr<ExprAST> LHS, RHS;$/;"	m	language:C++	class:BinaryExprAST	access:private
+BinaryExprAST::Op	ast.hpp	/^  char Op;$/;"	m	language:C++	class:BinaryExprAST	access:private
+BinaryExprAST::RHS	ast.hpp	/^  std::unique_ptr<ExprAST> LHS, RHS;$/;"	m	language:C++	class:BinaryExprAST	access:private
+BinopPrecedence	parser.cpp	/^static std::map<char, int> BinopPrecedence; $/;"	v	language:C++	file:
+Body	ast.hpp	/^  std::unique_ptr<ExprAST> Body;$/;"	m	language:C++	class:FunctionAST	access:private
+CallExprAST	ast.hpp	/^  CallExprAST(const std::string &Callee,$/;"	f	language:C++	class:CallExprAST	access:public	signature:(const std::string &Callee, std::vector<std::unique_ptr<ExprAST>> Args)
+CallExprAST	ast.hpp	/^class CallExprAST : public ExprAST {$/;"	c	language:C++	inherits:ExprAST
+CallExprAST::Args	ast.hpp	/^  std::vector<std::unique_ptr<ExprAST>> Args;$/;"	m	language:C++	class:CallExprAST	access:private
+CallExprAST::CallExprAST	ast.hpp	/^  CallExprAST(const std::string &Callee,$/;"	f	language:C++	class:CallExprAST	access:public	signature:(const std::string &Callee, std::vector<std::unique_ptr<ExprAST>> Args)
+CallExprAST::Callee	ast.hpp	/^  std::string Callee;$/;"	m	language:C++	class:CallExprAST	access:private
+Callee	ast.hpp	/^  std::string Callee;$/;"	m	language:C++	class:CallExprAST	access:private
+CurTok	parser.cpp	/^int CurTok;$/;"	v	language:C++
+Error	parser.cpp	/^std::unique_ptr<ExprAST> Error(const char *Str) {$/;"	f	language:C++	signature:(const char *Str)
+ErrorP	parser.cpp	/^std::unique_ptr<PrototypeAST> ErrorP(const char *Str) {$/;"	f	language:C++	signature:(const char *Str)
+ExprAST	ast.hpp	/^class ExprAST {$/;"	c	language:C++
+ExprAST::~ExprAST	ast.hpp	/^  virtual ~ExprAST() {}$/;"	f	language:C++	class:ExprAST	access:public	implementation:virtual	signature:()
+FunctionAST	ast.hpp	/^  FunctionAST(std::unique_ptr<PrototypeAST> Proto,$/;"	f	language:C++	class:FunctionAST	access:public	signature:(std::unique_ptr<PrototypeAST> Proto, std::unique_ptr<ExprAST> Body)
+FunctionAST	ast.hpp	/^class FunctionAST {$/;"	c	language:C++
+FunctionAST::Body	ast.hpp	/^  std::unique_ptr<ExprAST> Body;$/;"	m	language:C++	class:FunctionAST	access:private
+FunctionAST::FunctionAST	ast.hpp	/^  FunctionAST(std::unique_ptr<PrototypeAST> Proto,$/;"	f	language:C++	class:FunctionAST	access:public	signature:(std::unique_ptr<PrototypeAST> Proto, std::unique_ptr<ExprAST> Body)
+FunctionAST::Proto	ast.hpp	/^  std::unique_ptr<PrototypeAST> Proto;$/;"	m	language:C++	class:FunctionAST	access:private
+GetTokPrecedence	parser.cpp	/^ int GetTokPrecedence() {$/;"	f	language:C++	signature:()
+GetTokPrecedence	parser.hpp	/^int GetTokPrecedence();$/;"	p	language:C++	signature:()
+HandleDefinition	parser.cpp	/^ void HandleDefinition() {$/;"	f	language:C++	signature:()
+HandleDefinition	parser.hpp	/^void HandleDefinition();$/;"	p	language:C++	signature:()
+HandleExtern	parser.cpp	/^ void HandleExtern() {$/;"	f	language:C++	signature:()
+HandleExtern	parser.hpp	/^void HandleExtern();$/;"	p	language:C++	signature:()
+HandleTopLevelExpression	parser.cpp	/^ void HandleTopLevelExpression() {$/;"	f	language:C++	signature:()
+HandleTopLevelExpression	parser.hpp	/^void HandleTopLevelExpression();$/;"	p	language:C++	signature:()
+IdentifierStr	lexer.cpp	/^std::string IdentifierStr; \/\/ Filled in if tok_identifier$/;"	v	language:C++
+LHS	ast.hpp	/^  std::unique_ptr<ExprAST> LHS, RHS;$/;"	m	language:C++	class:BinaryExprAST	access:private
+MainLoop	parser.cpp	/^ void MainLoop() {$/;"	f	language:C++	signature:()
+MainLoop	parser.hpp	/^void MainLoop();$/;"	p	language:C++	signature:()
+Name	ast.hpp	/^  std::string Name;$/;"	m	language:C++	class:PrototypeAST	access:private
+Name	ast.hpp	/^  std::string Name;$/;"	m	language:C++	class:VariableExprAST	access:private
+NumVal	lexer.cpp	/^double NumVal;             \/\/ Filled in if tok_number$/;"	v	language:C++
+NumberExprAST	ast.hpp	/^  NumberExprAST(double Val) : Val(Val) {}$/;"	f	language:C++	class:NumberExprAST	access:public	signature:(double Val)
+NumberExprAST	ast.hpp	/^class NumberExprAST : public ExprAST {$/;"	c	language:C++	inherits:ExprAST
+NumberExprAST::NumberExprAST	ast.hpp	/^  NumberExprAST(double Val) : Val(Val) {}$/;"	f	language:C++	class:NumberExprAST	access:public	signature:(double Val)
+NumberExprAST::Val	ast.hpp	/^  double Val;$/;"	m	language:C++	class:NumberExprAST	access:private
+Op	ast.hpp	/^  char Op;$/;"	m	language:C++	class:BinaryExprAST	access:private
+ParseBinOpRHS	parser.cpp	/^ std::unique_ptr<ExprAST> ParseBinOpRHS(int ExprPrec,$/;"	f	language:C++	signature:(int ExprPrec, std::unique_ptr<ExprAST> LHS)
+ParseBinOpRHS	parser.hpp	/^std::unique_ptr<ExprAST> ParseBinOpRHS(int ExprPrec,$/;"	p	language:C++	signature:(int ExprPrec, std::unique_ptr<ExprAST> LHS)
+ParseDefinition	parser.cpp	/^ std::unique_ptr<FunctionAST> ParseDefinition() {$/;"	f	language:C++	signature:()
+ParseDefinition	parser.hpp	/^std::unique_ptr<FunctionAST> ParseDefinition() ;$/;"	p	language:C++	signature:()
+ParseExpression	parser.cpp	/^ std::unique_ptr<ExprAST> ParseExpression() {$/;"	f	language:C++	signature:()
+ParseExpression	parser.hpp	/^std::unique_ptr<ExprAST> ParseExpression();$/;"	p	language:C++	signature:()
+ParseExtern	parser.cpp	/^ std::unique_ptr<PrototypeAST> ParseExtern() {$/;"	f	language:C++	signature:()
+ParseExtern	parser.hpp	/^std::unique_ptr<PrototypeAST> ParseExtern() ;$/;"	p	language:C++	signature:()
+ParseIdentifierExpr	parser.cpp	/^ std::unique_ptr<ExprAST> ParseIdentifierExpr() {$/;"	f	language:C++	signature:()
+ParseIdentifierExpr	parser.hpp	/^std::unique_ptr<ExprAST> ParseIdentifierExpr();$/;"	p	language:C++	signature:()
+ParseNumberExpr	parser.cpp	/^ std::unique_ptr<ExprAST> ParseNumberExpr() {$/;"	f	language:C++	signature:()
+ParseNumberExpr	parser.hpp	/^std::unique_ptr<ExprAST> ParseNumberExpr();$/;"	p	language:C++	signature:()
+ParseParenExpr	parser.cpp	/^ std::unique_ptr<ExprAST> ParseParenExpr() {$/;"	f	language:C++	signature:()
+ParseParenExpr	parser.hpp	/^std::unique_ptr<ExprAST> ParseParenExpr();$/;"	p	language:C++	signature:()
+ParsePrimary	parser.cpp	/^ std::unique_ptr<ExprAST> ParsePrimary() {$/;"	f	language:C++	signature:()
+ParsePrimary	parser.hpp	/^std::unique_ptr<ExprAST> ParsePrimary();$/;"	p	language:C++	signature:()
+ParsePrototype	parser.cpp	/^ std::unique_ptr<PrototypeAST> ParsePrototype() {$/;"	f	language:C++	signature:()
+ParsePrototype	parser.hpp	/^std::unique_ptr<PrototypeAST> ParsePrototype();$/;"	p	language:C++	signature:()
+ParseTopLevelExpr	parser.cpp	/^ std::unique_ptr<FunctionAST> ParseTopLevelExpr() {$/;"	f	language:C++	signature:()
+ParseTopLevelExpr	parser.hpp	/^std::unique_ptr<FunctionAST> ParseTopLevelExpr();$/;"	p	language:C++	signature:()
+Proto	ast.hpp	/^  std::unique_ptr<PrototypeAST> Proto;$/;"	m	language:C++	class:FunctionAST	access:private
+PrototypeAST	ast.hpp	/^  PrototypeAST(const std::string &Name, std::vector<std::string> Args)$/;"	f	language:C++	class:PrototypeAST	access:public	signature:(const std::string &Name, std::vector<std::string> Args)
+PrototypeAST	ast.hpp	/^class PrototypeAST {$/;"	c	language:C++
+PrototypeAST::Args	ast.hpp	/^  std::vector<std::string> Args;$/;"	m	language:C++	class:PrototypeAST	access:private
+PrototypeAST::Name	ast.hpp	/^  std::string Name;$/;"	m	language:C++	class:PrototypeAST	access:private
+PrototypeAST::PrototypeAST	ast.hpp	/^  PrototypeAST(const std::string &Name, std::vector<std::string> Args)$/;"	f	language:C++	class:PrototypeAST	access:public	signature:(const std::string &Name, std::vector<std::string> Args)
+RHS	ast.hpp	/^  std::unique_ptr<ExprAST> LHS, RHS;$/;"	m	language:C++	class:BinaryExprAST	access:private
+Token	lexer.hpp	/^enum Token {$/;"	g	language:C++
+Val	ast.hpp	/^  double Val;$/;"	m	language:C++	class:NumberExprAST	access:private
+VariableExprAST	ast.hpp	/^  VariableExprAST(const std::string &Name) : Name(Name) {}$/;"	f	language:C++	class:VariableExprAST	access:public	signature:(const std::string &Name)
+VariableExprAST	ast.hpp	/^class VariableExprAST : public ExprAST {$/;"	c	language:C++	inherits:ExprAST
+VariableExprAST::Name	ast.hpp	/^  std::string Name;$/;"	m	language:C++	class:VariableExprAST	access:private
+VariableExprAST::VariableExprAST	ast.hpp	/^  VariableExprAST(const std::string &Name) : Name(Name) {}$/;"	f	language:C++	class:VariableExprAST	access:public	signature:(const std::string &Name)
+getNextToken	parser.cpp	/^int getNextToken() { return CurTok = gettok(); }$/;"	f	language:C++	signature:()
+getNextToken	parser.hpp	/^int getNextToken();$/;"	p	language:C++	signature:()
+gettok	lexer.cpp	/^int gettok() {$/;"	f	language:C++	signature:()
+gettok	lexer.hpp	/^int gettok();$/;"	p	language:C++	signature:()
+initBinOpPrec	parser.cpp	/^void initBinOpPrec() {$/;"	f	language:C++	signature:()
+initBinOpPrec	parser.hpp	/^void initBinOpPrec();$/;"	p	language:C++	signature:()
+main	main.cpp	/^int main() {$/;"	f	language:C++	signature:()
+tok_def	lexer.hpp	/^  tok_def = -2,$/;"	e	language:C++	enum:Token
+tok_eof	lexer.hpp	/^  tok_eof = -1,$/;"	e	language:C++	enum:Token
+tok_extern	lexer.hpp	/^  tok_extern = -3,$/;"	e	language:C++	enum:Token
+tok_identifier	lexer.hpp	/^  tok_identifier = -4,$/;"	e	language:C++	enum:Token
+tok_number	lexer.hpp	/^  tok_number = -5$/;"	e	language:C++	enum:Token
+~ExprAST	ast.hpp	/^  virtual ~ExprAST() {}$/;"	f	language:C++	class:ExprAST	access:public	implementation:virtual	signature:()

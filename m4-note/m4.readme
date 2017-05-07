@@ -1,0 +1,257 @@
+ EE 预定义的Macros要被声明
+ 
+ EE macro protoype
+ macroName (string, [count = ‘1’], [argument ]. . . )
+ 
+ EE 在M4中所有的宏参数都是strings
+
+ EE Macro的命名规则 和C 语言的一样
+
+ EE 选项
+ -P or --prefix-builttins 所有的built-in marco 开头加上m4_
+
+EE empty string
+`' 常用于间隔字符串 `hello'`world' m4解析的
+  时候当作两个字符
+
+ EE define
+ 内建Macro 创建一个新的Macro
+ 参数前的空格都会被忽略
+ e.g
+define(NAME,evan. Zhao)
+hello NAME
+
+# EE 重定义
+ define(NAME,fuck)
+ 在重定义是NAME会扩展为evan. Zhao
+ 其实是define(evan. Zhao,func)
+ 使用`'quoting 就可以解决问题
+ define(`NAME', fuck)
+ 如果name不是宏`name'和name的效果一样
+
+ define(`XX', `OO') 给参数加quing也是阻止宏替换不过一个Quit没用
+ 要两个。 为啥？？
+
+EE delete Macro
+undefine(`macroName'[, ...])
+每一个参数被当作一个remove的Macro
+只用带参数时undefine 才会被识别
+
+# EE dnl Macro 'delete to '
+ define时会有一个newline符，输出时也会把这个newline
+ 输出，使用dnl就不会输出这个newline.(原先define的位置不会有
+ 一个空行）
+ ! dnl与define之间不能有括号
+define(NA, william)dnl
+hello NA
+
+# EE `' Quoting and apostrophe
+ 被`'包围的宏名将不被扩展
+ 注意是反引号和引号
+1 Quoting `NA'
+2 用`'包围的string可以包含换行符
+e.g
+  `ok.
+  ye.'
+3 `'可以转义自己
+``HH'' -> `HH'
+4 单个括号可以使用`'保护
+e.g
+define(LP,`(')
+define(RP,`)'
+LP...RP -> (...)
+
+#EE Comment 注释
+默认为# 和 newline注释会回显到输出
+注释也可被`'转义为一般字符
+
+不想回显可以使用dnl 
+e.g dnl # not echoed
+
+块注释不想回显可以这样写
+ifelse(`this common
+will not echoed')dnl
+
+ EE changecom
+ 改变默认注释界定符。
+ 没有参数的changecom调用将会回复默认设置
+ e.g changecom('@@')
+ 如果想使用块注释，是以使用closing delimiter
+ e.g changecom('/*,*/')
+ /*fesf 
+ fff*/
+
+
+EE 几种输入类型
+1. quoting string
+使用` ' 包围的字符串。 输入后会把最外面的
+` '去掉，剩下的就是m4读入的string
+e.g. `heel xx' heel xx
+
+2. 宏名字
+3. 注释
+4. 其他的字符 主要包括 数字, 空白字符，括号
+   m4 读入的就是这些符号本身
+
+EE  m4的输出（工作流程) expansion
+1.逐个扫描，如果是宏名就收集参数，然后替换。
+2.如果是quoting string就除去最外面的`'
+如果参数是宏，就再次执行1
+!!! 宏的输出一定会再次扫描
+qouting 的不会再次扫描
+如有宏再次替换，递归的(resucesd)
+
+
+# EE 计算
+# 提供eval函数 操作符和C一致
+# incr decr 内置
+#define(`INC', `incr(`$1')')
+#INC(1)
+
+# EE string
+# len e.g len(`fesf')
+# substr: (`string', begin, [end])
+# e.g substr(`fesf', 1, 3) index begin in 0
+# index
+
+# EE 定义一个新宏
+# 宏可以被定义，重定义，删除用多种方式。
+# 使用define定义。 define(naem, [expansion])
+# 如果没有expansion 就是一个空串
+# 如果都差define一个macro，他最上面的那个define
+# 会被改变
+
+
+#
+## EE --prefix-builtins or -P
+#重命名所有的内建Macros以m4_开头
+#GUN m4 不会调用任何没有参数的内建宏，但是posix不是
+#
+
+# EE 调用macro invocation
+# 调用Macro 有参数时名字必须和（没有间隔
+# 没有参数是不能使用name() 这个是有一个empty string的调用
+# 收集完所以的参数，才回调用宏
+# 所有参数都是string
+# macro(arg1, arg2, ..., argn)
+# 缺少的参数会用empty string。
+# 多的参数会忽略
+
+#EE 阻止调用macro
+#1.使用quting 扩住一个macro name
+ 使用空stirng `‘ 在macro 名字中间 e.g. defin`'e
+#
+
+# EE 参数
+# 逗号commas分割参数,除非在qutiong中
+# 任何不Qutiong的argument 的空白都会忽略
+  参数中的空格不会被忽略	
+# 参数替换在扫描之前进行
+# quoting argument, 使用quoting和不使用quote的参数，注意在替换时的不同
+
+#Macro名字不一定一个个单词，可以是任何字符串
+#不是正规的名字不会被识别，但可以用indir和defn引用
+#macro的参数以$n代替 like shell n begine 1
+
+EE 参数个数：
+GUN m4不限制参数的个数，但是posix和其他实现只支持$后面跟1个数字，
+也就是最大$9, 大于9个参数时和BASH 一样使用 ${n} 来引用
+
+#$0 总是Macro的名字,
+#在扫描之前会替换参数,要Quting 否则会导致无限递归。。。？？？
+# '$#' 是实际传递的参数个数
+# `$*' 所有的参数.替换成arg1,arg2,...,argn
+# `$@' 和$*相同，但是他会把每个参数qutiong 
+#macro 的特殊参数和bash 几乎一样
+
+EE 当#，默认的注释符在参数中,不会被替换， 直到遇见‘。 会终结comment
+e.g.
+echo(#this is comment'but is not)
+
+# renaming macros
+# use defn(name...)
+#
+
+#临时重定义宏
+#使用pushdef,popdef
+#对用builtin 也可以使用
+#和stack相似
+#如是使用undefine 则所以的define都会别移除
+
+
+EE indir(name,[arg...])
+间接调用Macro
+#所有的macros都可以被间接调用。
+#只有使用arugment 掉用时indir才会被识别
+#可以用来调用无效名字的Macros
+#常用来调用一些私有的宏
+
+#EE  builtin 和indir 相似但是只能间接调用内建宏
+只会用使用原始行为，不会受pushdef 影响
+使用使用参数时才会被识别
+当使用-P 参数时 builtin 的参数不代m4_前缀
+
+
+EE ifdef(name, string-1,[string-2])
+#测试是否定义了一个宏
+#如果定义了name，就扩展stringj-1,
+#否则就扩占string-2,if string-2 is omitted.
+#就会扩增为empty-stirng
+
+EE ifelse
+有一个参数时，没用任何输出 ifelse(oxo)
+如果有3到4个参数，1和2参数相同，就输出参数3,不相同就输出参数4
+使用使用参数是ifelse 才会被识别
+
+## EE 如何输出\t \r \n ??
+
+
+## DEBUG
+## EE dumpdef([name...]) 
+#把指定的Macro的定义打印到stderr
+#如果找不到输出错误
+
+# EE traceon([name...]) 
+#    traceoff([name...])
+# 跟踪Marco的调用和替换
+
+EE |divering|
+1.A way temporarily saving output.
+2.Diversion make it possible to generate output different 
+  order than the input was read.
+
+EE *divert* ([number=0])
+divert is expaned void
+When all the M4 input will have been processed, all existing
+diversions are automatically undiverted in numerical order
+Several divert with same argument do not overwite the 
+previous diverted, but append to it.
+e.g. divert 
+    `first'
+     divert
+    `second'
+
+Negative diversion arugment. is simply discarded output.
+commmon use to wnwantedd output is the trailin newlines
+after macro define.
+e.g.
+divert(`-1')
+define (`x', `AA')
+divert
+is like 
+define (`x', `AA')dnl
+
+Invocation appear in normal text. To avoid invocation is
+use -P opreation. or 
+define(`divert', `ifelse(`$#', `0', ``$0'', 'builtin(`$0',$@)')')
+
+EE *undivert*([number])
+GNU extension diversions may contain non-numeri strings.
+
+EE buildin __file__  __line__ 内置宏
+
+Qus.
+defn
+format
+
+vim:ft=help

@@ -1,0 +1,23 @@
+正则库的组成
+
+模式类型  用来实例化模式
+1.|basic_regex|
+  正则库中的基本类型
+2.|sub_match|
+3.|match_results|
+
+匹配算法
+  接收 pattern 和 text
+|regex_match|
+  attempts to match a regular expression to the text
+  返回是否有匹配
+
+|regex_search|
+|regex_replace|
+
+迭代器
+|regex_iterator|
+|regex_token_iterator|
+
+
+vim:ft=help

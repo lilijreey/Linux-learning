@@ -1,0 +1,48 @@
+vim: ft=help
+
+Qus.
+ STL 的容器的const 操作需要加锁吗?
+    需要， 即使是const操作也会应为其他的线程可能改变容器，而产生
+    为定义的行为，所以即使是const操作也要加锁 e.g. size/0, empty/0
+
+C11 线程库
+----------------------------
+* thread Class
+
+最佳实践
+-----------------------------
+* 不要把保护的数据传递出去
+   一个class func 不要传递自身拥有的数据的指针或引用
+
+|std::lock|
+----------------------------
+ 一次可以加锁多个mutex, 用来避免 AB BA 造成的死锁
+|std::trylock| -> int
+  -1 加锁成功， 如果加锁不成功，会加锁已经加锁的mutex
+
+
+Memory synchronization ordering
+|std::memory_order| 
+----------------------------------
+specifies how regular (non-atomic) memory 
+    accesses are to be ordered around an atomic operation
+
+* memory_order_relaxed,
+    不保证存储顺序, 只做原子操作
+
+* memory_order_consume,
+    一个load 操作 ???
+
+* memory_order_acquire,
+    load 保证在这个操作之后的所有操作不会被提前
+ 
+* memory_order_release,
+    store 操作保证这操作之前的所有操作已经完成
+ 
+* memory_order_seq_cst
+    全部存储都按顺序执行，在都core系统中容易造成瓶颈
+     
+    默认使用的memory_order
+* memory_order_acq_rel,
+    load操作会执行acquire,store 操作会执行relaxed
+    

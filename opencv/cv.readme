@@ -1,0 +1,44 @@
+## 计算机视觉
+不同于图像处理,比他更高级
+
+
+## 显示灰度图片的分布3D
+
+```m
+    img = imread('F:\相册\psu_gray.png');                 
+    [y,x] = size(img);                 % 取出图像大小  
+    [X,Y] = meshgrid(1:x,1:y);         % 生成网格坐标  
+    pp = double(img);                  % uint8 转换为 double   
+    mesh(X, Y, pp);                    % 画图  
+    colormap gray;                     % 选为灰度  
+```
+
+
+### 对象分割 Object segmentation
+* GrabCut 算法
+
+### 图片分割
+* Watershed 算法
+
+生产高斯分布的kernel
+fspecial('gaussian', hsize, 5)
+
+
+## 特征点检测与匹配
+* ORB
+* SIFT/SURF
+  基于灰度图
+
+* FASE (features from accelerated segment test)
+ FAST特征检测算法来源于corner的定义，
+  这个定义基于特征点周围的图像灰度值，
+  检测候选特征点周围一圈的像素值，
+  如果候选点周围领域内有足够多的像素点与该候选点的灰度值差别够大，
+  则认为该候选点为一个特征点
+
+选取特征点
+
+* FLANN (Fast Library for Approximate Nearest Neighbors)
+
+
+## SURF 积分图像

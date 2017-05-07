@@ -1,0 +1,30 @@
+## LLVM 项目学习
+
+### tutorial 
+跟随llvm-tutorial 实现一个语言
+
+## IR (intermediate representation) 
+特性 
+* SSA (static single assignment form)
+ 每个变量只能赋值一次， 和Erlang一样。 重要用于代码优化
+ 大量的编译器都用到了这个特性
+
+
+* IR 代码优化
+  llvm支持在IR上进行代码优化
+   llvm 使用流水线架构实现代码优化功能，
+   可以自定义和添加多个代码优化算法，在流水线上
+    每个过程称为一个pass
+
+
+* JIT
+  运行时把代码编译为本地代码的能力
+  有了IR以后就可以编译为目标机器代码或是是JIT编译
+  有了JIT就可以按需编译代码，用到在编译
+  llvm 提供了JIT功能模块，通过调用API，实现JIT编译
+  EngineBuilder 对象用了创建一个JIT实例
+  
+
+
+
+
