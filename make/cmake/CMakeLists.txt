@@ -157,6 +157,10 @@ else()
 	message("find_packge(FONTCONFIG) not found")
 endif()
 
+
+##EE 显示gcc 命令
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
 ##EE 平台检测
 ## check_type_size(
 ## check_big_endian(

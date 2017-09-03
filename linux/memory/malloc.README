@@ -1,3 +1,10 @@
+glibc 提供的其他几个malloc控制，查询方法
+
+* malloc(3), malloc_hook(3), malloc_info(3), malloc_stats(3), malloc_trim(3)
+* mallopt  mallinfo(3) 
+* mcheck(3), mtrace(3), posix_memalign(3) mmap(2), sbrk(2), 
+
+
 几种流行的高效第三方malloc
 
 + jemalloc

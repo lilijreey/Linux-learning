@@ -13,6 +13,9 @@
  * =====================================================================================
  */
 
+
+
+#define	_GNU_SOURCE			/*  */
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,6 +23,7 @@
 #include <string.h>
 #include <sys/types.h> //for wait
 #include <sys/wait.h>
+#include <assert.h>
 
 void get_page_size()
 {
@@ -29,7 +33,7 @@ void get_page_size()
 	//printf("system page size:%d\n", getpagesize()) ;
 }
 
-#define	BUF_SIZE	1024		/*  */
+#define	BUF_SIZE	1024 * 1024 * 1024//1G
 
 //read from mmap
 void read_from_mmap(void *buf) {
@@ -51,20 +55,38 @@ struct ok
 int main() 
 {
     void *buf;
+    sleep(5);
+    printf("start mmaping...\n");
     buf = mmap(NULL, 
                 BUF_SIZE, 
                 PROT_READ | PROT_WRITE,
                 MAP_SHARED| MAP_ANON, //MAP_PRIVATE 会时parent和client各自有自己的mmap
                 -1, 0);
 
+    //mmap 成功后只是分配虚拟内存，并不真实分配物理内存，使用时才按页分配
+
    if (buf == MAP_FAILED) {
         perror("mmap falied:");
         exit(1);
     }
+    printf("mmaping successsed pid=%d\n", getpid());
+    sleep(10);
+
+    const int dataSize = 4*1024*1024;
+    char *data = (char*)malloc(dataSize);
+    assert(data);
+    for (int i=0; i< 1024; ++i) {
+        //拷贝内存到mmap 内存段中, 
+        memcpy(buf, data, dataSize);
+        buf += dataSize;
+        printf("写入4M\n");
+        sleep(1);
+
+    }
 
    //write hello to mmap
+#if 0
    const char str[] = "hello";
-#if 1
 
    //fork
    switch (fork()) {

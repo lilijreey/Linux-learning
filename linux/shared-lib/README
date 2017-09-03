@@ -60,6 +60,24 @@ e.g gcc -c |-fPIC| -Wall mod1.c mod2.c mod3.c  <compiled>
 
 1. find share-lib in run-time
 *Default-ld-path* /lib /use/lib and /etc/ld.so.conf is containes default search paht
+
+## System call hook 
+替换掉系统调用
+使用 dlsym(TDL_NETXT, "read") 得到实际系统调用地址
+自己定义一个同名同类型函数
+链接的时候使用
+LD_PRELOAD制定保护hook的so,这样查找就好先使用我们的hook版本，而不是
+gcc -shared -fpic -o libhook.so hook.c
+
+系统库版本
+
+*LD_PRELOAD* 用于动态链接库加载,加载优先级最高。一般情况下加载顺序为
+1. LD_PRELOAD 
+2. LD_LIBRARY_PATH
+3. /etc/ld.so.cache
+
+
+
 *LD_LIBRARY_PATH* set LD_LIBRARY_PATH is add other search path
   then the ld-linux.so.2 searches for LD_LIBRARY_PATH list before looking 
   in the standard library.(ldd also can't find is not set)

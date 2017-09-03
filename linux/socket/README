@@ -601,4 +601,14 @@ Funcs
      getservbyname
 
 
+## unix socket
+在同一台主机上的进程间通讯，不需要做网络协议，也不会有丢包的问题。
+提供流和数据包两种类型。 都是可靠有序的.
+unix socket不收网卡限制，效率比TCP/UDP高很多
+可以设置socket SO_SNDBUF提高一次发送的最大pakege大小
+see unixSocket.c
+
+
+
 vim: ft=help foldmethod=marker
+

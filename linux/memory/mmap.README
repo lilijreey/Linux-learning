@@ -44,6 +44,8 @@ flags:  MAP_SHARED, MAP_PRIVATE, 必选一个
                   this file, and are carried through to the underlying file. 
                   The file may not actually be updated until msync(2) or munmap() is called. 
                   对于父子，匿名mmap。父子fork后会共享一块mmap
+                  不同进程彼此共享映射的内存（同一块物理内存)
+  
 
        *MAP_PRIVATE*
 		  Create a private copy-on-write mapping. 
@@ -54,6 +56,7 @@ flags:  MAP_SHARED, MAP_PRIVATE, 必选一个
                   对mmap 的修改不会 改变映射的文件
                   对于父子进程MAP_PRIVATE 选项会让父子进程有各自的mmap，
                   一段对mmap的修改不会影响另一段
+                  不同进程，对同一块映射内存的修改不可见。写时拷贝
 
 offset: fd不为-1时才有效， 映射文件开始偏移量
 
@@ -103,5 +106,7 @@ printf("system page size:%ld\n", sysconf(_SC_PAGESIZE)) ;
 //printf("system page size:%d\n", getpagesize()) ;
 
 
+EE mmap 还可以用于实现JIT，申请一段可执行权限的内存，然后
+  把一段二进制指令拷贝过去，转换为对应类型，调用
 
 vim:ft=help

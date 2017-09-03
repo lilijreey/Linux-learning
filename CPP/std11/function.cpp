@@ -154,6 +154,11 @@ int main()
   std::function<void()> emp;
   //emp 在没复制以前不可以调用
   //ld error can not find ff1 reference
+  
+  ///E 可以使用if 检查是否为空
+  if (emp) {
+    printf("emp is empty \n");
+  }
   emp = f1;
   emp(); 
 
@@ -229,8 +234,8 @@ int main()
   /// 应该使用这个 上面的方法虽然可以调用但是在离开f3作用预后 调用一个
   // f3 的copy 可以去去不到bind 时fo3 中的成员对象， 可能是删除了 ???
   // 而这个就可以
-//  std::function<void(int)> f3x = std::bind(fo3, std::placeholders::_1);
-//  
+  //  std::function<void(int)> f3x = std::bind(fo3, std::placeholders::_1);
+  //  
   fo3(3);
   
   //如果在调用bind的返回值时 fo3 可能已经不存在可以传入obj 对象， bind

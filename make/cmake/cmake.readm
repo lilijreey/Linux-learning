@@ -89,6 +89,9 @@ if 语句做条件编译
 * 使用 make edit_cache 来编辑和修改这些变量
 
 
+EE 显示gcc 命令
+set(CMAKE_VERBOSE_MAKEFILE ON)
+
 EE add header file path like -I
 
 include_directories(
@@ -175,7 +178,7 @@ find_path(GLWF_INCLUDE_DIR FW/glfw3.h /usr/local/include /usr/include)
    set(GLWF_FOND "YES")
 
 ## find_package(Var version REQUIRED COMPONENTS xxx)
-## 有很多变量，see man
+## 只要找到包就会定义很多变量，see man
 		Var_FOUND	       - True if headers and requested libraries were found
 		Var_INCLUDE_DIRS     - Boost include directories
 		Var_LIBRARY_DIRS     - Link directories for Boost libraries
