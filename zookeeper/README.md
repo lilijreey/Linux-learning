@@ -43,3 +43,6 @@ C bind 提供了两种watcher的使用模式，
    为每个wathcer指定回调函数，和上文
 
 
+## server 四字命令 
+可以得到server的状态信息
+
