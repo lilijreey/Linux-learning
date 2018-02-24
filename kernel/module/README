@@ -2,6 +2,16 @@
 =====================
 set vim:foldmethod=marker
 
+## 开始
+编译模块需要安装必要的头文件
+默认就有
+
+## 安装内核API man page(9)
+进入内核代码执行
+0. make xconfig
+who??
+
+
 ### mod命令 {{{
 * 加载模块
    + insmod modfile
@@ -110,7 +120,8 @@ set vim:foldmethod=marker
 
   * 模块使用 `EXPORT_SYMBOL(name);
               EXPORT_SYMBOL_GPL(name); //只能被包含GPL许可的模块使用
-        宏来导出指定符号到内核`
+        宏来导出指定符号到内核` 
+       导出后会出现在/proc/kallsysms 中
 
     Qus. EXPORT_SYMBOL* 宏的实现技术？
 
@@ -128,9 +139,6 @@ set vim:foldmethod=marker
 模块卸载函数需要实现设备号的释放和cdev的注销
 * linux 使用 struct cdev 来描述一个字符设备
   define in include/linux/cdev.h
-* 使用MAJOR(dev_t vde) get device majorID
-* 使用MINOR(dev_t vde) get device minorID
-* MKDEV(int majorID, int minorID) create a dev_t 
 * 分配和释放设备号
     include linux/fs/char_dev.c
    rgister_chrdev_region
@@ -146,7 +154,7 @@ set vim:foldmethod=marker
 
 *  include <linux/kernel/module.h>
    try_module_get(THIS_MODLE)
-   try_module_put(THIS_MODULE)
+   module_put(THIS_MODULE)
     inc, dec 模块的引用技术
     module_refcount
     remod 在hello_exit 之前检查refcount 如果不为1 则无法卸载掉模块
@@ -166,7 +174,26 @@ set vim:foldmethod=marker
 
 
 ## 分配设备编号
- 在建立设备前，我们需要想内核申请1个或多个设备编号
+* 主设备号用来标记驱动
+  使用相同驱动的设备主设备号相同
+* 次设备号要来标记设备
+
+linux 允许多个驱动共享一个主设备号
+
+设备号类型 dev_t 包含主次信息 linux/type.h
+
+* MAJOR(dev_t vde)
+    get device majorID
+* MINOR(dev_t vde) 
+   get device minorID
+
+* MKDEV(int majorID, int minorID)
+  create a dev_t
+
+建立设备步骤:
+1.  核申请1个或多个设备编号
+2.  
+
   include <linux/fs.h>
  * register_chrdev_region() - register a range of device numbers
  * @from: the first in the desired range of device numbers; must include

@@ -8,8 +8,9 @@
 
 -module(worker).
 
--export([start_link/1,
-start_link/0,
+-export([
+         create/0,
+         create/1,
          start/1]).
 
 
@@ -22,6 +23,36 @@ sleep(Msec) ->
     receive _ -> ok
     after Msec-> ok
     end.
+
+create() -> 
+    create(1000).
+
+create(N) -> 
+    {ok, P} = erlzk:connect([{"127.0.0.1", 2181}], 3000),
+    Ref = erlang:make_ref(),
+    Root = "/test/" ++ erlang:ref_to_list(Ref),
+    {ok, _}  = erlzk:create(P, Root),
+    Base = rand:uniform(N), 
+    times(N,
+          fun(I) -> 
+                  %sleep(rand:uniform(200)),
+                  case erlzk:create(P, Root ++ "/" ++ integer_to_list(Base+I)) of
+                      {error, E} -> 
+                          io:format("Error ~p ~p~n", [Root, E]);
+                      %%{ok,_} when I rem 100 =:= 0 -> 
+                      %%    io:format(" ~p create node count ~p~n", [Root, I]);
+                      _ -> ok
+                      %%{ok, _Path} ->
+                      %%    io:format(" ~p create node count ~p~n", [Root, _Path])
+                  end
+          end),
+    io:format("create over~n"),
+    {ok, C} = erlzk:get_children(P, Root),
+    io:format("create over count ~p ~n", [length(C)]),
+    sleep(1000),
+    erlzk:close(P),
+    ok.
+
 
 
 task() -> 
@@ -56,7 +87,7 @@ task() ->
 start(N) ->
     erlzk:start(),
 
-    times(N, fun(_N) -> spawn(fun task/0) end),
+    times(N, fun(_N) -> spawn(fun create/0) end),
     io:format("start over~n"),
     ok.
 

@@ -1,7 +1,9 @@
 KVERS = $(shell uname -r)
 
 # Kernel module
-obj-m +=  hello.o
+#obj-m +=  hello.o
+
+obj-m +=  scull_mod.o
 
 build: kernel_modules
 

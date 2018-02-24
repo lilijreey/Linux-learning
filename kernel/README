@@ -1,6 +1,11 @@
 linux kernel 学习笔记
 vim: ft=help
 
+
+linux 内核提供每个系统的重要参考文档
+应先通读了解
+https://www.kernel.org/doc/html/latest/
+
 Qus.
 -----------------------------
 1. 内核和用户空间是如何相互访问的
