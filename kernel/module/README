@@ -145,7 +145,7 @@ who??
    alloc_chrdev_region
 
 * 加载模块，卸载模块
-  cdev_add
+  cdev_add, 执行之后就可以通过系统调用调用驱动函数了
   cdev_del 
   不允许rmmod 一个正在被使用module
 
